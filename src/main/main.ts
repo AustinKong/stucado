@@ -28,11 +28,11 @@ function createWindow() {
 
   if (VITE_DEV_SERVER_URL) {
     // Load the URL of the dev server if in development mode
-    win.loadURL(VITE_DEV_SERVER_URL)
+    void win.loadURL(VITE_DEV_SERVER_URL)
   } else {
     // Load actual index.html in production
     // win.loadFile('dist/index.html')
-    win.loadFile(path.join(RENDERER_DIST, 'index.html'))
+    void win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
 
@@ -54,4 +54,4 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+void app.whenReady().then(createWindow)
