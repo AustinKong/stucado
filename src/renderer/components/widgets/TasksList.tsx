@@ -37,7 +37,7 @@ const TasksList: React.FC = () => {
 
   const handleAddTask = () => {
     if (!inputContent) return
-    setTasks([...tasks, { id: tasks.length + 1, content: inputContent, status: TaskStatus.Pending }])
+    setTasks([...tasks, { id: (tasks.length > 0 ? tasks[tasks.length - 1].id : 0) + 1 , content: inputContent, status: TaskStatus.Pending }])
     setInputContent('')
   }
 
