@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import 'Styles/widgets/tasks-list.css'
 
 enum TaskStatus {
   Pending = 'Pending',
@@ -41,32 +42,47 @@ const TasksList: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className='tasks-list'>
       <h1>Tasks</h1>
       <ul>
         {tasks.map(task => (
-          <li key={task.id}>
-            <button onClick={() => handleToggleTaskStatus(task.id)}>
-              {task.status}
-            </button>
+          <li 
+            key={task.id} 
+            className='task-item'
+          >
+            <button 
+              onClick={() => handleToggleTaskStatus(task.id)}
+              className={`task-status task-status__${task.status === TaskStatus.Pending ? 'pending' : task.status === TaskStatus.InProgress ? 'in-progress' : 'completed'}`}
+            />
 
-            {task.content}
+            <div
+              className='task-content'
+            >
+              {task.content}
+            </div>
 
-            <button onClick={() => handleDeleteTask(task.id)}>
-              🗑️
+            <button 
+              onClick={() => handleDeleteTask(task.id)}
+              className='delete-task'
+            >
+              {/* TODO: Change to an edit button */}
+              x️
             </button>
           </li>
         ))}
 
-        <li>
+        <li className='task-item add-task'>
           <input
             type="text"
+            placeholder='Add a new task...'
             value={inputContent}
             onChange={e => setInputContent(e.target.value)}
           />
-          <button onClick={() => handleAddTask()}>
-            +
-          </button>
+          {inputContent && 
+            <button onClick={() => handleAddTask()}>
+              Add task
+            </button>
+          }
         </li>
       </ul>
 
