@@ -24,7 +24,8 @@ module.exports = {
   },
   rules: {
     quotes: ['error', 'single'],
-    'indent': ['error', 2],
+    'indent': 'off',
+    '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': ['warn'],
     'object-curly-spacing': ['error', 'always'],
     'react-refresh/only-export-components': [
