@@ -33,7 +33,7 @@ export const generateTimetable = async (url: string) => {
 
   for (const module of modules) {
     const moduleCode: string = module.substring(0, module.indexOf('='))
-    const classesInfo: string[] = module.substring(module.indexOf('=') + 1).split(',')
+    const classesInfo: string[] = module.substring(module.indexOf('=') + 1).split(',').filter((classInfo) => classInfo !== '')
     const moduleInfo: APIModule = await(getModuleInfo(composeUrl(academicYear, moduleCode))) as APIModule
 
     for (const classInfo of classesInfo) {
@@ -53,8 +53,6 @@ export const generateTimetable = async (url: string) => {
 
       timetable.push(selectedClass)
     }
-
-    console.log(timetable)
   }
 }
 
