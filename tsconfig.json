@@ -27,7 +27,7 @@
       "Styles/*": ["./src/renderer/styles/*"],
       "Assets/*": ["./src/renderer/assets/*"],
       "Types/*": ["./src/renderer/data/types/*"],
-      "Utils/*": ["./src/utils/*"],
+      "Services/*": ["./src/services/*"],
     }
   },
   "include": ["src", "electron"],

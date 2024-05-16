@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { APIModule, RawLesson } from 'Types/modules'
 
-interface Class {
+export interface Class {
   moduleCode: string;
   classNo: string;
   venue: string;
@@ -14,9 +14,7 @@ interface Class {
 
 // Given a NUSMods url, extract the relevant class details and
 // send a GET reqeust to NUSMods API to get the class timings
-
-// Example URL: https://nusmods.com/timetable/sem-2/share?CS1010=TUT:02,SEC:1&CS1010E=SEC:2,TUT:18&CS1010R=&CS1010S=TUT:12,REC:03,LEC:1&CS2030=LAB:10A,REC:02,LEC:1&CS2030S=LAB:16E,REC:03,LEC:2
-export const generateTimetable = async (url: string) => {
+export const generateTimetable = async (url: string): Promise<Class[]> => {
   // Extract modules from URL
   const modules: string[] = url.substring(url.indexOf('?') + 1).split('&')
   
@@ -53,7 +51,13 @@ export const generateTimetable = async (url: string) => {
 
       timetable.push(selectedClass)
     }
+
+    timetable.sort((a, b) => {
+      return +a.schedule.startTime - +b.schedule.startTime
+    })
   }
+
+  return timetable
 }
 
 const composeUrl = (academicYear: string, moduleCode: string): string => {
