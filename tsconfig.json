@@ -26,6 +26,8 @@
       "Interfaces/*": ["./src/renderer/interfaces/*"],
       "Styles/*": ["./src/renderer/styles/*"],
       "Assets/*": ["./src/renderer/assets/*"],
+      "Types/*": ["./src/renderer/data/types/*"],
+      "Utils/*": ["./src/utils/*"],
     }
   },
   "include": ["src", "electron"],
