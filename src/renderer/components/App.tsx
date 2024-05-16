@@ -1,7 +1,9 @@
+import TasksList from 'Components/widgets/TasksList'
+
 function App() {
   return (
     <>
-      Hello world from React + Vite + Electron!
+      <TasksList />
     </>
   )
 }
