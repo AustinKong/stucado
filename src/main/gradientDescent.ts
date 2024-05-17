@@ -99,25 +99,38 @@ const rawData = `
 98 lateAfternoon Friday 10 3 stormy 82.0426844
 99 night Sunday 5 7 rainy 65.1484772
 100 evening Wednesday 12 15 cloudy 20.6684360
-`
+`;
+
+//define structure of dataset
+interface DataPoint {
+    timeOfDay: string;
+    dayOfWeek: string;
+    hoursInClasses: number;
+    hoursFocused: number;
+    weather: string;
+    productivity: number;
+}
+
+type TimeOfDay = 'dawn' | 'earlyAfternoon' | 'earlyMorning' | 'evening' | 'lateAfternoon' | 'lateMorning' | 'midnight' | 'night';
+type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+type Weather = 'sunny' | 'rainy' | 'stormy' | 'cloudy';
 
 //turn rawData into objects
-function processRawData(rawData) {
+function processRawData(rawData: string): DataPoint[] {
     const dataset = rawData.trim().split('\n').map(line => {
         const parts = line.trim().split(' ');
         const [id, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity] = parts;
         return {
-            timeOfDay,
-            dayOfWeek,
+            timeOfDay: timeOfDay as TimeOfDay,
+            dayOfWeek: dayOfWeek as DayOfWeek,
             hoursInClasses: parseFloat(hoursInClasses),
             hoursFocused: parseFloat(hoursFocused),
-            weather,
+            weather: weather as Weather,
             productivity: parseFloat(productivity)
         };
     })
     return dataset;
 }
-
 
 //convert categorical data into dummy variables
 const allTimesOfDay = ["dawn", "earlyAfternoon", "earlyMorning", "evening", 
@@ -126,8 +139,8 @@ const allDaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday",
     "Friday", "Saturday", "Sunday"];
 const allWeathers = ["sunny", "rainy", "stormy", "cloudy"];
 
-function categoricalToDummy(data) {
-    const result = [];
+function categoricalToDummy(data: DataPoint) : number[] {
+    const result: number[] = [];
     result.push(...allTimesOfDay.map(time => data.timeOfDay === time ? 1 : 0));
     result.push(...allDaysOfWeek.map(day => data.dayOfWeek === day ? 1 : 0));
     result.push(data.hoursInClasses);
@@ -146,16 +159,15 @@ const learningRate = 0.01;
 const iterations = 10000;
 const numOfVariables = preparedDataset[0].variables.length;
 // Initialize weights(m) and intercept(c)
-let weights = Array(numOfVariables).fill(0);
+let weights: number[] = Array(numOfVariables).fill(0);
 let intercept = 0;
 
-// Predict function
-function predict(variables) {
-  return variables.reduce((sum, variable, index) => sum + variable * weights[index], intercept);
+function predict(variables: number[]): number {
+    return variables.reduce((sum, variable, index) => sum + variable * weights[index], intercept);
 }
 
 for (let i = 0; i < iterations; i++) {
-    let weightGradients = Array(numOfVariables).fill(0);
+    let weightGradients: number[] = Array(numOfVariables).fill(0);
     let interceptGradient = 0;
     let totalError = 0;
 
@@ -180,12 +192,13 @@ for (let i = 0; i < iterations; i++) {
 console.log('Weights:', weights);
 console.log('Intercept:', intercept);
 
-const newExample = {
+const newExample: DataPoint = {
     timeOfDay: "dawn",
     dayOfWeek: "Monday",
     hoursInClasses: 9,
     hoursFocused: 2,
-    weather: "cloudy"
+    weather: "cloudy",
+    productivity: 0 //dummy value
 };
 
 const newFeatures = categoricalToDummy(newExample);
