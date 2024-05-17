@@ -40,12 +40,12 @@
     }
 }
 
-.timetable__items {
+.timetable__slots {
     width: 100%;
     position: relative;
 }
 
-.timetable__item {
+.timetable__slot {
     position: absolute;
     background-color:darkolivegreen;
     border-radius: 5px;

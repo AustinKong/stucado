@@ -1,5 +1,4 @@
 // Copied from NUSMods API
-// TODO: Most of these are unnecessary, remove them
 export type CovidZoneId = 'A' | 'B' | 'C' | 'D' | 'E' | 'Unknown';
 export type AcadYear = string; // E.g. "2016/2017"
 export type ClassNo = string; // E.g. "1", "A"
@@ -34,34 +33,10 @@ export type PrereqTree =
   | string
   | { and?: PrereqTree[]; or?: PrereqTree[]; nOf?: [number, PrereqTree[]] };
 
-// Auxiliary data types
-export type Day =
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday'
-  | 'Sunday';
-
-export const WorkingDaysOfWeek: Day[] = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
-
-export const DaysOfWeek: Day[] = [...WorkingDaysOfWeek, 'Sunday'];
-
 export type Time = 'Morning' | 'Afternoon' | 'Evening';
-export const TimesOfDay: Time[] = ['Morning', 'Afternoon', 'Evening'];
 
 export type ModuleLevel = 1 | 2 | 3 | 4 | 5 | 6 | 8;
 export const Semesters = [1, 2, 3, 4];
-
-export type WorkloadComponent = 'Lecture' | 'Tutorial' | 'Laboratory' | 'Project' | 'Preparation';
 
 // RawLesson is a lesson time slot obtained from the API.
 // Usually ModuleCode and ModuleTitle has to be injected in before using in the timetable.
@@ -139,10 +114,3 @@ export type APIModule = {
   prereqTree?: PrereqTree;
   fulfillRequirements?: ModuleCode[];
 };
-
-// This format is returned from the module list endpoint.
-export type ModuleCondensed = Readonly<{
-  moduleCode: ModuleCode;
-  title: ModuleTitle;
-  semesters: number[];
-}>;

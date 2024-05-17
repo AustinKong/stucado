@@ -1,75 +1,94 @@
-import axios from 'axios'
-import { APIModule, RawLesson } from 'Types/modules'
+import axios, { AxiosResponse } from 'axios';
+import { APIModule, RawLesson } from 'Types/nusMods.types';
+import { Class, TimetableSlot } from 'Types/timetable.types';
 
-export interface Class {
-  moduleCode: string;
-  classNo: string;
-  venue: string;
-  schedule: {
-    startTime: string;
-    endTime: string;
-    day: string;
-  }
-}
+// Given a NUSMods URL, generate a timetable in the form of Timetable
+export const getTimetable = async (url: string): Promise<TimetableSlot[]> => {
+  const classes: Class[] = await getClassInfo(url);
+  console.log(classes)
+  let timetableSlots: TimetableSlot[] = classes.map((classData) => ({
+    title: `${classData.moduleCode} ${classData.classNo}`,
+    description: `${classData.schedule.startTime} - ${classData.schedule.endTime} @ ${classData.venue}`,
+    schedule: classData.schedule,
+  }));
 
-// Given a NUSMods url, extract the relevant class details and
-// send a GET reqeust to NUSMods API to get the class timings
-export const generateTimetable = async (url: string): Promise<Class[]> => {
-  // Extract modules from URL
-  const modules: string[] = url.substring(url.indexOf('?') + 1).split('&')
-  
-  // Extract date, assuming the academic year always ends on May
-  const date: Date = new Date()
-  const academicYear: string = date.getMonth() <= 5 ?
-    `${date.getFullYear() - 1}-${date.getFullYear()}` : 
-    `${date.getFullYear()}-${date.getFullYear() + 1}`
+  timetableSlots = timetableSlots.sort((a, b) => +a.schedule.startTime - +b.schedule.startTime);
 
-  // Extract semester: 1 | 2
-  const semester: string = url.split('/')[4][4]
+  console.log(timetableSlots)
+  return timetableSlots;
+};
 
-  const timetable: Class[] = []
+// Given a NUSMods URL, extract the class information in the form of Class[]
+const getClassInfo = async (url: string): Promise<Class[]> => {
+  // Extract class information from URL
+  // e.g. [ 'CS1010=TUT:06,SEC:1', 'CS1010E=SEC:2,TUT:18' ]
+  const urlClassesInfo: string[] = url
+    .substring(url.indexOf('?') + 1)
+    .split('&');
 
-  for (const module of modules) {
-    const moduleCode: string = module.substring(0, module.indexOf('='))
-    const classesInfo: string[] = module.substring(module.indexOf('=') + 1).split(',').filter((classInfo) => classInfo !== '')
-    const moduleInfo: APIModule = await(getModuleInfo(composeUrl(academicYear, moduleCode))) as APIModule
+  // Extract academic year from URL, assuming semester ends on May
+  // e.g. 2021-2022
+  const date: Date = new Date();
+  const academicYear: string =
+    date.getMonth() <= 4
+      ? `${date.getFullYear() - 1}-${date.getFullYear()}`
+      : `${date.getFullYear()}-${date.getFullYear() + 1}`;
 
-    for (const classInfo of classesInfo) {
-      const classNo: string = classInfo.substring(classInfo.indexOf(':') + 1)
-      const classData: RawLesson = moduleInfo.semesterData[+semester - 1].timetable.filter((classData) => classData.classNo === classNo)[0]
+  // Extract semester from URL
+  // Semester 1 | 2 -> 0 | 1
+  const semester: number = +url.split('/')[4][4] - 1;
 
-      const selectedClass: Class = {
+  const classes: Class[] = [];
+
+  for (const urlClassInfo of urlClassesInfo) {
+    const moduleCode: string = urlClassInfo.substring(
+      0,
+      urlClassInfo.indexOf('=')
+    );
+    const enrolledClasses: string[] = urlClassInfo
+      .substring(urlClassInfo.indexOf('=') + 1)
+      .split(',')
+      .filter((classInfo) => classInfo !== '');
+    const moduleInfo: APIModule = (await fetchModuleInfo(
+      composeUrl(academicYear, moduleCode)
+    )) as APIModule;
+
+    for (const enrolledClass of enrolledClasses) {
+      const classNo: string = enrolledClass.substring(
+        enrolledClass.indexOf(':') + 1
+      );
+      const classData: RawLesson = moduleInfo.semesterData[
+        semester
+      ].timetable.filter((classData) => classData.classNo === classNo)[0];
+
+      classes.push({
         moduleCode: moduleInfo.moduleCode,
         classNo: `${classData.lessonType} ${classNo}`,
         venue: classData.venue,
         schedule: {
           startTime: classData.startTime,
           endTime: classData.endTime,
-          day: classData.day
-        }
-      }
-
-      timetable.push(selectedClass)
+          day: classData.day,
+        },
+      });
     }
-
-    timetable.sort((a, b) => {
-      return +a.schedule.startTime - +b.schedule.startTime
-    })
   }
 
-  return timetable
-}
+  return classes;
+};
 
-const composeUrl = (academicYear: string, moduleCode: string): string => {
-  const URL: string = 'https://api.nusmods.com/v2/'
-  return URL + `${academicYear}/modules/${moduleCode}.json`
-}
-
-const getModuleInfo = (url: string) => {
+// GET request to NUSMods API to get single module information
+const fetchModuleInfo = async (url: string) => {
   try {
-    return axios.get<APIModule>(url)
-      .then((response) => response.data)
+    const response: AxiosResponse<APIModule> = await axios.get<APIModule>(url);
+    return response.data;
   } catch (err) {
     console.error(err);
   }
-}
+};
+
+// Composes the URL for the GET request to NUSMods API
+const composeUrl = (academicYear: string, moduleCode: string): string => {
+  const URL: string = 'https://api.nusmods.com/v2/';
+  return URL + `${academicYear}/modules/${moduleCode}.json`;
+};
