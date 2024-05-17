@@ -73,7 +73,7 @@ const TasksList: React.FC = () => {
 
         <li className='task-item add-task'>
           <input
-            type="text"
+            type='text'
             placeholder='Add a new task...'
             value={inputContent}
             onChange={e => setInputContent(e.target.value)}
