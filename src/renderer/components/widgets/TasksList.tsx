@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Task, TaskStatus } from 'Types/tasksList.types';
+import { Task } from 'Types/tasksList.types';
 import 'Styles/widgets/tasks-list.css';
 
 const TasksList: React.FC = () => {
