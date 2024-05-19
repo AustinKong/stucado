@@ -26,7 +26,7 @@
       "Interfaces/*": ["./src/renderer/interfaces/*"],
       "Styles/*": ["./src/renderer/styles/*"],
       "Assets/*": ["./src/renderer/assets/*"],
-      "Types/*": ["./src/renderer/data/types/*"],
+      "Data/*": ["./src/renderer/data/*"],
       "Services/*": ["./src/services/*"],
     }
   },

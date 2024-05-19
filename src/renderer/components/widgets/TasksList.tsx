@@ -1,71 +1,28 @@
-import React, { useState } from 'react';
-import { Task } from 'Types/tasksList.types';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTaskStatus, deleteTask, addTask } from 'Data/slices/tasks';
+import { RootState } from 'Data/store';
+import { Task } from 'Data/types/task.types';
 import 'Styles/widgets/tasks-list.css';
 
 const TasksList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootState) => state.tasks);
   const [inputContent, setInputContent] = useState<string>('');
-
-  const handleToggleTaskStatus = (id: number) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === id) {
-          switch (task.status) {
-            case 'Pending':
-              return { ...task, status: 'InProgress' };
-            case 'InProgress':
-              return { ...task, status: 'Completed' };
-          }
-        }
-        return task;
-      })
-    );
-  };
-
-  const handleDeleteTask = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
 
   const handleAddTask = () => {
     if (!inputContent) return;
-    setTasks([
-      ...tasks,
-      {
-        id: (tasks.length > 0 ? tasks[tasks.length - 1].id : 0) + 1,
-        content: inputContent,
-        status: 'Pending',
-      },
-    ]);
+    dispatch(addTask({ content: inputContent, status: 'Pending' }));
     setInputContent('');
   };
 
   return (
-    <div className='tasks-list'>
+    <div className='tasks-list widget'>
       <h2>Tasks</h2>
+
       <ul>
         {tasks.map((task) => (
-          <li key={task.id} className='tasks-list__task-item'>
-            <button
-              onClick={() => handleToggleTaskStatus(task.id)}
-              className={`tasks-list__task-status tasks-list__task-status--${
-                task.status === 'Pending'
-                  ? 'pending'
-                  : task.status === 'InProgress'
-                    ? 'in-progress'
-                    : 'completed'
-              }`}
-            />
-
-            <div className='tasks-list__task-content'>{task.content}</div>
-
-            <button
-              onClick={() => handleDeleteTask(task.id)}
-              className='tasks-list__delete-task'
-            >
-              {/* TODO: Change to an edit button */}
-              x️
-            </button>
-          </li>
+          <TasksListItem key={task.id} task={task} />
         ))}
 
         <li className='tasks-list__task-item tasks-list__add-task'>
@@ -81,6 +38,35 @@ const TasksList: React.FC = () => {
         </li>
       </ul>
     </div>
+  );
+};
+
+const TasksListItem: React.FC<{ task: Task }> = ({ task }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <li className='tasks-list__task-item'>
+      <button
+        onClick={() => dispatch(toggleTaskStatus(task.id))}
+        className={`tasks-list__task-status tasks-list__task-status--${
+          task.status === 'Pending'
+            ? 'pending'
+            : task.status === 'InProgress'
+              ? 'in-progress'
+              : 'completed'
+        }`}
+      />
+
+      <div className='tasks-list__task-content'>{task.content}</div>
+
+      <button
+        onClick={() => dispatch(deleteTask(task.id))}
+        className='tasks-list__delete-task'
+      >
+        {/* TODO: Change to an edit button */}
+        x️
+      </button>
+    </li>
   );
 };
 

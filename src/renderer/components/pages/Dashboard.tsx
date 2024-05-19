@@ -13,6 +13,7 @@ const Dashboard: React.FC = () => {
     </div>
 
     <div className='dashboard__grid'>
+      <TasksList />
     </div>
   </div>
 }

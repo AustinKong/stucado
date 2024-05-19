@@ -24,6 +24,7 @@ module.exports = {
   },
   rules: {
     quotes: ['error', 'single'],
+    'react/prop-types': 'off',
     'indent': 'off',
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': ['warn'],
