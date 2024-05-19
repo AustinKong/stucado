@@ -20,7 +20,7 @@ const Timetable: React.FC = () => {
 
   return (
     <div>
-      <h1>Timetable</h1>
+      <h2>Timetable</h2>
       <div className='timetable'>
         <div className='timetable__scrollable'>
           <div className='timetable__header'>

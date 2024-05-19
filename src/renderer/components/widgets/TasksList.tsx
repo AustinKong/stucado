@@ -41,7 +41,7 @@ const TasksList: React.FC = () => {
 
   return (
     <div className='tasks-list'>
-      <h1>Tasks</h1>
+      <h2>Tasks</h2>
       <ul>
         {tasks.map((task) => (
           <li key={task.id} className='tasks-list__task-item'>

@@ -1,6 +1,12 @@
 :root {
-  --background-color: #333333;
-  --text-color: #ffffff;
+  --background-color: #181818;
+  --widget-color: #2a2a2a;
+  --text-color: #dbdbdb;
+}
+
+@font-face {
+  font-family: inter;
+  src: url('../assets/fonts/Inter-VariableFont.ttf');
 }
 
 * {
@@ -9,7 +15,26 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: inter;
   background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  padding: 3px;
+}
+
+input {
+  border: none;
+  padding: 0.3rem;
+  background-color: inherit;
+  color: var(--text-color);
+}
+
+input::placeholder {
   color: var(--text-color);
 }

@@ -1,5 +1,5 @@
 .timetable {
-    width: 80vw;
+    width: 100%;
     padding: 2rem;
     overflow-x: scroll;
 }
@@ -23,7 +23,6 @@
     /* FIXME: Hard coding 1.5em to make the time "notches" match with the timetable,
         might break if it changes*/
     width: calc(100% - 1.5em);
-    height: 6rem;
     display: flex;
 }
 

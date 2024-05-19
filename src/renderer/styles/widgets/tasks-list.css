@@ -1,10 +1,13 @@
 .tasks-list {
-  width: 50vw;
+  width: 100%;
 
   ul {
     width: 100%;
     list-style-type: none;
   }
+}
+
+.tasks-list__task-item {
 }
 
 .tasks-list__task-status {
@@ -33,13 +36,7 @@
 }
 
 .tasks-list__add-task {
-  margin-left: 25px;
-
-  input {
-    border: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
+  margin-top: 1rem;
 }
 
 .tasks-list__delete-task {
