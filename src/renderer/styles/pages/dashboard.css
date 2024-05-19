@@ -1,4 +1,19 @@
 .dashboard {
+  width: 100%;
+}
+
+.dashboard__banner {
+  padding: 30px;
+  background-color: var(--widget-color);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+.dashboard__date {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.dashboard__grid {
   padding: 5rem 5rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -7,8 +22,6 @@
 }
 
 .dashboard__widget {
-  height: 100%;
-  width: 100%;
   background-color: var(--widget-color);
   border-radius: 10px;
   padding: 2rem;

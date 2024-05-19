@@ -3,15 +3,14 @@ import HomeIcon from 'Assets/icons/home.svg?react'
 import CalendarIcon from 'Assets/icons/calendar.svg?react'
 import StatisticsIcon from 'Assets/icons/statistics.svg?react'
 import SettingsIcon from 'Assets/icons/settings.svg?react'
+import appIcon from 'Assets/images/appIcon.png'
+import userAvatar from 'Assets/images/blankAvatar.webp'
 import 'Styles/layout.css'
 
 const Layout: React.FC = () => {
-  /* TODO: Change colors of SVG https://fonts.google.com/icons?selected=Material+Symbols+Outlined:home:FILL@0;wght@400;GRAD@0;opsz@24&icon.size=24&icon.color=%23e8eaed&icon.platform=web */
-  return <div className='layout'>
+  return <>
     <aside className='navbar'>
-      <div className='navbar__app-icon'>
-        🥑
-      </div>
+      <img className='navbar__app-icon' src={appIcon} alt='App icon' />
 
       <nav className='navbar__links-group'>
         <Link className='navbar__link' to="/">
@@ -28,13 +27,11 @@ const Layout: React.FC = () => {
         </Link>
       </nav>
 
-      <div className='navbar__user'>
-        <img className='navbar__user-avatar' />
-      </div>
+      <img className='navbar__user-avatar' src={userAvatar} alt='User avatar'/>
     </aside>
 
     <Outlet />
-  </div>
+  </>
 }
 
 export default Layout

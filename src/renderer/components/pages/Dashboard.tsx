@@ -3,18 +3,16 @@ import Timetable from 'Components/widgets/Timetable'
 import 'Styles/pages/dashboard.css'
 
 const Dashboard: React.FC = () => {
+  const dateNow: string = new Date().toString().split(' ').slice(0, 4).join(' ');
+
   return <div className='dashboard'>
-    <div 
-      className='dashboard__widget'
-      style={{ gridRow: 'span 1', gridColumn: 'span 1' }}
-    >
-      <TasksList />
+    <div className='dashboard__banner'>
+      <h1 className='dashboard__date'>
+        {dateNow}
+      </h1>
     </div>
-    <div 
-      className='dashboard__widget'
-      style={{ gridColumn: 'span 4' }}
-    >
-      <Timetable />
+
+    <div className='dashboard__grid'>
     </div>
   </div>
 }
