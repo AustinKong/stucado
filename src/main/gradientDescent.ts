@@ -132,7 +132,7 @@ function processRawData(rawData: string): DataPoint[] {
     return dataset;
 }
 
-//convert categorical data into dummy variables
+//convert categorical data into dummy variables, with no reference level
 const allTimesOfDay = ["dawn", "earlyAfternoon", "earlyMorning", "evening", 
     "lateAfternoon", "lateMorning", "midnight", "night"];
 const allDaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday",
@@ -155,8 +155,8 @@ const preparedDataset = processRawData(rawData).map(data => ({
     target: data.productivity 
 }));
 // Learning rate and iterations
-const learningRate = 0.01;
-const iterations = 10000;
+const learningRate = 0.005;
+const iterations = 100000;
 const numOfVariables = preparedDataset[0].variables.length;
 // Initialize weights(m) and intercept(c)
 let weights: number[] = Array(numOfVariables).fill(0);
@@ -178,13 +178,13 @@ for (let i = 0; i < iterations; i++) {
 
         interceptGradient += error;
         variables.forEach((variable, index) => {
-            weightGradients[index] += error * variable;  //x_i(y - predicted y)
+            weightGradients[index] += error * variable;  //(predicted y- y)x_i
         });
     });
 
-    intercept -= (learningRate * interceptGradient) / preparedDataset.length;
+    intercept -= (learningRate * 2 * interceptGradient) / preparedDataset.length;
     weights = weights.map((weight, index) => 
-        weight - (learningRate * weightGradients[index]) / preparedDataset.length);
+        weight - (learningRate * 2 * weightGradients[index]) / preparedDataset.length);
 
 }
 
@@ -193,6 +193,15 @@ console.log('Weights:', weights);
 console.log('Intercept:', intercept);
 
 const newExample: DataPoint = {
+    timeOfDay: "evening",
+    dayOfWeek: "Friday",
+    hoursInClasses: 3,
+    hoursFocused: 7,
+    weather: "sunny",
+    productivity: 0 //dummy value
+  };
+
+const newExample2: DataPoint = {
     timeOfDay: "dawn",
     dayOfWeek: "Monday",
     hoursInClasses: 9,
@@ -201,6 +210,23 @@ const newExample: DataPoint = {
     productivity: 0 //dummy value
 };
 
-const newFeatures = categoricalToDummy(newExample);
-const prediction = predict(newFeatures);
-console.log('Prediction for new example:', prediction);
+const newExample3: DataPoint = {
+    timeOfDay: "lateAfternoon",
+    dayOfWeek: "Wednesday",
+    hoursInClasses: 12,
+    hoursFocused: 0,
+    weather: "stormy",
+    productivity: 0
+};
+
+const newFeatures1 = categoricalToDummy(newExample);
+const prediction = predict(newFeatures1);
+console.log('Prediction for new example1:', prediction);
+
+const newFeatures2 = categoricalToDummy(newExample2);
+const prediction2 = predict(newFeatures2);
+console.log('Prediction for new example2:', prediction2);
+
+const newFeatures3 = categoricalToDummy(newExample3);
+const prediction3 = predict(newFeatures3);
+console.log('Prediction for new example3:', prediction3);
