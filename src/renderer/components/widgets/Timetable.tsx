@@ -7,12 +7,13 @@ import { setTimetable } from 'Data/slices/timetable';
 import 'Styles/widgets/timetable.css';
 import { RootState } from 'Data/store';
 import UploadIcon from 'Assets/icons/upload.svg?react';
+import Modal from 'Components/generic/Modal';
 
 const Timetable: React.FC = () => {
   const dispatch = useDispatch();
   const timetable = useSelector((state: RootState) => state.timetable);
   const [inputUrl, setInputUrl] = useState<string>('');
-  const [uploadIsShown, setUploadIsShown] = useState<boolean>(false);
+  const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
 
   const dayOfWeekToday = DaysOfWeek[new Date().getDay()];
 
@@ -31,7 +32,7 @@ const Timetable: React.FC = () => {
         <h2 className='widget__subtitle'>({dayOfWeekToday})</h2>
         <button
           className='timetable__upload'
-          onClick={() => setUploadIsShown(!uploadIsShown)}
+          onClick={() => setUploadModalIsOpen(true)}
         >
           <UploadIcon />
         </button>
@@ -50,6 +51,12 @@ const Timetable: React.FC = () => {
             .map((slot, index) => <TimetableSlotItem key={index} slot={slot} />)}
         </div>
       </div>
+
+      <Modal isOpen={uploadModalIsOpen} onClose={() => setUploadModalIsOpen(false)}>
+        <div>
+          test
+        </div>
+      </Modal>
 
       <input
         type='text'
