@@ -7,6 +7,9 @@ const timetableSlice = createSlice({
   name: 'timetable',
   initialState,
   reducers: {
+    setTimetable: (state, action: PayloadAction<TimetableSlot[]>) => {
+      return action.payload
+    },
     addSlot: (state, action: PayloadAction<TimetableSlot>) => {
       state.push(action.payload)
     },
@@ -24,5 +27,5 @@ const timetableSlice = createSlice({
   }
 });
 
-export const { addSlot, deleteSlot, updateSlot } = timetableSlice.actions;
+export const { setTimetable, addSlot, deleteSlot, updateSlot } = timetableSlice.actions;
 export default timetableSlice.reducer;

@@ -1,88 +1,56 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { getTimetable } from 'Services/timetable';
-import { DaysOfWeek } from 'Types/main.types';
-import { TimetableSlot } from 'Types/timetable.types';
+import { DaysOfWeek } from 'Data/types/main.types';
+import { TimetableSlot } from 'Data/types/timetable.types';
+import { setTimetable } from 'Data/slices/timetable';
 import 'Styles/widgets/timetable.css';
+import { RootState } from 'Data/store';
+import UploadIcon from 'Assets/icons/upload.svg?react';
 
 const Timetable: React.FC = () => {
-  const [timetable, setTimetable] = useState<TimetableSlot[]>([]);
+  const dispatch = useDispatch();
+  const timetable = useSelector((state: RootState) => state.timetable);
   const [inputUrl, setInputUrl] = useState<string>('');
+  const [uploadIsShown, setUploadIsShown] = useState<boolean>(false);
+
+  const dayOfWeekToday = DaysOfWeek[new Date().getDay()];
 
   // TODO: URL validation
   const handleSubmitUrl = (url: string) => {
     setInputUrl('');
     getTimetable(url)
-      .then((response: TimetableSlot[]) => {
-        setTimetable(response);
-      })
+      .then((response: TimetableSlot[]) => dispatch(setTimetable(response)))
       .catch((e) => console.error(e));
   };
 
   return (
-    <div>
-      <h2>Timetable</h2>
-      <div className='timetable'>
-        <div className='timetable__scrollable'>
-          <div className='timetable__header'>
-            {Array.from({ length: 25 }, (_, index) => index)
-              .map(
-                (time) =>
-                  `${time.toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false,
-                  })}00`
-              )
-              .map((time) => {
-                return (
-                  <time key={time} className='timetable__time'>
-                    {time}
-                  </time>
-                );
-              })}
-          </div>
+    <div className='widget timetable'>
+      <span className='widget__header'>
+        <h2 className='widget__title'>Schedule</h2>
+        <h2 className='widget__subtitle'>({dayOfWeekToday})</h2>
+        <button
+          className='timetable__upload'
+          onClick={() => setUploadIsShown(!uploadIsShown)}
+        >
+          <UploadIcon />
+        </button>
+      </span>
 
-          <ul className='timetable__rows'>
-            {DaysOfWeek.map((day: string) => {
-              return (
-                <li key={day} className='timetable__row'>
-                  <div className='timetable__day-of-week'>
-                    <span>{day}</span>
-                  </div>
-                  <div className='timetable__slots'>
-                    {timetable
-                      .filter((slotData) => slotData.schedule.day === day)
-                      .map((slotData, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className='timetable__slot'
-                            style={{
-                              width: `${
-                                (1 / 24) *
-                                (+slotData.schedule.endTime -
-                                  +slotData.schedule.startTime)
-                              }%`,
-                              left: `${
-                                (1 / 24) * +slotData.schedule.startTime
-                              }%`,
-                            }}
-                          >
-                            <p className='timetable__item-title'>
-                              {slotData.title}
-                            </p>
-                            <p className='timetable__item-description'>
-                              {slotData.description}
-                            </p>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+      <div className='timetable'>
+        <div className='timetable__hours'>
+          {Array.from({ length: 25 }, (_, index) => index)
+            .map(time => +time.toLocaleString() > 12 ? `${time - 12} PM` : `${time} AM`)
+            .map(time => <time key={time}>{time}</time>)}
+        </div>
+
+        <div className='timetable__slots'>
+          {timetable
+            .filter((slot) => slot.schedule.day === dayOfWeekToday)
+            .map((slot, index) => <TimetableSlotItem key={index} slot={slot} />)}
         </div>
       </div>
+
       <input
         type='text'
         placeholder='Paste your NUSMods URL here...'
@@ -95,5 +63,14 @@ const Timetable: React.FC = () => {
     </div>
   );
 };
+
+const TimetableSlotItem: React.FC<{ slot: TimetableSlot }> = ({ slot }) => {
+  return (
+    <div className='timetable__slot'>
+      <p className='timetable__item-title'>{slot.title}</p>
+      <p className='timetable__item-description'>{slot.description}</p>
+    </div>
+  );
+}
 
 export default Timetable;

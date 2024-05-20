@@ -1,53 +1,46 @@
 .timetable {
-    width: 100%;
-    padding: 2rem;
-    overflow-x: scroll;
+  padding: 2rem 0;
 }
 
-.timetable__scrollable {
-    width: 200vw;
+.timetable__upload {
+  background-color: transparent;
+  border: none;
+  color: var(--icon-primary);
 }
 
-.timetable__header {
-    width: calc(100% - 3rem);
-    display: flex;
-    justify-content: space-between;
-    margin-left: 3rem;
-}
-
-.timetable__time {
-    transform: translateX(-50%);
-}
-
-.timetable__row {
-    /* FIXME: Hard coding 1.5em to make the time "notches" match with the timetable,
-        might break if it changes*/
-    width: calc(100% - 1.5em);
-    display: flex;
-}
-
-.timetable__day-of-week {
-    position: sticky;
-    left: 0;
-    width: 3rem;
-    z-index: 1;
-    align-items: center;
-    display: flex;
-
-    span {
-        text-align: center;
-    }
+.timetable__hours {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  align-items: end;
+  color: var(--icon-primary);
+  font-size: small;
+  width: fit-content;
 }
 
 .timetable__slots {
-    width: 100%;
-    position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.timetable__slot {
-    position: absolute;
-    background-color:darkolivegreen;
-    border-radius: 5px;
-    padding: 0.5rem;
-    height: 100%;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

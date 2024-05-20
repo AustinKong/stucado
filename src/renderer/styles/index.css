@@ -42,6 +42,7 @@ html, body {
 
 button {
   padding: 3px;
+  cursor: pointer;
 }
 
 input {

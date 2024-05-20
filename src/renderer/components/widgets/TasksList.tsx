@@ -4,6 +4,7 @@ import { toggleTaskStatus, deleteTask, addTask } from 'Data/slices/tasks';
 import { RootState } from 'Data/store';
 import { Task } from 'Data/types/task.types';
 import 'Styles/widgets/tasks-list.css';
+import EditIcon from 'Assets/icons/edit.svg?react';
 
 const TasksList: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,10 +18,13 @@ const TasksList: React.FC = () => {
   };
 
   return (
-    <div className='tasks-list widget'>
-      <h2>Tasks</h2>
+    <div className='widget tasks-list'>
+      <span className='widget__header'>
+        <h2 className='widget__title'>Tasks</h2>
+        <h2 className='widget__subtitle'>({tasks.length})</h2>
+      </span>
 
-      <ul>
+      <ul className='tasks-list__list'>
         {tasks.map((task) => (
           <TasksListItem key={task.id} task={task} />
         ))}
@@ -59,12 +63,12 @@ const TasksListItem: React.FC<{ task: Task }> = ({ task }) => {
 
       <div className='tasks-list__task-content'>{task.content}</div>
 
+      {/* TODO: Change Edit button to actually edit the thing instead of delete */}
       <button
         onClick={() => dispatch(deleteTask(task.id))}
         className='tasks-list__delete-task'
       >
-        {/* TODO: Change to an edit button */}
-        x️
+        <EditIcon />
       </button>
     </li>
   );
