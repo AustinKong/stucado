@@ -1,37 +1,17 @@
 import { setupDatabase, getDataPoints, DataPoint } from '../database/database';
-
-//convert categorical data into dummy variables, with no reference level
-const allTimesOfDay = [
-  'dawn',
-  'earlyAfternoon',
-  'earlyMorning',
-  'evening',
-  'lateAfternoon',
-  'lateMorning',
-  'midnight',
-  'night',
-];
-const allDaysOfWeek = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-];
-const allWeathers = ['sunny', 'rainy', 'stormy', 'cloudy'];
+// TODO: Change to use aliases
+import { TimesOfDay, DaysOfWeek, WeatherConditions } from '../../shared/types/main.types';
 
 function categoricalToDummy(data: DataPoint): number[] {
   const result: number[] = [];
   result.push(
-    ...allTimesOfDay.map((time) => (data.timeOfDay === time ? 1 : 0))
+    ...TimesOfDay.map((time) => (data.timeOfDay === time ? 1 : 0))
   );
-  result.push(...allDaysOfWeek.map((day) => (data.dayOfWeek === day ? 1 : 0)));
+  result.push(...DaysOfWeek.map((day) => (data.dayOfWeek === day ? 1 : 0)));
   result.push(data.hoursInClasses);
   result.push(data.hoursFocused);
   result.push(
-    ...allWeathers.map((weather) => (data.weather === weather ? 1 : 0))
+    ...WeatherConditions.map((weather) => (data.weather === weather ? 1 : 0))
   );
   return result;
 }
@@ -53,7 +33,7 @@ async function runGradientDescent() {
 
   const numOfVariables = preparedDataset[0].variables.length;
   // Initialize weights(m) and intercept(c)
-  let weights: number[] = Array(numOfVariables).fill(0);
+  let weights: number[] = Array(numOfVariables).fill(0) as number[];
   let intercept = 0;
 
   function predict(variables: number[]): number {
@@ -64,7 +44,7 @@ async function runGradientDescent() {
   }
 
   for (let i = 0; i < iterations; i++) {
-    let weightGradients: number[] = Array(numOfVariables).fill(0);
+    const weightGradients: number[] = Array(numOfVariables).fill(0) as number[];
     let interceptGradient = 0;
     let totalError = 0;
 

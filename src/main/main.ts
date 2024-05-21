@@ -2,8 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-import { getTasks, updateTasks } from 'Main/services/tasks'
-import { getTimetable, uploadTimetable } from 'Main/services/timetable'
+import { getTasks, updateTasks } from './services/tasks'
+import { getTimetable, uploadTimetable } from './services/timetable'
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
