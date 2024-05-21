@@ -2,7 +2,6 @@
   "name": "stucado",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
@@ -11,8 +10,11 @@
   },
   "dependencies": {
     "axios": "^1.6.8",
+    "esm": "^3.2.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "devDependencies": {
