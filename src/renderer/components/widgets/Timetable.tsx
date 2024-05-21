@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTimetable } from 'Services/timetable';
 import { DaysOfWeek } from 'Data/types/main.types';
@@ -16,6 +16,14 @@ const Timetable: React.FC = () => {
   const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
   const [inputUrl, setInputUrl] = useState<string>('');
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
+
+  const timetableRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (timetableRef.current) {
+      timetableRef.current.scrollTop = (new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE * 16 - 300;
+    }
+  }, []);
 
   const dayOfWeekToday = DaysOfWeek[new Date().getDay() - 1];
 
@@ -42,6 +50,7 @@ const Timetable: React.FC = () => {
 
       <div 
         className='timetable__timetable'
+        ref={timetableRef}
       >
         <div className='timetable__hours'>
           {Array.from({ length: 25 }, (_, index) => index)
@@ -67,6 +76,15 @@ const Timetable: React.FC = () => {
               />
             })
           }
+        </div>
+
+        {/* TODO: Make the current time indicator real-time */}
+        <div 
+          className='timetable__current-time-indicator'
+          style={{ top: `${(new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE}rem` }}
+        >
+          <time>{`${new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours()}:${new Date().getMinutes()}`}</time>
+          <div className='timetable__current-time-line' />
         </div>
       </div>
 
