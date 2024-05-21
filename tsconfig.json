@@ -21,13 +21,18 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      // Common aliases
       "@/*": ["./src/*"],
-      "Components/*": ["./src/renderer/components/*"],
-      "Interfaces/*": ["./src/renderer/interfaces/*"],
-      "Styles/*": ["./src/renderer/styles/*"],
+      "Types/*": ["./src/types/*"],
+      // Renderer aliases
       "Assets/*": ["./src/renderer/assets/*"],
+      "Components/*": ["./src/renderer/components/*"],
       "Data/*": ["./src/renderer/data/*"],
-      "Services/*": ["./src/services/*"],
+      "Styles/*": ["./src/renderer/styles/*"],
+      // Main aliases
+      "Database/*": ["./src/main/database/*"],
+      "Services/*": ["./src/main/services/*"],
+      "Models/*": ["./src/main/models/*"],
     }
   },
   "include": ["src", "electron"],
