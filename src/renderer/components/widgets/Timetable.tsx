@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTimetable } from 'Services/timetable';
-import { DaysOfWeek } from 'Data/types/main.types';
-import { TimetableSlot } from 'Data/types/timetable.types';
+import { getTimetable } from '@/main/services/timetable';
+import { DaysOfWeek } from '@/shared/types/main.types';
+import { TimetableSlot } from '@/shared/types/timetable.types';
 import { setTimetable } from 'Data/slices/timetable';
 import 'Styles/widgets/timetable.css';
 import { RootState } from 'Data/store';

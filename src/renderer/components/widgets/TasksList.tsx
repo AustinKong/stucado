@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTaskStatus, deleteTask, addTask } from 'Data/slices/tasks';
 import { RootState } from 'Data/store';
-import { Task } from 'Data/types/task.types';
+import { Task } from '@/shared/types/task.types';
 import 'Styles/widgets/tasks-list.css';
 import EditIcon from 'Assets/icons/edit.svg?react';
 

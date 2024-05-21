@@ -1,4 +1,4 @@
-import { setupDatabase, getDataPoints, DataPoint } from './database';
+import { setupDatabase, getDataPoints, DataPoint } from '../database/database';
 
 //convert categorical data into dummy variables, with no reference level
 const allTimesOfDay = ["dawn", "earlyAfternoon", "earlyMorning", "evening", 
