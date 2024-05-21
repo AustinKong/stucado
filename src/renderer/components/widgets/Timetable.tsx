@@ -9,19 +9,21 @@ import { RootState } from 'Data/store';
 import UploadIcon from 'Assets/icons/upload.svg?react';
 import Modal from 'Components/generic/Modal';
 
+const REM_PER_MINUTE = 0.08;
+
 const Timetable: React.FC = () => {
   const dispatch = useDispatch();
-  const timetable = useSelector((state: RootState) => state.timetable);
+  const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
   const [inputUrl, setInputUrl] = useState<string>('');
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
 
-  const dayOfWeekToday = DaysOfWeek[new Date().getDay()];
+  const dayOfWeekToday = DaysOfWeek[new Date().getDay() - 1];
 
   // TODO: URL validation
   const handleSubmitUrl = (url: string) => {
     setInputUrl('');
     getTimetable(url)
-      .then((response: TimetableSlot[]) => dispatch(setTimetable(response)))
+      .then(response => dispatch(setTimetable(response)))
       .catch((e) => console.error(e));
   };
 
@@ -38,42 +40,58 @@ const Timetable: React.FC = () => {
         </button>
       </span>
 
-      <div className='timetable'>
+      <div 
+        className='timetable__timetable'
+      >
         <div className='timetable__hours'>
           {Array.from({ length: 25 }, (_, index) => index)
-            .map(time => +time.toLocaleString() > 12 ? `${time - 12} PM` : `${time} AM`)
-            .map(time => <time key={time}>{time}</time>)}
+            .map(time => (
+              <time 
+                key={time}
+                style={{ top: `${(time * 60) * REM_PER_MINUTE}rem` }}
+              >
+                {+time.toLocaleString() > 12 ? `${time - 12} PM` : `${time} AM`}
+              </time>
+            ))}
         </div>
 
         <div className='timetable__slots'>
           {timetable
-            .filter((slot) => slot.schedule.day === dayOfWeekToday)
-            .map((slot, index) => <TimetableSlotItem key={index} slot={slot} />)}
+            .filter(slot => slot.schedule.day === dayOfWeekToday)
+            .map((slot, index) => {
+              return <TimetableSlotItem 
+                key={index} 
+                slot={slot} 
+                offset={REM_PER_MINUTE * slot.schedule.startTime}
+                height={REM_PER_MINUTE * (slot.schedule.endTime - slot.schedule.startTime)}
+              />
+            })
+          }
         </div>
       </div>
 
       <Modal isOpen={uploadModalIsOpen} onClose={() => setUploadModalIsOpen(false)}>
-        <div>
-          test
-        </div>
+        <input
+          type='text'
+          placeholder='Paste your NUSMods URL here...'
+          value={inputUrl}
+          onChange={(e) => setInputUrl(e.target.value)}
+        />
+        {inputUrl && (
+          <button onClick={() => handleSubmitUrl(inputUrl)}>Submit URL</button>
+        )}
       </Modal>
 
-      <input
-        type='text'
-        placeholder='Paste your NUSMods URL here...'
-        value={inputUrl}
-        onChange={(e) => setInputUrl(e.target.value)}
-      />
-      {inputUrl && (
-        <button onClick={() => handleSubmitUrl(inputUrl)}>Submit URL</button>
-      )}
     </div>
   );
 };
 
-const TimetableSlotItem: React.FC<{ slot: TimetableSlot }> = ({ slot }) => {
+const TimetableSlotItem: React.FC<{ slot: TimetableSlot, offset: number, height: number }> = ({ slot, offset, height }) => {
   return (
-    <div className='timetable__slot'>
+    <div 
+      className='timetable__slot'
+      style={{ top: `${offset}rem`, height: `${height}rem` }}
+    >
       <p className='timetable__item-title'>{slot.title}</p>
       <p className='timetable__item-description'>{slot.description}</p>
     </div>

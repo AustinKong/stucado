@@ -1,5 +1,5 @@
 .timetable {
-  padding: 2rem 0;
+  grid-row: span 2;
 }
 
 .timetable__upload {
@@ -8,22 +8,39 @@
   color: var(--icon-primary);
 }
 
-.timetable__hours {
+.timetable__timetable {
+  margin: 2rem 0.5rem 1rem 0.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 5rem;
+  padding: 1rem 0;
+  overflow-y: scroll;
+  height: calc(100% - 5rem)
+}
+
+.timetable__hours {
   align-items: end;
   color: var(--icon-primary);
   font-size: small;
   width: fit-content;
+  position: relative;
+  width: 20%;
+
+  time {
+    position: absolute;
+    transform: translateY(-50%);
+  }
 }
 
 .timetable__slots {
-  display: flex;
-  flex-direction: column;
+  width: 80%;
+  position: relative;
 }
 
-
+.timetable__slot {
+  position: absolute;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: slategrey;
+}
 
 
 

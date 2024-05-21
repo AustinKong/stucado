@@ -1,4 +1,4 @@
-import 'Styles/generics/modal.css'
+import 'Styles/generic/modal.css'
 import ReactDOM from 'react-dom';
 
 const Modal: React.FC<{ isOpen: boolean, children: React.ReactNode, onClose: () => void }> = ({ isOpen, children, onClose }) => {
@@ -9,6 +9,7 @@ const Modal: React.FC<{ isOpen: boolean, children: React.ReactNode, onClose: () 
       <div className='modal__overlay' />
       <div className='modal'>
         <button className='modal__close' onClick={onClose}>
+          {/* TODO: Replace with SVG */}
           Close
         </button>
         <div className='modal__content'>

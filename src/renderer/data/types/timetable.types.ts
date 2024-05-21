@@ -15,8 +15,8 @@ export type TimetableSlot = {
   title: string;
   description?: string;
   schedule: {
-    startTime: string;
-    endTime: string;
+    startTime: number;
+    endTime: number;
     day: string;
   }
 };
