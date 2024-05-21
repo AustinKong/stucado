@@ -1,54 +1,81 @@
 .timetable {
-    width: 80vw;
-    padding: 2rem;
-    overflow-x: scroll;
+  grid-row: span 2;
 }
 
-.timetable__scrollable {
-    width: 200vw;
+.timetable__upload {
+  background-color: transparent;
+  border: none;
+  color: var(--icon-primary);
 }
 
-.timetable__header {
-    width: calc(100% - 3rem);
-    display: flex;
-    justify-content: space-between;
-    margin-left: 3rem;
+.timetable__timetable {
+  position: relative;
+  margin: 2rem 0.5rem 1rem 0.5rem;
+  display: flex;
+  padding: 1rem 0;
+  overflow-y: hidden;
+  height: calc(100% - 5rem)
 }
 
-.timetable__time {
-    transform: translateX(-50%);
-}
+.timetable__hours {
+  align-items: end;
+  color: var(--icon-primary);
+  font-size: small;
+  width: fit-content;
+  position: relative;
+  width: 20%;
 
-.timetable__row {
-    /* FIXME: Hard coding 1.5em to make the time "notches" match with the timetable,
-        might break if it changes*/
-    width: calc(100% - 1.5em);
-    height: 6rem;
-    display: flex;
-}
-
-.timetable__day-of-week {
-    position: sticky;
-    left: 0;
-    width: 3rem;
-    z-index: 1;
-    align-items: center;
-    display: flex;
-
-    span {
-        text-align: center;
-    }
+  time {
+    position: absolute;
+    transform: translateY(-50%);
+  }
 }
 
 .timetable__slots {
-    width: 100%;
-    position: relative;
+  width: 80%;
+  position: relative;
 }
 
 .timetable__slot {
-    position: absolute;
-    background-color:darkolivegreen;
-    border-radius: 5px;
-    padding: 0.5rem;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: green;
 }
+
+.timetable__current-time-indicator {
+  position: absolute;
+  display: flex;
+  width: 100%;
+
+  time {
+    font-size: small;
+    width: 20%;
+    transform: translateY(-50%);
+  }
+}
+
+.timetable__current-time-line {
+  border: 1.5px solid purple;
+  height: 0;
+  width: 80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

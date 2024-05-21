@@ -11,11 +11,12 @@ export type Class = {
 
 // A timetable is an array of TimetableSlot
 export type TimetableSlot = {
+  id: number;
   title: string;
   description?: string;
   schedule: {
-    startTime: string;
-    endTime: string;
+    startTime: number;
+    endTime: number;
     day: string;
   }
 };
