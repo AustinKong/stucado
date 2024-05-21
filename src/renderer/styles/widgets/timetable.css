@@ -50,6 +50,7 @@
   width: 100%;
 
   time {
+    font-size: small;
     width: 20%;
     transform: translateY(-50%);
   }

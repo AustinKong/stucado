@@ -78,12 +78,12 @@ const Timetable: React.FC = () => {
           }
         </div>
 
-        {/* TODO: Make the current time indicator real-time */}
+        {/* TODO: Make the current time indicator real-time * format the time */}
         <div 
           className='timetable__current-time-indicator'
           style={{ top: `${(new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE}rem` }}
         >
-          <time>{`${new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours()}:${new Date().getMinutes()}`}</time>
+          <time>{`${new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours()}:${new Date().getMinutes() > 9 ? new Date().getMinutes() : '0' + new Date().getMinutes()}`}</time>
           <div className='timetable__current-time-line' />
         </div>
       </div>
