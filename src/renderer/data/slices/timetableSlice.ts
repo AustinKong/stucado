@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TimetableSlot } from '../../../shared/types/timetable.types';
+import { TimetableSlot } from '../types/timetable.types';
 
 const initialState: TimetableSlot[] = []
 

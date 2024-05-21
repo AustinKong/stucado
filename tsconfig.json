@@ -23,15 +23,14 @@
     "paths": {
       // Common aliases
       "@/*": ["./src/*"],
-      "Types/*": ["./src/types/*"],
       // Renderer aliases
+      "Renderer/*": ["./src/renderer/*"],
       "Assets/*": ["./src/renderer/assets/*"],
       "Components/*": ["./src/renderer/components/*"],
-      "Data/*": ["./src/renderer/data/*"],
       "Styles/*": ["./src/renderer/styles/*"],
       // Main aliases
+      "Main/*": ["./src/main/*"],
       "Database/*": ["./src/main/database/*"],
-      "Services/*": ["./src/main/services/*"],
       "Models/*": ["./src/main/models/*"],
     }
   },

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { APIModule, RawLesson } from '@/shared/types/nusMods.types';
-import { Class, TimetableSlot } from '@/shared/types/timetable.types';
+import { APIModule, RawLesson } from '@/renderer/data/types/nusMods.types';
+import { Class, TimetableSlot } from '@/renderer/data/types/timetable.types';
 
 // Given a NUSMods URL, generate a timetable in the form of Timetable
 export const getTimetable = async (url: string): Promise<TimetableSlot[]> => {

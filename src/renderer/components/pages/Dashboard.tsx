@@ -13,7 +13,6 @@ const Dashboard: React.FC = () => {
     </div>
 
     <div className='dashboard__grid'>
-      <Timetable />
       <TasksList />
     </div>
   </div>
