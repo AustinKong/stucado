@@ -1,5 +1,6 @@
-import 'Styles/generic/modal.css'
 import ReactDOM from 'react-dom';
+
+import 'Styles/generic/modal.css'
 
 const Modal: React.FC<{ isOpen: boolean, children: React.ReactNode, onClose: () => void }> = ({ isOpen, children, onClose }) => {
   if (!isOpen) return null

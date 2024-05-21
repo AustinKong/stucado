@@ -1,6 +1,6 @@
+import 'Styles/pages/dashboard.css'
 import TasksList from 'Components/widgets/TasksList'
 import Timetable from 'Components/widgets/Timetable'
-import 'Styles/pages/dashboard.css'
 
 const Dashboard: React.FC = () => {
   const dateNow: string = new Date().toString().split(' ').slice(0, 4).join(' ');
@@ -13,6 +13,7 @@ const Dashboard: React.FC = () => {
     </div>
 
     <div className='dashboard__grid'>
+      <Timetable />
       <TasksList />
     </div>
   </div>

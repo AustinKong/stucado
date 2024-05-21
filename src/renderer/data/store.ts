@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tasksReducer from '@/renderer/data/slices/tasksSlice';
-import timetableReducer from '@/renderer/data/slices/timetableSlice'
+
+import tasksReducer from 'Renderer/data/slices/tasksSlice';
+import timetableReducer from 'Renderer/data/slices/timetableSlice'
 
 export const store = configureStore({
   reducer: {

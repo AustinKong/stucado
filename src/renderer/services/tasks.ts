@@ -1,6 +1,7 @@
-import { store } from 'Renderer/data/store';
 import { setTasks } from 'Renderer/data/slices/tasksSlice';
-import { Task } from 'Renderer/data/types/task.types';
+
+import { Task } from 'Types/task.types';
+import { store } from 'Renderer/data/store';
 
 // Retrieve tasks from backend
 export const retrieveTasks = async (): Promise<void> => {

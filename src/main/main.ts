@@ -1,8 +1,9 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
-// import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { getTasks, updateTasks } from './services/tasks'
+
+import { getTasks, updateTasks } from 'Main/services/tasks'
+import { getTimetable, uploadTimetable } from 'Main/services/timetable'
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -59,6 +60,9 @@ void app.whenReady().then(() => {
   // Define IPC listeners, delegate to services
   ipcMain.handle('get-tasks', getTasks);
   ipcMain.on('update-tasks', updateTasks);
+
+  ipcMain.handle('upload-timetable', uploadTimetable);
+  ipcMain.handle('get-timetable', getTimetable);
 
   createWindow()
 })

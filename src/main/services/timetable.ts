@@ -1,8 +1,32 @@
 import axios, { AxiosResponse } from 'axios';
-import { APIModule, RawLesson } from '@/renderer/data/types/nusMods.types';
-import { Class, TimetableSlot } from '@/renderer/data/types/timetable.types';
+import { IpcMainInvokeEvent } from 'electron';
+
+import { APIModule, RawLesson } from 'Types/nusMods.types';
+import { Class, TimetableSlot } from 'Types/timetable.types';
+
+export const getTimetable = async (): Promise<TimetableSlot[]> => {
+  // Read from database
+  console.log('Getting timetable')
+  return Promise.resolve([]);
+}
+
+export const uploadTimetable = async (event: IpcMainInvokeEvent, url: string): Promise<TimetableSlot[]> => {
+  console.log(url)
+  return Promise.resolve([]);
+}
+
+
+
+
+
+
+
+
+
 
 // Given a NUSMods URL, generate a timetable in the form of Timetable
+// FIXME: Hidden to prevent overlapping method names
+/*
 export const getTimetable = async (url: string): Promise<TimetableSlot[]> => {
   const classes: Class[] = await getClassInfo(url);
   let timetableSlots: TimetableSlot[] = classes.map((classData) => ({
@@ -19,6 +43,7 @@ export const getTimetable = async (url: string): Promise<TimetableSlot[]> => {
 
   return timetableSlots;
 };
+*/
 
 // Given a NUSMods URL, extract the class information in the form of Class[]
 const getClassInfo = async (url: string): Promise<Class[]> => {

@@ -23,6 +23,8 @@
     "paths": {
       // Common aliases
       "@/*": ["./src/*"],
+      "Shared/*": ["./src/shared/*"],
+      "Types/*": ["./src/shared/types/*"],
       // Renderer aliases
       "Renderer/*": ["./src/renderer/*"],
       "Assets/*": ["./src/renderer/assets/*"],

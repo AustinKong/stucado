@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { addTask, deleteTask, toggleTaskStatus } from 'Renderer/services/tasks';
+
 import { RootState } from 'Renderer/data/store';
-import { Task } from 'Renderer/data/types/task.types';
-import { retrieveTasks, addTask, deleteTask, toggleTaskStatus } from 'Renderer/services/tasks';
+import { Task } from 'Types/task.types';
 
 import 'Styles/widgets/tasks-list.css';
 import EditIcon from 'Assets/icons/edit.svg?react';
@@ -11,10 +12,6 @@ import EditIcon from 'Assets/icons/edit.svg?react';
 const TasksList: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const [inputContent, setInputContent] = useState<string>('');
-
-  useEffect(() => {
-    void retrieveTasks();
-  }, []);
 
   const handleAddTask = () => {
     if (!inputContent) return;
