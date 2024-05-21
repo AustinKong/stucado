@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { APIModule, RawLesson, Time } from 'Data/types/nusMods.types';
+import { APIModule, RawLesson } from 'Data/types/nusMods.types';
 import { Class, TimetableSlot } from 'Data/types/timetable.types';
 
 // Given a NUSMods URL, generate a timetable in the form of Timetable
@@ -27,7 +27,7 @@ const getClassInfo = async (url: string): Promise<Class[]> => {
   const urlClassesInfo: string[] = url
     .substring(url.indexOf('?') + 1)
     .split('&');
-
+  
   // Extract academic year from URL, assuming semester ends on May
   // e.g. 2021-2022
   const date: Date = new Date();
@@ -37,8 +37,8 @@ const getClassInfo = async (url: string): Promise<Class[]> => {
       : `${date.getFullYear()}-${date.getFullYear() + 1}`;
 
   // Extract semester from URL
-  // Semester 1 | 2 -> 0 | 1
-  const semester: number = +url.split('/')[4][4] - 1;
+  // Semester 1 | 2 
+  const semester: number = +url.split('/')[4][4];
 
   const classes: Class[] = [];
 
@@ -59,9 +59,9 @@ const getClassInfo = async (url: string): Promise<Class[]> => {
       const classNo: string = enrolledClass.substring(
         enrolledClass.indexOf(':') + 1
       );
-      const classData: RawLesson = moduleInfo.semesterData[
-        semester
-      ].timetable.filter((classData) => classData.classNo === classNo)[0];
+      const classData: RawLesson = moduleInfo.semesterData
+        .filter(semesterData => semesterData.semester === semester)[0]
+        .timetable.filter((classData) => classData.classNo === classNo)[0];
 
       classes.push({
         moduleCode: moduleInfo.moduleCode,
