@@ -1,7 +1,7 @@
 import { setupDatabase, getDataPoints, DataPoint } from './database';
 
-//convert categorical data into dummy variables
-const allTimesOfDay = ["dawn", "earlyAfternoon", "earlyMorning", "evening",
+//convert categorical data into dummy variables, with no reference level
+const allTimesOfDay = ["dawn", "earlyAfternoon", "earlyMorning", "evening", 
     "lateAfternoon", "lateMorning", "midnight", "night"];
 const allDaysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday",
     "Friday", "Saturday", "Sunday"];

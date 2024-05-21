@@ -1,0 +1,31 @@
+.navbar {
+  background-color: var(--widget-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-right: 2px solid var(--border-primary);
+  padding: 30px 15px;
+  gap: 4rem;
+
+}
+
+.navbar__app-icon {
+  width: 32px;
+}
+
+.navbar__links-group {
+  display: inherit;
+  flex-direction: inherit;
+  gap: 2rem;
+  align-items: inherit;
+}
+
+.navbar__link {
+  color: var(--icon-primary);
+}
+
+.navbar__user-avatar {
+  width: 32px;
+  border-radius: 50%;
+}

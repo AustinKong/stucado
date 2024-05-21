@@ -1,93 +1,77 @@
-import React, { useState } from 'react'
-import 'Styles/widgets/tasks-list.css'
-
-enum TaskStatus {
-  Pending = 'Pending',
-  InProgress = 'InProgress',
-  Completed = 'Completed'
-}
-
-interface Task {
-  id: number
-  content: string
-  status: TaskStatus
-}
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTaskStatus, deleteTask, addTask } from 'Data/slices/tasks';
+import { RootState } from 'Data/store';
+import { Task } from 'Data/types/task.types';
+import 'Styles/widgets/tasks-list.css';
+import EditIcon from 'Assets/icons/edit.svg?react';
 
 const TasksList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [inputContent, setInputContent] = useState<string>('')
-
-  const handleToggleTaskStatus = (id: number) => {
-    setTasks(tasks.map(task => {
-      if (task.id === id) {
-        switch (task.status) {
-          case TaskStatus.Pending:
-            return { ...task, status: TaskStatus.InProgress }
-          case TaskStatus.InProgress:
-            return { ...task, status: TaskStatus.Completed }
-        }
-      }
-      return task
-    }))
-  }
-
-  const handleDeleteTask = (id: number) => {
-    setTasks(tasks.filter(task => task.id !== id))
-  }
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const [inputContent, setInputContent] = useState<string>('');
 
   const handleAddTask = () => {
-    if (!inputContent) return
-    setTasks([...tasks, { id: (tasks.length > 0 ? tasks[tasks.length - 1].id : 0) + 1 , content: inputContent, status: TaskStatus.Pending }])
-    setInputContent('')
-  }
+    if (!inputContent) return;
+    dispatch(addTask({ content: inputContent, status: 'Pending' }));
+    setInputContent('');
+  };
 
   return (
-    <div className='tasks-list'>
-      <h1>Tasks</h1>
-      <ul>
-        {tasks.map(task => (
-          <li 
-            key={task.id} 
-            className='task-item'
-          >
-            <button 
-              onClick={() => handleToggleTaskStatus(task.id)}
-              className={`task-status task-status__${task.status === TaskStatus.Pending ? 'pending' : task.status === TaskStatus.InProgress ? 'in-progress' : 'completed'}`}
-            />
+    <div className='widget tasks-list'>
+      <span className='widget__header'>
+        <h2 className='widget__title'>Tasks</h2>
+        <h2 className='widget__subtitle'>({tasks.length})</h2>
+      </span>
 
-            <div
-              className='task-content'
-            >
-              {task.content}
-            </div>
-
-            <button 
-              onClick={() => handleDeleteTask(task.id)}
-              className='delete-task'
-            >
-              {/* TODO: Change to an edit button */}
-              x️
-            </button>
-          </li>
+      <ul className='tasks-list__list'>
+        {tasks.map((task) => (
+          <TasksListItem key={task.id} task={task} />
         ))}
 
-        <li className='task-item add-task'>
+        <li className='tasks-list__task-item tasks-list__add-task'>
           <input
             type='text'
             placeholder='Add a new task...'
             value={inputContent}
-            onChange={e => setInputContent(e.target.value)}
+            onChange={(e) => setInputContent(e.target.value)}
           />
-          {inputContent && 
-            <button onClick={() => handleAddTask()}>
-              Add task
-            </button>
-          }
+          {inputContent && (
+            <button onClick={() => handleAddTask()}>Add task</button>
+          )}
         </li>
       </ul>
-
     </div>
-  )
-}
+  );
+};
 
-export default TasksList
+const TasksListItem: React.FC<{ task: Task }> = ({ task }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <li className='tasks-list__task-item'>
+      <button
+        onClick={() => dispatch(toggleTaskStatus(task.id))}
+        className={`tasks-list__task-status tasks-list__task-status--${
+          task.status === 'Pending'
+            ? 'pending'
+            : task.status === 'InProgress'
+              ? 'in-progress'
+              : 'completed'
+        }`}
+      />
+
+      <div className='tasks-list__task-content'>{task.content}</div>
+
+      {/* TODO: Change Edit button to actually edit the thing instead of delete */}
+      <button
+        onClick={() => dispatch(deleteTask(task.id))}
+        className='tasks-list__delete-task'
+      >
+        <EditIcon />
+      </button>
+    </li>
+  );
+};
+
+export default TasksList;

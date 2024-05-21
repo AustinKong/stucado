@@ -1,20 +1,22 @@
 import axios, { AxiosResponse } from 'axios';
-import { APIModule, RawLesson } from 'Types/nusMods.types';
-import { Class, TimetableSlot } from 'Types/timetable.types';
+import { APIModule, RawLesson, Time } from 'Data/types/nusMods.types';
+import { Class, TimetableSlot } from 'Data/types/timetable.types';
 
 // Given a NUSMods URL, generate a timetable in the form of Timetable
 export const getTimetable = async (url: string): Promise<TimetableSlot[]> => {
   const classes: Class[] = await getClassInfo(url);
-  console.log(classes)
   let timetableSlots: TimetableSlot[] = classes.map((classData) => ({
     title: `${classData.moduleCode} ${classData.classNo}`,
     description: `${classData.schedule.startTime} - ${classData.schedule.endTime} @ ${classData.venue}`,
-    schedule: classData.schedule,
-  }));
+    schedule: {
+      startTime: militaryTimeToMinutes(classData.schedule.startTime),
+      endTime: militaryTimeToMinutes(classData.schedule.endTime),
+      day: classData.schedule.day
+    },
+  } as TimetableSlot));
 
   timetableSlots = timetableSlots.sort((a, b) => +a.schedule.startTime - +b.schedule.startTime);
 
-  console.log(timetableSlots)
   return timetableSlots;
 };
 
@@ -75,6 +77,13 @@ const getClassInfo = async (url: string): Promise<Class[]> => {
   }
 
   return classes;
+};
+
+// Utility function to convert military time to minutes since midnight
+const militaryTimeToMinutes = (time: string): number => {
+  const hours: number = +time.substring(0, 2);
+  const minutes: number = +time.substring(2);
+  return hours * 60 + minutes;
 };
 
 // GET request to NUSMods API to get single module information
