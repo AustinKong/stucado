@@ -1,3 +1,5 @@
+import { Day } from 'Types/main.types';
+
 export type Class = {
   moduleCode: string;
   classNo: string;
@@ -17,6 +19,6 @@ export type TimetableSlot = {
   schedule: {
     startTime: number;
     endTime: number;
-    day: string;
+    day: Day;
   }
 };
