@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getTimetable } from 'Services/timetable';
-import { DaysOfWeek } from 'Data/types/main.types';
-import { TimetableSlot } from 'Data/types/timetable.types';
-import { setTimetable } from 'Data/slices/timetable';
+import { useSelector } from 'react-redux';
+
+import { uploadTimetable } from 'Renderer/services/timetable';
+
+import { DaysOfWeek } from 'Types/main.types';
+import { TimetableSlot } from 'Types/timetable.types';
+import { RootState } from 'Renderer/data/store';
+
 import 'Styles/widgets/timetable.css';
-import { RootState } from 'Data/store';
 import UploadIcon from 'Assets/icons/upload.svg?react';
 import Modal from 'Components/generic/Modal';
 
 const REM_PER_MINUTE = 0.08;
 
 const Timetable: React.FC = () => {
-  const dispatch = useDispatch();
   const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
+
   const [inputUrl, setInputUrl] = useState<string>('');
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
 
@@ -27,12 +29,9 @@ const Timetable: React.FC = () => {
 
   const dayOfWeekToday = DaysOfWeek[new Date().getDay() - 1];
 
-  // TODO: URL validation
   const handleSubmitUrl = (url: string) => {
     setInputUrl('');
-    getTimetable(url)
-      .then(response => dispatch(setTimetable(response)))
-      .catch((e) => console.error(e));
+    void uploadTimetable(url);
   };
 
   return (

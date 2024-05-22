@@ -1,14 +1,14 @@
 import { Outlet, Link } from 'react-router-dom'
 
+import appIcon from 'Assets/images/appIcon.png'
+import userAvatar from 'Assets/images/blankAvatar.webp'
+import 'Styles/layout.css'
+
 import HomeIcon from 'Assets/icons/home.svg?react'
 import CalendarIcon from 'Assets/icons/calendar.svg?react'
 import StatisticsIcon from 'Assets/icons/statistics.svg?react'
 import SettingsIcon from 'Assets/icons/settings.svg?react'
 
-import appIcon from 'Assets/images/appIcon.png'
-import userAvatar from 'Assets/images/blankAvatar.webp'
-
-import 'Styles/layout.css'
 
 const Layout: React.FC = () => {
   return <>

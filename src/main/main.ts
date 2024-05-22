@@ -1,7 +1,9 @@
-import { app, BrowserWindow } from 'electron'
-// import { createRequire } from 'node:module'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+
+import { getTasks, updateTasks } from './services/tasks'
+import { getTimetable, uploadTimetable } from './services/timetable'
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -22,7 +24,7 @@ function createWindow() {
     // TODO: Add public icon
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.mjs'),
+      preload: path.join(__dirname, 'preload.js'),
     },
   })
 
@@ -54,4 +56,13 @@ app.on('activate', () => {
   }
 })
 
-void app.whenReady().then(createWindow)
+void app.whenReady().then(() => {
+  // Define IPC listeners, delegate to services
+  ipcMain.handle('get-tasks', getTasks);
+  ipcMain.on('update-tasks', updateTasks);
+
+  ipcMain.handle('upload-timetable', uploadTimetable);
+  ipcMain.handle('get-timetable', getTimetable);
+
+  createWindow()
+})

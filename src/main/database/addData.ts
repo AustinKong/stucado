@@ -1,4 +1,11 @@
-import { setupDatabase, addDataPoint, DataPoint, TimeOfDay, DayOfWeek, Weather } from './database';
+import {
+  setupDatabase,
+  addDataPoint,
+  DataPoint,
+} from './database';
+
+// TODO: Change to use aliases
+import { TimeOfDay, Day, Weather } from '../../shared/types/main.types';
 
 const rawData = `
 1 midnight Sunday 12 2 cloudy 55.2819977
@@ -106,33 +113,44 @@ const rawData = `
 //processData: turn data from form of [id, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity]
 //             into the form of DataPoint object, and put in an array
 function processRawData(rawData: string): DataPoint[] {
-    const dataset = rawData.trim().split('\n').map(line => {
-        const parts = line.trim().split(' ');
-        const [id, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity] = parts;
-        return {
-            timeOfDay: timeOfDay as TimeOfDay,
-            dayOfWeek: dayOfWeek as DayOfWeek,
-            hoursInClasses: parseFloat(hoursInClasses),
-            hoursFocused: parseFloat(hoursFocused),
-            weather: weather as Weather,
-            productivity: parseFloat(productivity)
-        };
-    })
-    return dataset;
+  const dataset = rawData
+    .trim()
+    .split('\n')
+    .map((line) => {
+      const parts = line.trim().split(' ');
+      const [
+        id,
+        timeOfDay,
+        dayOfWeek,
+        hoursInClasses,
+        hoursFocused,
+        weather,
+        productivity,
+      ] = parts;
+      return {
+        timeOfDay: timeOfDay as TimeOfDay,
+        dayOfWeek: dayOfWeek as Day,
+        hoursInClasses: parseFloat(hoursInClasses),
+        hoursFocused: parseFloat(hoursFocused),
+        weather: weather as Weather,
+        productivity: parseFloat(productivity),
+      };
+    });
+  return dataset;
 }
 
 async function main() {
-    const db = await setupDatabase();
+  const db = await setupDatabase();
 
-    const allData: DataPoint[] = processRawData(rawData);
+  const allData: DataPoint[] = processRawData(rawData);
 
-    for (let i = 0; i < allData.length; i++) {
-        await addDataPoint(db, allData[i]);
-        console.log("Added data point" + i);
-    }
-    console.log("iteration completed");
+  for (let i = 0; i < allData.length; i++) {
+    await addDataPoint(db, allData[i]);
+    console.log('Added data point' + i);
+  }
+  console.log('iteration completed');
 }
 
-main().catch(err => {
-    console.error("Error adding data point", err);
+main().catch((err) => {
+  console.error('Error adding data point', err);
 });
