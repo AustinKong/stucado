@@ -6,7 +6,7 @@ import { TimetableSlot } from 'Types/timetable.types';
 
 // Retrieve timetable from backend
 export const retrieveTimetable = async (): Promise<void> => {
-  const timetable: TimetableSlot[] = await (window.timetableAPI.getTimetable() as Promise<TimetableSlot[]>);
+  const timetable: TimetableSlot[] = await (window.timetableAPI.getTimetable());
   store.dispatch(setTimetable(timetable));
 }
 
@@ -15,5 +15,6 @@ export const retrieveTimetable = async (): Promise<void> => {
 // TODO: URL validation
 export const uploadTimetable = async (url: string): Promise<void> => {
   const timetable = await window.timetableAPI.uploadTimetable(url);
-  store.dispatch(setTimetable(timetable as TimetableSlot[]));
+  console.log(timetable)
+  store.dispatch(setTimetable(timetable));
 }

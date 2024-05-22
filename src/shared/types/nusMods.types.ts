@@ -80,7 +80,7 @@ export type NUSModuleAttributes = Partial<{
 }>;
 
 // Information for a module for a particular academic year.
-export type APIModule = {
+export type Module = {
   acadYear: AcadYear;
 
   // Basic info
