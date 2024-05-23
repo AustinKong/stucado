@@ -1,4 +1,4 @@
-import { Day } from 'Types/main.types';
+import { Day } from '../../shared/types/main.types';
 
 export type Class = {
   moduleCode: string;

@@ -55,7 +55,7 @@ export async function addOrUpdateTasks(db: Database, task: Task): Promise<void> 
   const { id, content, status, estimatedTime, beginTime, endTime } = task
   
   await db.run(`
-		INSERT INTO tasks (content, status, estimated_time, begin_time, end_time)
+		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
 		VALUES (?, ?, ?, ?, ?, ?)
 		ON CONFLICT(id) DO UPDATE SET 
 			content = EXCLUDED.content,
