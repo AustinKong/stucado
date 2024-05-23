@@ -7,14 +7,17 @@ const Dashboard: React.FC = () => {
 
   return <div className='dashboard'>
     <div className='dashboard__banner'>
-      <h1 className='dashboard__date'>
+      <span>
+        Dashboard
+      </span>
+      &nbsp;
+      <span className='dashboard__date'>
         {dateNow}
-      </h1>
+      </span>
     </div>
 
-    <div className='dashboard__grid'>
+    <div className='dashboard__content'>
       <Timetable />
-      <TasksList />
     </div>
   </div>
 }

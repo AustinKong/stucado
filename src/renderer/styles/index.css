@@ -15,7 +15,7 @@
   --bg-primary-dark: #1e1e1e;
   --bg-secondary-dark: #2e2e2e;
   --text-primary-dark: #ffffff;
-  --text-secondary-dark: #cccccc;
+  --text-secondary-dark: #ababab;
   --border-primary-dark: #444444;
   --border-secondary-dark: #555555;
   --accent-dark: #4a90e2;
@@ -70,10 +70,11 @@
 html, body {
   font-family: roboto;
   background-color: var(--bg-primary);
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 #root {
+  overflow-x: hidden;
 }
 
 /* Some default styles */
@@ -87,11 +88,11 @@ input {
   border: none;
   padding: 0.3rem;
   background-color: inherit;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 input::placeholder {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 a {

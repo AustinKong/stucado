@@ -1,81 +1,118 @@
 .timetable {
-  grid-row: span 2;
+  --timetable-width: 200rem;
+  padding: 2rem;
 }
 
-.timetable__upload {
-  background-color: transparent;
-  border: none;
-  color: var(--icon-primary);
+.timetable__title {
+  font-weight: 500;
 }
 
-.timetable__timetable {
-  position: relative;
-  margin: 2rem 0.5rem 1rem 0.5rem;
+.timetable__subtitle {
+  color: var(--text-secondary)
+}
+
+.timetable__content {
+  overflow-x: scroll;
+  padding: 2rem 4rem 2rem 0;
+}
+
+/* Days of week (Mon ... Sun) on the left side */
+.timetable__day-of-week {
+  position: sticky;
+  left: 0;
+  width: 3.5rem;
+  height: 5rem;
   display: flex;
-  padding: 1rem 0;
-  overflow-y: hidden;
-  height: calc(100% - 5rem)
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-primary);
+  z-index: 1001;
 }
 
+/* Hours of the day (12AM ... 12PM) on the top */
 .timetable__hours {
-  align-items: end;
-  color: var(--icon-primary);
+  margin-left: 3.5rem;
+  position: relative;;
+  height: 1rem;
+  width: calc(var(--timetable-width) - 3.5rem)
+}
+
+.timetable__hour {
+  position: absolute;
+  transform: translateX(-50%);
   font-size: small;
-  width: fit-content;
-  position: relative;
-  width: 20%;
-
-  time {
-    position: absolute;
-    transform: translateY(-50%);
-  }
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
 
-.timetable__slots {
-  width: 80%;
+
+/* Timetable slots */
+.timetable__days {
+  width: var(--timetable-width);
   position: relative;
 }
 
-.timetable__slot {
-  position: absolute;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: green;
-}
-
-.timetable__current-time-indicator {
-  position: absolute;
+.timetable__day {
   display: flex;
-  width: 100%;
-
-  time {
-    font-size: small;
-    width: 20%;
-    transform: translateY(-50%);
-  }
+  height: 5rem;
 }
 
-.timetable__current-time-line {
-  border: 1.5px solid purple;
-  height: 0;
-  width: 80%;
+.timetable__day--active {
+  /* TODO: Add variable for this color */
+  background-color: rgb(147, 147, 147, 0.03)
 }
 
+.timetable__slot-container {
+  position: relative;
+  flex-grow: 1;
+}
 
+.timetable__indicator {
+  margin-left: 3.5rem;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
 
+.timetable__indicator-time {
+  position: absolute;
+  width: fit-content;
+  color: var(--highlight);
+  transform: translateX(-50%) translateY(-100%);
+}
 
+.timetable__indicator-line {
+  height: 100%;
+  width: 1px;
+  background-color: var(--highlight);
+}
 
+/* Timetable slot */
+.timetable-slot {
+  position: absolute;
+  background-color: var(--bg-secondary);
+  height: 100%;
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+}
 
+.timetable-slot__trim {
+  width: 6px;
+  min-height: 100%;
+}
 
+.timetable-slot__content {
+  padding: 0.8rem;
+  width: calc(100% - 6px);
+}
 
+.timetable-slot__title {
+  font-weight: 400;
+  font-size: small;
+}
 
-
-
-
-
-
-
-
-
-
+.timetable-slot__description {
+  font-size: x-small;
+  color: var(--text-secondary);
+}

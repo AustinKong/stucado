@@ -11,8 +11,134 @@ import 'Styles/widgets/timetable.css';
 import UploadIcon from 'Assets/icons/upload.svg?react';
 import Modal from 'Components/generic/Modal';
 
-const REM_PER_MINUTE = 0.08;
+const PERCENTAGE_PER_MINUTE = 100 / 60 / 24;
 
+const COLORS = [
+  '#FF6F61', // Coral
+  '#6B5B95', // Royal Purple
+  '#88B04B', // Yellow-Green
+  '#F7CAC9', // Rose Quartz
+  '#92A8D1', // Serenity
+  '#F7786B'  // Peach Echo
+];
+
+const Timetable: React.FC = () => {
+  useEffect(() => {
+    void uploadTimetable('https://nusmods.com/timetable/sem-2/share?CS1010E=SEC:2,TUT:18&CS1010R=&CS1010S=TUT:12,REC:03,LEC:1&CS2030S=LAB:16E,REC:03,LEC:2')
+  }, []);
+  const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, 60 * 1000 - new Date().getMilliseconds());
+    // To cleanup and prevent memory leaks
+    return () => clearInterval(interval);
+  });
+
+  return (
+    <div className='timetable'>
+      <h2 className='timetable__title'>
+        Schedule
+        &nbsp;
+        <span className='timetable__subtitle'>
+          ({DaysOfWeek[date.getDay() - 1]})
+        </span>
+      </h2>
+
+      <div className='timetable__content'>
+
+        {/* Hours of the day (12 AM ... 12 PM) on the top */}
+        <div className='timetable__hours'>
+          {Array.from({ length: 25 }, (_, index) => index)
+            .map(time => (
+              <time 
+                key={time}
+                className='timetable__hour'
+                style={{
+                  left: `${time * 60 * PERCENTAGE_PER_MINUTE}%`
+                }}
+              >
+                {+time > 12 ? `${time - 12} PM` : +time === 0 ? '12 PM' : `${time} AM`}
+              </time>
+            ))}
+        </div>
+        
+        {/* Timetable slots */}
+        <ol className='timetable__days'>
+          {DaysOfWeek.map((day, index) => (
+            <li 
+              key={index} 
+              className={`timetable__day ${day === DaysOfWeek[date.getDay() - 1] ? 'timetable__day--active' : ''}`}
+            >
+              <div 
+                key={index}
+                className='timetable__day-of-week'
+              >
+                <span>
+                  {day.substring(0, 3)}
+                </span>
+              </div>
+              
+              <div className='timetable__slot-container'>
+                {timetable
+                  .filter(slot => slot.schedule.day === day)
+                  .map((slot, index) => (
+                    <Slot
+                      key={index}
+                      title={slot.title}
+                      description={slot.description as string}
+                      color={COLORS[slot.id % COLORS.length]}
+                      left={`${slot.schedule.startTime * PERCENTAGE_PER_MINUTE}%`}
+                      width={`${(slot.schedule.endTime - slot.schedule.startTime) * PERCENTAGE_PER_MINUTE}%`}
+                    />
+                  ))}
+              </div>
+            </li>
+          ))}
+          <div
+            className='timetable__indicator'
+            style={{ left: `${(date.getHours() * 60 + date.getMinutes()) * PERCENTAGE_PER_MINUTE}%` }}
+          >
+            <p className='timetable__indicator-time'>
+              {Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).format(date).substring(0, 5)}
+            </p>
+            <div className='timetable__indicator-line'/>
+          </div>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+const Slot: React.FC<{ title: string, description: string, color: string, left: string, width: string }> = ({ title, description, color, left, width }) => {
+  return (
+    <div
+      className='timetable-slot'
+      style={{ 
+        color,
+        left,
+        width
+      }}
+    >
+      <div 
+        className='timetable-slot__trim'
+        style={{ backgroundColor: color }}
+      />
+      <div className='timetable-slot__content'>
+        <h3 className='timetable-slot__title'>
+          {title}
+        </h3>
+        <p className='timetable-slot__description'>
+          {description}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/*
 const Timetable: React.FC = () => {
   const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
 
@@ -77,7 +203,6 @@ const Timetable: React.FC = () => {
           }
         </div>
 
-        {/* TODO: Make the current time indicator real-time * format the time */}
         <div 
           className='timetable__current-time-indicator'
           style={{ top: `${(new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE}rem` }}
@@ -114,5 +239,9 @@ const TimetableSlotItem: React.FC<{ slot: TimetableSlot, offset: number, height:
     </div>
   );
 }
+
+export default Timetable;
+
+*/
 
 export default Timetable;
