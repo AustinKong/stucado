@@ -6,7 +6,8 @@ import { Task } from '../../shared/types/task.types';
 
 let db: Database | null = null;
 
-//Create cache database
+/* Utility functions */
+// Create cache database
 export async function createCache(): Promise<Database> {
   if (db) {
     return db;
@@ -40,7 +41,26 @@ export async function createCache(): Promise<Database> {
   return db;
 }
 
-//Create task
+// TODO: delete this function
+async function readTable(tableName: string): Promise<void> {
+  const db = await createCache();
+  try {
+    const rows = await db.all(`SELECT * FROM ${tableName}`);
+    console.log(`Data from ${tableName}:`, rows);
+  } catch (err) {
+    console.error(`Error retrieving data from table ${tableName}:`, err);
+  }
+}
+
+export async function deleteCache(): Promise<void> {
+  const db = await createCache();
+  await db.exec('DELETE FROM timetable');
+  await db.exec('DELETE FROM tasks');
+  console.log('Deleted all data');
+}
+
+/* Task manipulation */
+// Create task
 export async function createTask(task: Task): Promise<void> {
   const db = await createCache();
   const { id, content, status, estimatedTime, beginTime, endTime } = task
@@ -57,34 +77,24 @@ export async function createTask(task: Task): Promise<void> {
 	`, [id, content, status, estimatedTime, beginTime, endTime]);
 }
 
-export async function readTable(tableName: string): Promise<void> {
+// Read tasks
+export async function readTasks(): Promise<Task[] | undefined> {
   const db = await createCache();
   try {
-    const rows = await db.all(`SELECT * FROM ${tableName}`);
-    console.log(`Data from ${tableName}:`, rows);
+    return await db.all('SELECT * FROM tasks');
   } catch (err) {
-    console.error(`Error retrieving data from table ${tableName}:`, err);
+    console.error('Error retrieving tasks: ', err);
   }
 }
 
-//Read tasks
-export async function readTasks(): Promise<void> {
-  await readTable('tasks');
-}
-
-//Read task with id
-export async function readTask(id: number): Promise<void> {
+// Read task with id
+export async function readTask(id: number): Promise<Task | undefined> {
   const db = await createCache();
   try {
-    const row: Task | undefined = await db.get('SELECT * FROM tasks WHERE id = ?', id);
-    console.log('Data from task ' + id + ': ', row);
+    return await db.get('SELECT * FROM tasks WHERE id = ?', id);
   } catch (err) {
     console.error('Error retrieving task ' + id + ': ', err);
   }
-}
-
-export async function readTimetable(): Promise<void> {
-  await readTable('timetable');
 }
 
 //Update task
@@ -104,7 +114,29 @@ export async function updateTask(task: Task): Promise<void> {
 	`, [id, content, status, estimatedTime, beginTime, endTime]);
 }
 
-//Update timetable
+export async function deleteTask(id: number): Promise<void> {
+  const db = await createCache();
+  try {
+    await db.run('DELETE FROM tasks WHERE id = ?', id);
+    console.log('Deleted task ' + id);
+  } catch (err) {
+    console.log('Error deleting task ' + id);
+  }
+}
+
+/* Timetable manipulation */
+// Read timetable
+export async function readTimetable(): Promise<TimetableSlot[] | undefined> {
+  const db = await createCache();
+  try {
+    return await db.all('SELECT * FROM timetable');
+  } catch (err) {
+    console.error('Error retrieving tasks: ', err);
+  }
+}
+
+
+// Update timetable
 export async function updateTimetable(allSlots: TimetableSlot[]): Promise<void> {
   const db = await createCache();
 
@@ -122,21 +154,4 @@ export async function updateTimetable(allSlots: TimetableSlot[]): Promise<void> 
 				day = EXCLUDED.day;
 	`, [title, description, schedule, startTime, endTime, day]);
   }
-}
-
-export async function deleteTask(id: number): Promise<void> {
-  const db = await createCache();
-  try {
-    await db.run('DELETE FROM tasks WHERE id = ?', id);
-    console.log('Deleted task ' + id);
-  } catch (err) {
-    console.log('Error deleting task ' + id);
-  }
-}
-
-export async function deleteCache(): Promise<void> {
-  const db = await createCache();
-  await db.exec('DELETE FROM timetable');
-  await db.exec('DELETE FROM tasks');
-  console.log('Deleted all data');
 }
