@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-import { getTasks, updateTasks } from './services/tasks'
+import { getTasks, createTask, updateTask, deleteTask } from './services/tasks'
 import { getTimetable, uploadTimetable } from './services/timetable'
 
 // const require = createRequire(import.meta.url)
@@ -59,7 +59,9 @@ app.on('activate', () => {
 void app.whenReady().then(() => {
   // Define IPC listeners, delegate to services
   ipcMain.handle('get-tasks', getTasks);
-  ipcMain.on('update-tasks', updateTasks);
+  ipcMain.handle('create-task', createTask);
+  ipcMain.handle('update-task', updateTask);
+  ipcMain.handle('delete-task', deleteTask);
 
   ipcMain.handle('upload-timetable', uploadTimetable);
   ipcMain.handle('get-timetable', getTimetable);

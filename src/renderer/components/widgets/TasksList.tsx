@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { addTask, deleteTask, toggleTaskStatus } from 'Renderer/services/tasks';
+import { createTask, editTask, incrementTaskStatus, deleteTask } from 'Renderer/services/tasks';
 
 import { RootState } from 'Renderer/data/store';
 import { Task } from 'Types/task.types';
@@ -16,7 +16,7 @@ const TasksList: React.FC = () => {
 
   const handleAddTask = () => {
     if (!inputContent) return;
-    void addTask(inputContent, inputEstimatedTime || 0);
+    void createTask(inputContent, inputEstimatedTime || 0);
     setInputContent('');
     setInputEstimatedTime(null);
   };
@@ -63,7 +63,7 @@ const TasksListItem: React.FC<{ task: Task }> = ({ task }) => {
   return (
     <li className='tasks-list__task-item'>
       <button
-        onClick={() => toggleTaskStatus(task.id)}
+        onClick={() => void incrementTaskStatus(task.id)}
         className={`tasks-list__task-status tasks-list__task-status--${
           task.status === 'Pending'
             ? 'pending'
@@ -77,7 +77,7 @@ const TasksListItem: React.FC<{ task: Task }> = ({ task }) => {
 
       {/* TODO: Change Edit button to actually edit the thing instead of delete */}
       <button
-        onClick={() => deleteTask(task.id)}
+        onClick={() => void deleteTask(task.id)}
         className='tasks-list__delete-task'
       >
         <EditIcon />
