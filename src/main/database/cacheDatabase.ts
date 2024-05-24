@@ -4,9 +4,15 @@ import * as sqlite3 from 'sqlite3';
 import { TimetableSlot } from '../../shared/types/timetable.types';
 import { Task } from '../../shared/types/task.types';
 
-//open cache database
-export async function setupCacheDatabase(): Promise<Database> {
-  const db = await open({
+let db: Database | null = null;
+
+//Create cache database
+export async function createCache(): Promise<Database> {
+  if (db) {
+    return db;
+  }
+	
+  db = await open({
     filename: './cache.db',
     driver: sqlite3.Database,
   });
@@ -34,7 +40,74 @@ export async function setupCacheDatabase(): Promise<Database> {
   return db;
 }
 
-export async function addOrUpdateTimetable(db: Database, allSlots: TimetableSlot[]): Promise<void> {
+//Create task
+export async function createTask(task: Task): Promise<void> {
+  const db = await createCache();
+  const { id, content, status, estimatedTime, beginTime, endTime } = task
+  
+  await db.run(`
+		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
+		VALUES (?, ?, ?, ?, ?, ?)
+		ON CONFLICT(id) DO UPDATE SET 
+			content = EXCLUDED.content,
+			status = EXCLUDED.status,
+			estimated_time = EXCLUDED.estimated_time,
+			begin_time = EXCLUDED.begin_time,
+			end_time = EXCLUDED.end_time;
+	`, [id, content, status, estimatedTime, beginTime, endTime]);
+}
+
+export async function readTable(tableName: string): Promise<void> {
+  const db = await createCache();
+  try {
+    const rows = await db.all(`SELECT * FROM ${tableName}`);
+    console.log(`Data from ${tableName}:`, rows);
+  } catch (err) {
+    console.error(`Error retrieving data from table ${tableName}:`, err);
+  }
+}
+
+//Read tasks
+export async function readTasks(): Promise<void> {
+  await readTable('tasks');
+}
+
+//Read task with id
+export async function readTask(id: number): Promise<void> {
+  const db = await createCache();
+  try {
+    const row: Task | undefined = await db.get('SELECT * FROM tasks WHERE id = ?', id);
+    console.log('Data from task ' + id + ': ', row);
+  } catch (err) {
+    console.error('Error retrieving task ' + id + ': ', err);
+  }
+}
+
+export async function readTimetable(): Promise<void> {
+  await readTable('timetable');
+}
+
+//Update task
+export async function updateTask(task: Task): Promise<void> {
+  const db = await createCache();
+  const { id, content, status, estimatedTime, beginTime, endTime } = task
+  
+  await db.run(`
+		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
+		VALUES (?, ?, ?, ?, ?, ?)
+		ON CONFLICT(id) DO UPDATE SET 
+			content = EXCLUDED.content,
+			status = EXCLUDED.status,
+			estimated_time = EXCLUDED.estimated_time,
+			begin_time = EXCLUDED.begin_time,
+			end_time = EXCLUDED.end_time;
+	`, [id, content, status, estimatedTime, beginTime, endTime]);
+}
+
+//Update timetable
+export async function updateTimetable(allSlots: TimetableSlot[]): Promise<void> {
+  const db = await createCache();
+
   for (const slot of allSlots) {
     const { id, title, description, schedule } = slot;
     const { startTime, endTime, day } = schedule;
@@ -51,35 +124,19 @@ export async function addOrUpdateTimetable(db: Database, allSlots: TimetableSlot
   }
 }
 
-export async function addOrUpdateTasks(db: Database, task: Task): Promise<void> {
-  const { id, content, status, estimatedTime, beginTime, endTime } = task
-  
-  await db.run(`
-		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
-		VALUES (?, ?, ?, ?, ?, ?)
-		ON CONFLICT(id) DO UPDATE SET 
-			content = EXCLUDED.content,
-			status = EXCLUDED.status,
-			estimated_time = EXCLUDED.estimated_time,
-			begin_time = EXCLUDED.begin_time,
-			end_time = EXCLUDED.end_time;
-	`, [id, content, status, estimatedTime, beginTime, endTime]);
-}
-
-export async function clearCache(db: Database): Promise<void> {
-  await db.exec(`
-	DELETE FROM timetable
-	`);
-  await db.exec(`
-	DELETE FROM tasks
-	`);
-}
-
-export async function showAllDataFromTable(db: Database, tableName: string): Promise<void> {
+export async function deleteTask(id: number): Promise<void> {
+  const db = await createCache();
   try {
-    const rows = await db.all(`SELECT * FROM ${tableName}`);
-    console.log(`Data from ${tableName}:`, rows);
+    await db.run('DELETE FROM tasks WHERE id = ?', id);
+    console.log('Deleted task ' + id);
   } catch (err) {
-    console.error(`Error retrieving data from table ${tableName}:`, err);
+    console.log('Error deleting task ' + id);
   }
+}
+
+export async function deleteCache(): Promise<void> {
+  const db = await createCache();
+  await db.exec('DELETE FROM timetable');
+  await db.exec('DELETE FROM tasks');
+  console.log('Deleted all data');
 }

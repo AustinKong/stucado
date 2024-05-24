@@ -13,29 +13,31 @@ export interface DataPoint {
   productivity: number;
 }
 
+let db: Database | null = null;
+
 //open database connection
-export async function setupDatabase() {
-  const db = await open({
+export async function createDatabase() {
+  db = await open({
     filename: './data.db',
     driver: sqlite3.Database,
   });
 
   await db.exec(`
-        CREATE TABLE IF NOT EXISTS data_points (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            time_of_day TEXT,
-            day_of_week TEXT,
-            hours_in_classes INTEGER,
-            hours_focused INTEGER,
-            weather TEXT,
-            productivity REAL
-        );
-    `);
+    CREATE TABLE IF NOT EXISTS data_points (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      time_of_day TEXT,
+      day_of_week TEXT,
+      hours_in_classes INTEGER,
+      hours_focused INTEGER,
+      weather TEXT,
+      productivity REAL
+    );
+  `);
   return db;
 }
 
 //adding data point into database
-export async function addDataPoint(db: Database, dataPoint: DataPoint) {
+export async function updateDataPoint(dataPoint: DataPoint) {
   const {
     timeOfDay,
     dayOfWeek,
@@ -44,20 +46,20 @@ export async function addDataPoint(db: Database, dataPoint: DataPoint) {
     weather,
     productivity,
   } = dataPoint;
-  await db.run(
-    `
-        INSERT INTO data_points (time_of_day, day_of_week, hours_in_classes, hours_focused, weather, productivity)
-        VALUES (?, ?, ?, ?, ?, ?)
-    `,
-    [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity]
-  );
+  const db = await createDatabase();
+
+  await db.run(`
+    INSERT INTO data_points (time_of_day, day_of_week, hours_in_classes, hours_focused, weather, productivity)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `, [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity]);
 }
 
 //retrieving data point from database
-export async function getDataPoints(db: Database): Promise<DataPoint[]> {
+export async function readDataPoints(): Promise<DataPoint[]> {
+  const db = await createDatabase();
   const rows = await db.all(`
-        SELECT time_of_day AS timeOfDay, day_of_week AS dayOfWeek, hours_in_classes AS hoursInClasses, hours_focused AS hoursFocused, weather, productivity
-        FROM data_points
-    `);
+    SELECT time_of_day AS timeOfDay, day_of_week AS dayOfWeek, hours_in_classes AS hoursInClasses, hours_focused AS hoursFocused, weather, productivity
+    FROM data_points
+  `);
   return rows as DataPoint[];
 }
