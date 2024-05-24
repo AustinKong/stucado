@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { IpcMainInvokeEvent } from 'electron';
-import { readTimetable, updateTimetable } from 'Main/database/timetable';
+import { readTimetable, updateTimetable } from '../database/cache';
 
 import { Module, RawLesson } from 'Types/nusMods.types';
 import { TimetableSlot } from 'Types/timetable.types';
 
 export async function getTimetable(): Promise<TimetableSlot[]> {
-  const timetable: TimetableSlot[] = await readTimetable();
+  const timetable: TimetableSlot[] = await readTimetable() as TimetableSlot[];
   return timetable;
 }
 

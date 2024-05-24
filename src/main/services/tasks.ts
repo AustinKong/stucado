@@ -4,7 +4,7 @@ import {
   readTasks as readTasksCache, 
   createTask as createTaskCache,
   updateTask as updateTaskCache,
-  deleteTask as deleteTaskCache } from 'Main/database/cache'
+  deleteTask as deleteTaskCache } from '../database/cache'
 
 let taskUID = 0;
 
@@ -14,7 +14,7 @@ let taskUID = 0;
  * @returns A promise that resolves to an array of tasks.
  */
 export async function getTasks(event: IpcMainInvokeEvent): Promise<Task[]> {
-  const tasks: Task[] = await readTasksCache()
+  const tasks: Task[] = await readTasksCache() as Task[];
   taskUID = tasks.length;
   return tasks;
 }
