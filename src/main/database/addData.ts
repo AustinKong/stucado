@@ -1,8 +1,4 @@
-import {
-  setupDatabase,
-  addDataPoint,
-  DataPoint,
-} from './database';
+import { updateDataPoint, DataPoint } from './database';
 
 // TODO: Change to use aliases
 import { TimeOfDay, Day, Weather } from '../../shared/types/main.types';
@@ -140,12 +136,10 @@ function processRawData(rawData: string): DataPoint[] {
 }
 
 async function main() {
-  const db = await setupDatabase();
-
   const allData: DataPoint[] = processRawData(rawData);
 
   for (let i = 0; i < allData.length; i++) {
-    await addDataPoint(db, allData[i]);
+    await updateDataPoint(allData[i]);
     console.log('Added data point' + i);
   }
   console.log('iteration completed');
