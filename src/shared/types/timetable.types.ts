@@ -1,4 +1,4 @@
-import { Day } from 'Types/main.types';
+import { Day } from '../../shared/types/main.types';
 
 // A timetable is an array of TimetableSlot
 export type TimetableSlot = {
