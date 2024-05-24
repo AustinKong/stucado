@@ -88,11 +88,11 @@ input {
   border: none;
   padding: 0.3rem;
   background-color: inherit;
-  color: var(--text-primary);
+  color: var(black);
 }
 
 input::placeholder {
-  color: var(--text-primary);
+  color: var(gray);
 }
 
 a {

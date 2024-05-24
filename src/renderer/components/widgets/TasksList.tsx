@@ -12,19 +12,23 @@ import EditIcon from 'Assets/icons/edit.svg?react';
 const TasksList: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const [inputContent, setInputContent] = useState<string>('');
+  const [inputEstimatedTime, setInputEstimatedTime] = useState<number | null>(null);
 
   const handleAddTask = () => {
     if (!inputContent) return;
-    void addTask(inputContent);
+    void addTask(inputContent, inputEstimatedTime || 0);
     setInputContent('');
+    setInputEstimatedTime(null);
   };
 
   return (
-    <div className='widget tasks-list'>
-      <span className='widget__header'>
-        <h2 className='widget__title'>Tasks</h2>
-        <h2 className='widget__subtitle'>({tasks.length})</h2>
-      </span>
+    <div className='tasks-list'>
+      <h2 className='tasks-list__title'>
+        Tasks &nbsp;
+        <span className='tasks-list__subtitle'>
+          ({tasks.length})
+        </span>
+      </h2>
 
       <ul className='tasks-list__list'>
         {tasks.map((task) => (
@@ -33,10 +37,18 @@ const TasksList: React.FC = () => {
 
         <li className='tasks-list__task-item tasks-list__add-task'>
           <input
+            className='tasks-list__input-task'
             type='text'
             placeholder='Add a new task...'
             value={inputContent}
             onChange={(e) => setInputContent(e.target.value)}
+          />
+          <input
+            className='tasks-list__input-task'
+            type='text'
+            placeholder='Estimated time (minutes)'
+            value={inputEstimatedTime === null ? '' : inputEstimatedTime}
+            onChange={(e) => setInputEstimatedTime(/^-?\d+$/.test(e.target.value) ? parseFloat(e.target.value) : 0)}
           />
           {inputContent && (
             <button onClick={handleAddTask}>Add task</button>

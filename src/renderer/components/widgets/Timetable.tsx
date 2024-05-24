@@ -23,11 +23,10 @@ const COLORS = [
 ];
 
 const Timetable: React.FC = () => {
-  useEffect(() => {
-    void uploadTimetable('https://nusmods.com/timetable/sem-2/share?CS1010E=SEC:2,TUT:18&CS1010R=&CS1010S=TUT:12,REC:03,LEC:1&CS2030S=LAB:16E,REC:03,LEC:2')
-  }, []);
   const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
   const [date, setDate] = useState(new Date());
+  const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
+  const [inputUrl, setInputUrl] = useState<string>('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,6 +36,12 @@ const Timetable: React.FC = () => {
     return () => clearInterval(interval);
   });
 
+  const handleSubmitUrl = () => {
+    void uploadTimetable(inputUrl);
+    setUploadModalIsOpen(false);
+    setInputUrl('');
+  }
+
   return (
     <div className='timetable'>
       <h2 className='timetable__title'>
@@ -45,6 +50,11 @@ const Timetable: React.FC = () => {
         <span className='timetable__subtitle'>
           ({DaysOfWeek[date.getDay() - 1]})
         </span>
+
+        <UploadIcon 
+          className='timetable__upload'
+          onClick={() => setUploadModalIsOpen(!uploadModalIsOpen)}
+        />
       </h2>
 
       <div className='timetable__content'>
@@ -108,6 +118,21 @@ const Timetable: React.FC = () => {
           </div>
         </ol>
       </div>
+
+      <Modal
+        isOpen={uploadModalIsOpen}
+        onClose={() => setUploadModalIsOpen(false)}
+      >
+        <input
+          type='text'
+          placeholder='Paste your NUSMods URL here...'
+          value={inputUrl}
+          onChange={(e) => setInputUrl(e.target.value)}
+        />
+        <button onClick={handleSubmitUrl}>
+          Submit URL
+        </button>
+      </Modal>
     </div>
   )
 }

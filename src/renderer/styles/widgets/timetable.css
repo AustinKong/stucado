@@ -1,5 +1,6 @@
 .timetable {
   --timetable-width: 200rem;
+  width: 100%;
   padding: 2rem;
 }
 
@@ -9,6 +10,12 @@
 
 .timetable__subtitle {
   color: var(--text-secondary)
+}
+
+.timetable__upload {
+  color: var(--text-secondary);
+  float: right;
+  cursor: pointer;
 }
 
 .timetable__content {
