@@ -8,7 +8,9 @@ declare global {
   interface Window {
     tasksAPI: {
       getTasks: () => Promise<Task[]>
-      updateTasks: (tasks: Task[]) => void
+      createTask: (content: string, estimatedTime: number) => Promise<Task>
+      updateTask: (task: Task) => Promise<Task>
+      deleteTask: (id: number) => Promise<number>
     },
     timetableAPI: {
       getTimetable: () => Promise<TimetableSlot[]>
@@ -19,7 +21,9 @@ declare global {
 
 contextBridge.exposeInMainWorld('tasksAPI', {
   getTasks: () => ipcRenderer.invoke('get-tasks'),
-  updateTasks: (tasks: Task[]) => ipcRenderer.send('update-tasks', tasks)
+  createTask: (content: string, estimatedTime: number) => ipcRenderer.invoke('create-task', content, estimatedTime),
+  updateTask: (task: Task) => ipcRenderer.invoke('update-task', task),
+  deleteTask: (id: number) => ipcRenderer.invoke('delete-task', id),
 })
 
 contextBridge.exposeInMainWorld('timetableAPI', {
