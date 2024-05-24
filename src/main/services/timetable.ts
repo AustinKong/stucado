@@ -1,18 +1,20 @@
 import axios, { AxiosResponse } from 'axios';
 import { IpcMainInvokeEvent } from 'electron';
+import { readTimetable, updateTimetable } from 'Main/database/timetable';
 
 import { Module, RawLesson } from 'Types/nusMods.types';
 import { TimetableSlot } from 'Types/timetable.types';
 
 export async function getTimetable(): Promise<TimetableSlot[]> {
-  // Read from database
-  console.log('Getting timetable')
-  return Promise.resolve([]);
+  const timetable: TimetableSlot[] = await readTimetable();
+  return timetable;
 }
 
 export async function uploadTimetable(event: IpcMainInvokeEvent, url: string): Promise<TimetableSlot[]> {
   const { enrolledLessons, academicYear, semester } = extractURL(url);
-  return getLessonsToTimetable(enrolledLessons, academicYear, semester);
+  const timetable: TimetableSlot[] = await getLessonsToTimetable(enrolledLessons, academicYear, semester);
+  void updateTimetable(timetable);
+  return timetable;
 }
 
 /* Getting timetable from NUS Mods API */

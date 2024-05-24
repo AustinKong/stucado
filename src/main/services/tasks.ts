@@ -13,7 +13,7 @@ let taskUID = 0;
  * @param event - The IPC event object.
  * @returns A promise that resolves to an array of tasks.
  */
-export const getTasks = async (event: IpcMainInvokeEvent): Promise<Task[]> => {
+export async function getTasks(event: IpcMainInvokeEvent): Promise<Task[]> {
   const tasks: Task[] = await readTasksCache()
   taskUID = tasks.length;
   return tasks;
@@ -26,7 +26,7 @@ export const getTasks = async (event: IpcMainInvokeEvent): Promise<Task[]> => {
  * @param estimatedTime - The user estimated time for completing the task.
  * @returns A promise that resolves to the created task.
  */
-export const createTask = (event: IpcMainInvokeEvent, content: string, estimatedTime: number): Promise<Task> => {
+export function createTask(event: IpcMainInvokeEvent, content: string, estimatedTime: number): Promise<Task> {
   const task: Task = {
     content,
     status: 'Pending',
@@ -44,7 +44,7 @@ export const createTask = (event: IpcMainInvokeEvent, content: string, estimated
  * @param task - The new task data.
  * @returns A Promise that resolves to the updated task.
  */
-export const updateTask = (event: IpcMainInvokeEvent, task: Task): Promise<Task> => {
+export function updateTask(event: IpcMainInvokeEvent, task: Task): Promise<Task> {
   void updateTaskCache(task);
   return Promise.resolve(task);
 }
@@ -55,7 +55,7 @@ export const updateTask = (event: IpcMainInvokeEvent, task: Task): Promise<Task>
  * @param id - The id of the task to be deleted.
  * @returns A promise that resolves to the id of the deleted task.
  */
-export const deleteTask = (event: IpcMainInvokeEvent, id: number): Promise<number> => {
+export function deleteTask(event: IpcMainInvokeEvent, id: number): Promise<number> {
   void deleteTaskCache(id);
   return Promise.resolve(id);
 }
