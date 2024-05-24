@@ -5,16 +5,17 @@ import { store } from 'Renderer/data/store';
 
 // Retrieve tasks from backend
 export const retrieveTasks = async (): Promise<void> => {
-  const tasks: Task[] = await (window.tasksAPI.getTasks() as Promise<Task[]>);
+  const tasks: Task[] = await (window.tasksAPI.getTasks());
   store.dispatch(setTasks(tasks));
 }
 
 // Add a new task to the store and backend
-export const addTask = (content: string): void => {
+export const addTask = (content: string, estimatedTime: number): void => {
   const updatedTasks: Task[] = [...store.getState().tasks, 
     { content, 
       status: 'Pending',
-      id: store.getState().tasks.length > 0 ? store.getState().tasks[store.getState().tasks.length - 1].id + 1 : 0 
+      id: store.getState().tasks.length > 0 ? store.getState().tasks[store.getState().tasks.length - 1].id + 1 : 0,
+      estimatedTime,
     }];
   updateTasks(updatedTasks);
 }

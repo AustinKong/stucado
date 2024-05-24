@@ -40,6 +40,7 @@ function extractURL(url: string): { enrolledLessons: string[], academicYear: str
 
 async function getLessonsToTimetable(enrolledLessons: string[], academicYear: string, semester: number): Promise<TimetableSlot[]> {
   const timetable: TimetableSlot[] = [];
+  let index: number = 0;
 
   for (const enrolledLesson of enrolledLessons) {
     const moduleCode: string = enrolledLesson.substring(0, enrolledLesson.indexOf('='));
@@ -65,12 +66,14 @@ async function getLessonsToTimetable(enrolledLessons: string[], academicYear: st
       timetable.push({
         title: `${moduleCode} ${lessonData.lessonType} ${classNo}`,
         description: `${lessonData.startTime} - ${lessonData.endTime} @ ${lessonData.venue}`,
+        id: index,
         schedule: {
           startTime: militaryTimeToMinutes(lessonData.startTime),
           endTime: militaryTimeToMinutes(lessonData.endTime),
           day: lessonData.day
         }
       } as TimetableSlot);
+      index++;
     }
   }
 

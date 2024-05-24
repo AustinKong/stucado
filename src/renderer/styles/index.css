@@ -1,19 +1,62 @@
 /* Some setup */
 
 :root {
-  --background-color: #1c1d21;
-  --widget-color: #242529;
-  --text-color: #dbdbdb;
+  /* Light mode colors */
+  --bg-primary-light: #ffffff;
+  --bg-secondary-light: #f0f0f0;
+  --text-primary-light: #000000;
+  --text-secondary-light: #333333;
+  --border-primary-light: #cccccc;
+  --border-secondary-light: #bbbbbb;
+  --accent-light: #007bff;
+  --highlight-light: #ff0;
 
-  --border-primary: #2d2e32;
+  /* Dark mode colors */
+  --bg-primary-dark: #1e1e1e;
+  --bg-secondary-dark: #2e2e2e;
+  --text-primary-dark: #ffffff;
+  --text-secondary-dark: #ababab;
+  --border-primary-dark: #444444;
+  --border-secondary-dark: #555555;
+  --accent-dark: #4a90e2;
+  --highlight-dark: #ffcc00;
 
-  /* Set fill=currentColor in SVG files to allow it to be affected by this parameter */
-  --icon-primary: #999999;
+  /* Default (Dark Mode) */
+  /* Main background color */
+  --bg-primary: var(--bg-primary-dark);
+  /* Distinction from main background color */
+  --bg-secondary: var(--bg-secondary-dark);
+  /* Main text, high contrast */
+  --text-primary: var(--text-primary-dark);
+  /* Secondary text, low contrast: subtitles */
+  --text-secondary: var(--text-secondary-dark);
+  --border-primary: var(--border-primary-dark);
+  --border-secondary: var(--border-secondary-dark);
+  --accent: var(--accent-dark);
+  --highlight: var(--highlight-dark);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: var(--bg-primary-light);
+    --bg-secondary: var(--bg-secondary-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --border-primary: var(--border-primary-light);
+    --border-secondary: var(--border-secondary-light);
+    --accent: var(--accent-light);
+    --highlight: var(--highlight-light);
+  }
 }
 
 @font-face {
   font-family: inter;
   src: url('../assets/fonts/Inter-VariableFont.ttf');
+}
+
+@font-face {
+  font-family: roboto;
+  src: url('../assets/fonts/Roboto-VariableFont.ttf');
 }
 
 /* Some universal styles */
@@ -25,17 +68,13 @@
 }
 
 html, body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: inter;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  font-family: roboto;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 #root {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Some default styles */
@@ -49,11 +88,11 @@ input {
   border: none;
   padding: 0.3rem;
   background-color: inherit;
-  color: var(--text-color);
+  color: var(black);
 }
 
 input::placeholder {
-  color: var(--text-color);
+  color: var(gray);
 }
 
 a {

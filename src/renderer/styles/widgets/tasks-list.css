@@ -1,3 +1,16 @@
+.tasks-list {
+  padding: 2rem;
+  width: 50%;
+}
+
+.tasks-list__title {
+  font-weight: 500;
+}
+
+.tasks-list__subtitle {
+  color: var(--text-secondary);
+}
+
 .tasks-list__list {
   list-style-type: none;
 }
@@ -35,4 +48,8 @@
   background-color: transparent;
   border: none;
   color: var(--icon-primary);
+}
+
+.tasks-list__input-task {
+  color: var(--text-primary);
 }
