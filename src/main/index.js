@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset';
 
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
 import { uploadTimetable, getTimetable } from '@services/timetable';
+import { runModel } from '@services/insights';
 
 function createWindow() {
   // Create the browser window.
@@ -82,4 +83,6 @@ app.whenReady().then(() => {
 
   ipcMain.handle('upload-timetable', uploadTimetable);
   ipcMain.handle('get-timetable', getTimetable);
+
+  ipcMain.handle('run-model', runModel);
 });
