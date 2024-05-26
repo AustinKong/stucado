@@ -17,7 +17,8 @@ export async function createCache() {
 
   await db.exec(`
 		CREATE TABLE IF NOT EXISTS timetable (
-			title TEXT PRIMARY KEY,
+			id INTEGER PRIMARY KEY,
+      title TEXT,
 			description TEXT,
 			start_time INTEGER,
 			end_time INTEGER,
@@ -42,7 +43,6 @@ export async function deleteCache() {
   const db = await createCache();
   await db.exec('DELETE FROM timetable');
   await db.exec('DELETE FROM tasks');
-  console.log('Deleted all data');
 }
 
 /* Task manipulation */
@@ -110,7 +110,6 @@ export async function deleteTask(id) {
   const db = await createCache();
   try {
     await db.run('DELETE FROM tasks WHERE id = ?', id);
-    console.log('Deleted task ' + id);
   } catch (err) {
     console.log('Error deleting task ' + id);
   }
@@ -121,7 +120,20 @@ export async function deleteTask(id) {
 export async function readTimetable() {
   const db = await createCache();
   try {
-    return await db.all('SELECT * FROM timetable');
+    const slots = await db.all('SELECT * FROM timetable');
+    const timetable = slots.map(({ id, title, description, start_time, end_time, day }) => {
+      return {
+        id,
+        title,
+        description,
+        schedule: {
+          startTime: start_time,
+          endTime: end_time,
+          day,
+        },
+      };
+    });
+    return timetable;
   } catch (err) {
     console.error('Error retrieving tasks: ', err);
   }
@@ -132,20 +144,21 @@ export async function updateTimetable(allSlots) {
   const db = await createCache();
 
   for (const slot of allSlots) {
-    const { id, title, description, schedule } = slot;
+    const { title, description, id, schedule } = slot;
     const { startTime, endTime, day } = schedule;
 
     await db.run(
       `
-			INSERT INTO timetable (title, description, start_time, end_time, day)
-			VALUES (?, ?, ?, ?, ?)
-			ON CONFLICT(title) DO UPDATE SET
+			INSERT INTO timetable (id, title, description, start_time, end_time, day)
+			VALUES (?, ?, ?, ?, ?, ?)
+			ON CONFLICT(id) DO UPDATE SET
+        title = EXCLUDED.title,
 				description = EXCLUDED.description,
 				start_time = EXCLUDED.start_time,
 				end_time = EXCLUDED.end_time,
 				day = EXCLUDED.day;
 	`,
-      [title, description, schedule, startTime, endTime, day]
+      [id, title, description, startTime, endTime, day]
     );
   }
 }
