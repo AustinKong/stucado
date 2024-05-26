@@ -47,7 +47,7 @@ const Timetable = () => {
     <div className="timetable">
       <h2 className="timetable__title">
         Schedule &nbsp;
-        <span className="timetable__subtitle">({DaysOfWeek[date.getDay() - 1]})</span>
+        <span className="timetable__subtitle">({DaysOfWeek[date.getDay()]})</span>
         <UploadIcon className="timetable__upload" onClick={() => setUploadModalIsOpen(!uploadModalIsOpen)} />
       </h2>
 
