@@ -1,4 +1,5 @@
 import { DaysOfWeek } from '../../shared/constants.js';
+import { readTimetable, readTasks } from '../database/cache.js';
 
 export function getTimeOfDay(hour) {
   if (hour >= 6 && hour < 9) return 'earlyMorning';
@@ -11,7 +12,9 @@ export function getTimeOfDay(hour) {
   if (hour >= 3 && hour < 6) return 'dawn';
 }
 
-export function getHoursInClasses(timetable, taskStartTime) {
+export async function getHoursInClasses(taskStartTime) {
+  const timetable = await readTimetable();
+  console.log(timetable);
   let hours = 0;
   const sixteenHoursAgo = new Date(taskStartTime - 16 * 60 * 60 * 1000);
   const taskStartDay = new Date(taskStartTime).getDay();
@@ -42,4 +45,22 @@ export function getHoursInClasses(timetable, taskStartTime) {
   }
   //console.log(hours);
   return hours;
+}
+
+export async function getHoursFocused(taskStartTime) {
+  const tasks = await readTasks();
+  console.log(tasks);
+  let hours = 0;
+  for (const task of tasks) {
+    if (task.endTime <= taskStartTime) {
+      hours += (task.endTime - task.beginTime) / 60 / 1000;
+    }
+  }
+  console.log(hours);
+  return hours;
+}
+
+export async function getProductivity(task) {
+  const timeTaken = (task.beginTime - task.endTime) / 60 / 1000;
+  return (task.estimatedTime / timeTaken) * 100;
 }
