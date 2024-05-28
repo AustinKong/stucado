@@ -84,7 +84,6 @@ export async function readTasks() {
         endTime: end_time,
       };
     });
-    console.log(tasks);
     return tasks;
   } catch (err) {
     console.error('Error retrieving tasks: ', err);

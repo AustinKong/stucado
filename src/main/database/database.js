@@ -22,7 +22,6 @@ export async function createDatabase() {
       day_of_week TEXT,
       hours_in_classes INTEGER,
       hours_focused INTEGER,
-      weather TEXT,
       productivity REAL
     );
   `);
@@ -31,15 +30,15 @@ export async function createDatabase() {
 
 //adding data point into database
 export async function updateDataPoint(dataPoint) {
-  const { timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity } = dataPoint;
+  const { timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity } = dataPoint;
   const db = await createDatabase();
 
   await db.run(
     `
-    INSERT INTO data_points (time_of_day, day_of_week, hours_in_classes, hours_focused, weather, productivity)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO data_points (time_of_day, day_of_week, hours_in_classes, hours_focused, productivity)
+    VALUES (?, ?, ?, ?, ?)
   `,
-    [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, weather, productivity]
+    [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity]
   );
 }
 
@@ -47,8 +46,14 @@ export async function updateDataPoint(dataPoint) {
 export async function readDataPoints() {
   const db = await createDatabase();
   const rows = await db.all(`
-    SELECT time_of_day AS timeOfDay, day_of_week AS dayOfWeek, hours_in_classes AS hoursInClasses, hours_focused AS hoursFocused, weather, productivity
+    SELECT time_of_day AS timeOfDay, day_of_week AS dayOfWeek, hours_in_classes AS hoursInClasses, hours_focused AS hoursFocused, productivity
     FROM data_points
   `);
+  console.log(rows);
   return rows;
+}
+
+export async function deleteData() {
+  const db = await createDatabase();
+  await db.exec('DELETE from data_points');
 }
