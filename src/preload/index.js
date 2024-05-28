@@ -14,3 +14,7 @@ contextBridge.exposeInMainWorld('timetableAPI', {
   getTimetable: () => ipcRenderer.invoke('get-timetable'),
   uploadTimetable: (url) => ipcRenderer.invoke('upload-timetable', url),
 });
+
+contextBridge.exposeInMainWorld('insightsAPI', {
+  runModel: (inputs) => ipcRenderer.invoke('run-model', inputs),
+});
