@@ -1,5 +1,6 @@
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
+import path from 'path';
 
 let db = null;
 
@@ -10,8 +11,10 @@ export async function createCache() {
     return db;
   }
 
+  const dbPath = path.join('', '..', '..', '..', 'cache.db');
+
   db = await open({
-    filename: './cache.db',
+    filename: dbPath,
     driver: sqlite3.Database,
   });
 
@@ -70,7 +73,18 @@ export async function createTask(task) {
 export async function readTasks() {
   const db = await createCache();
   try {
-    return await db.all('SELECT * FROM tasks');
+    const allTasks = await db.all('SELECT * FROM tasks');
+    const tasks = allTasks.map(({ id, content, status, estimated_time, begin_time, end_time }) => {
+      return {
+        id,
+        content,
+        status,
+        estimatedTime: estimated_time,
+        beginTime: begin_time,
+        endTime: end_time,
+      };
+    });
+    return tasks;
   } catch (err) {
     console.error('Error retrieving tasks: ', err);
   }
@@ -80,7 +94,16 @@ export async function readTasks() {
 export async function readTask(id) {
   const db = await createCache();
   try {
-    return await db.get('SELECT * FROM tasks WHERE id = ?', id);
+    const rawTask = await db.get('SELECT * FROM tasks WHERE id = ?', id);
+    const formattedTask = {
+      id: rawTask.id,
+      content: rawTask.content,
+      status: rawTask.status,
+      estimatedTime: rawTask.estimated_time,
+      beginTime: rawTask.begin_time,
+      endTime: rawTask.end_time,
+    };
+    return formattedTask;
   } catch (err) {
     console.error('Error retrieving task ' + id + ': ', err);
   }
