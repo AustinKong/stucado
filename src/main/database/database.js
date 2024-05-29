@@ -20,8 +20,8 @@ export async function createDatabase() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       time_of_day TEXT,
       day_of_week TEXT,
-      hours_in_classes INTEGER,
-      hours_focused INTEGER,
+      hours_in_classes REAL,
+      hours_focused REAL,
       productivity REAL
     );
   `);
@@ -46,10 +46,14 @@ export async function updateDataPoint(dataPoint) {
 export async function readDataPoints() {
   const db = await createDatabase();
   const rows = await db.all(`
-    SELECT time_of_day AS timeOfDay, day_of_week AS dayOfWeek, hours_in_classes AS hoursInClasses, hours_focused AS hoursFocused, productivity
+    SELECT 
+      time_of_day AS timeOfDay, 
+      day_of_week AS dayOfWeek, 
+      hours_in_classes AS hoursInClasses, 
+      hours_focused AS hoursFocused, 
+      productivity
     FROM data_points
   `);
-  console.log(rows);
   return rows;
 }
 
@@ -57,3 +61,5 @@ export async function deleteData() {
   const db = await createDatabase();
   await db.exec('DELETE from data_points');
 }
+
+readDataPoints();
