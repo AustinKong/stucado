@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { DaysOfWeek } from '@shared/constants';
 
 import '@styles/widgets/insights.css';
 import { runModel } from '@services/insights';
 
+const DEFAULT_STATE = { timeOfDay: 0, dayOfWeek: DaysOfWeek[0], hoursInClasses: 0, hoursFocused: 0 };
+
 const Insights = () => {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState(DEFAULT_STATE);
   const [output, setOutput] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setInputs({});
+    setInputs(DEFAULT_STATE);
     const o = await runModel(inputs);
     setOutput(o);
   };
@@ -37,13 +40,11 @@ const Insights = () => {
           <label>
             Input day of week: &nbsp;
             <select value={inputs.dayOfWeek} name="dayOfWeek" onChange={handleChange}>
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-              <option value="Sunday">Sunday</option>
+              {DaysOfWeek.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
             </select>
           </label>
           <label>

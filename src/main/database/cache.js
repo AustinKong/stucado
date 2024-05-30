@@ -102,7 +102,7 @@ export async function readTask(id) {
       beginTime: rawTask.begin_time,
       endTime: rawTask.end_time,
     };
-    console.log(formattedTask);
+    // console.log(formattedTask);
     return formattedTask;
   } catch (err) {
     console.error('Error retrieving task ' + id + ': ', err);
