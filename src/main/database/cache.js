@@ -83,7 +83,6 @@ export async function readTasks() {
         end_time AS endTime 
       FROM tasks
     `);
-    console.log(tasks);
     return tasks;
   } catch (err) {
     console.error('Error retrieving tasks: ', err);
