@@ -105,7 +105,7 @@ async function runGradientDescent(datapoint) {
     productivity: result,
   };
 
-  updateDataPoint(newDataPoint);
+  await updateDataPoint(newDataPoint);
   return result;
 }
 
