@@ -1,0 +1,35 @@
+/* Generic widget styles */
+.widget {
+  padding: 20px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+}
+
+.widget-content {
+  padding: 16px;
+}
+
+/* Header */
+.widget-header {
+  display: flex;
+  align-items: center;
+}
+
+.widget-header__title {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+/* Interaction button */
+.widget__interaction-button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  gap: 4px;
+}
+
+.widget__interaction-button:hover {
+  cursor: pointer;
+}

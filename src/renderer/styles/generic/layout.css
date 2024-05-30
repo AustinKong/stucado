@@ -1,0 +1,57 @@
+.sidebar {
+  position: fixed;
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 48px 16px;
+  align-items: center;
+}
+
+/* Icon */
+.sidebar__icon-island {
+
+}
+
+.sidebar__icon {
+  width: 32px;
+}
+
+/* Page links */
+.sidebar__page-island {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 16px;
+}
+
+.sidebar__page {
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.sidebar__page--inactive {
+  color: var(--text-secondary);
+}
+
+.sidebar__page--active {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+/* Logout */
+.sidebar__logout-island {}
+
+.sidebar__logout {
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.sidebar__logout:hover {
+  color: var(--text-primary);
+}
+
+/* Page */
+.page {
+  margin-left: 80px;
+}

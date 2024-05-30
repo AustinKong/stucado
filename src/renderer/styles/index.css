@@ -1,52 +1,18 @@
-/* Some setup */
-
 :root {
-  /* Light mode colors */
-  --bg-primary-light: #ffffff;
-  --bg-secondary-light: #f0f0f0;
-  --text-primary-light: #000000;
-  --text-secondary-light: #333333;
-  --border-primary-light: #cccccc;
-  --border-secondary-light: #bbbbbb;
-  --accent-light: #007bff;
-  --highlight-light: #ff0;
-
-  /* Dark mode colors */
-  --bg-primary-dark: #1e1e1e;
-  --bg-secondary-dark: #2e2e2e;
-  --text-primary-dark: #ffffff;
-  --text-secondary-dark: #ababab;
-  --border-primary-dark: #444444;
-  --border-secondary-dark: #555555;
-  --accent-dark: #4a90e2;
-  --highlight-dark: #ffcc00;
-
-  /* Default (Dark Mode) */
-  /* Main background color */
   --bg-primary: var(--bg-primary-dark);
-  /* Distinction from main background color */
-  --bg-secondary: var(--bg-secondary-dark);
-  /* Main text, high contrast */
-  --text-primary: var(--text-primary-dark);
-  /* Secondary text, low contrast: subtitles */
-  --text-secondary: var(--text-secondary-dark);
+  --bg-secondary: #f3f3f3;
+
+  --text-primary: #1c1c1c;
+  --text-secondary: #a4a4a4;
+
   --border-primary: var(--border-primary-dark);
-  --border-secondary: var(--border-secondary-dark);
+
   --accent: var(--accent-dark);
   --highlight: var(--highlight-dark);
-}
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-primary: var(--bg-primary-light);
-    --bg-secondary: var(--bg-secondary-light);
-    --text-primary: var(--text-primary-light);
-    --text-secondary: var(--text-secondary-light);
-    --border-primary: var(--border-primary-light);
-    --border-secondary: var(--border-secondary-light);
-    --accent: var(--accent-light);
-    --highlight: var(--highlight-light);
-  }
+  --traffic-light-red: #ff5f58;
+  --traffic-light-yellow: #ffbd2e;
+  --traffic-light-green: #28c76f;
 }
 
 @font-face {
@@ -71,40 +37,19 @@ html, body {
   font-family: roboto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-}
-
-#root {
-  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 /* Some default styles */
 
 button {
-  padding: 3px;
-  cursor: pointer;
+  all: unset;
 }
-
-input {
-  border: none;
-  padding: 0.3rem;
-  background-color: inherit;
-  color: var(black);
-}
-
-input::placeholder {
-  color: var(gray);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-a:visited {
-  color: inherit;
-}
-a:hover {
-  color: inherit;
-}
+a,
+a:visited,
+a:hover,
 a:active {
   color: inherit;
+  text-decoration: none;
 }

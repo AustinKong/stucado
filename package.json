@@ -21,6 +21,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "@phosphor-icons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
     "react-redux": "^9.1.2",

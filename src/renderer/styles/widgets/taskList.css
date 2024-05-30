@@ -1,0 +1,58 @@
+.task-list {
+
+}
+
+.task-list__list {
+  list-style: none;
+}
+
+/* Task item */
+.task-item {
+  display: flex;
+  align-items: center;
+}
+
+.task-item + .task-item {
+  margin-top: 16px;
+}
+
+/* Task item status */
+.task-item__status {
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 50%;
+}
+
+.task-item__status--pending {
+  background-color: var(--traffic-light-red);
+}
+
+.task-item__status--in-progress {
+  background-color: var(--traffic-light-yellow);
+}
+
+.task-item__status--completed {
+  background-color: var(--traffic-light-green);
+}
+
+/* Task item content */
+.task-item__content {
+  margin-left: 8px;
+}
+
+.task-item__title {
+  font-size: 18px;
+}
+
+.task-item__description {
+  color: var(--text-secondary);
+}
+
+/* Task item edit */
+.task-item__edit {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+* {
+}

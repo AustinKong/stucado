@@ -1,24 +1,17 @@
 import '@styles/pages/dashboard.css';
-import TasksList from '@components/widgets/TasksList';
+import TaskList from '@components/widgets/TaskList';
 import Timetable from '@components/widgets/Timetable';
-import Insights from '@components/widgets/Insights';
+import Pomodoro from '@components/widgets/Pomodoro';
 
 const Dashboard = () => {
-  const dateNow = new Date().toString().split(' ').slice(0, 4).join(' ');
-
   return (
     <div className="dashboard">
-      <div className="dashboard__banner">
-        <span>Dashboard</span>
-        &nbsp;
-        <span className="dashboard__date">{dateNow}</span>
-      </div>
-
-      <div className="dashboard__content">
-        <Timetable />
-        <TasksList />
-        <Insights />
-      </div>
+      <TaskList />
+      <Timetable />
+      <Pomodoro />
+      <div>Widget 1</div>
+      <div>Widget 2</div>
+      <div>Widget 3</div>
     </div>
   );
 };
