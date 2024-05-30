@@ -1,5 +1,6 @@
 export const DaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const TimesOfDay = [
+  'dawn',
   'earlyMorning',
   'lateMorning',
   'earlyAfternoon',
@@ -7,6 +8,5 @@ export const TimesOfDay = [
   'evening',
   'night',
   'midnight',
-  'dawn',
 ];
 export const Weathers = ['sunny', 'rainy', 'stormy', 'cloudy'];

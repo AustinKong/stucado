@@ -31,7 +31,6 @@ function processRawData(rawData) {
     .map((line) => {
       const parts = line.trim().split(' ');
       const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
-      console.log(parts);
       updateDataPoint({
         timeOfDay,
         dayOfWeek,
@@ -107,7 +106,6 @@ async function runGradientDescent(datapoint) {
   };
 
   updateDataPoint(newDataPoint);
-  console.log(result);
   return result;
 }
 

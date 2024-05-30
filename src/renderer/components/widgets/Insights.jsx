@@ -56,6 +56,7 @@ const Insights = () => {
           </label>
           <input className="insights-submit" type="submit" value="Submit" />
         </form>
+        <p>Predicted productivity:</p>
         <p className="insights-output">{output || 'Give input'}</p>
       </div>
     </div>
