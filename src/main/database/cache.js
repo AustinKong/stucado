@@ -1,6 +1,6 @@
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
-import path from 'path';
+//import path from 'path';
 
 let db = null;
 
@@ -11,10 +11,10 @@ export async function createCache() {
     return db;
   }
 
-  const dbPath = path.join('', '..', '..', '..', 'cache.db');
+  //const dbPath = path.join('', '..', '..', '..', 'cache.db');
 
   db = await open({
-    filename: dbPath,
+    filename: './cache.db',
     driver: sqlite3.Database,
   });
 
@@ -73,17 +73,17 @@ export async function createTask(task) {
 export async function readTasks() {
   const db = await createCache();
   try {
-    const allTasks = await db.all('SELECT * FROM tasks');
-    const tasks = allTasks.map(({ id, content, status, estimated_time, begin_time, end_time }) => {
-      return {
+    const tasks = await db.all(`
+      SELECT 
         id,
-        content,
-        status,
-        estimatedTime: estimated_time,
-        beginTime: begin_time,
-        endTime: end_time,
-      };
-    });
+        content, 
+        status, 
+        estimated_time AS estimatedTime, 
+        begin_time AS beginTime, 
+        end_time AS endTime 
+      FROM tasks
+    `);
+    console.log(tasks);
     return tasks;
   } catch (err) {
     console.error('Error retrieving tasks: ', err);
@@ -103,6 +103,7 @@ export async function readTask(id) {
       beginTime: rawTask.begin_time,
       endTime: rawTask.end_time,
     };
+    console.log(formattedTask);
     return formattedTask;
   } catch (err) {
     console.error('Error retrieving task ' + id + ': ', err);
