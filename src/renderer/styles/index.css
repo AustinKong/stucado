@@ -1,14 +1,15 @@
 :root {
   --bg-primary: var(--bg-primary-dark);
   --bg-secondary: #f3f3f3;
+  --bg-tertiary: #e6e6e684;
 
   --text-primary: #1c1c1c;
   --text-secondary: #a4a4a4;
 
   --border-primary: var(--border-primary-dark);
 
-  --accent: var(--accent-dark);
-  --highlight: var(--highlight-dark);
+  --accent: #2194e1;
+  --highlight: #53e333;
 
   --traffic-light-red: #ff5f58;
   --traffic-light-yellow: #ffbd2e;

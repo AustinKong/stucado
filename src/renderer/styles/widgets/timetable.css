@@ -1,3 +1,73 @@
 .timetable {
   grid-column: span 3;
 }
+
+.timetable__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.timetable__scrollable {
+  overflow-x: scroll;
+  padding-left: 4px;
+}
+
+/* Hours notches */
+.timetable__hours {
+  display: flex;
+}
+
+.timetable-hour {
+  min-width: 48px;
+  height: 24px;
+  position: relative;
+}
+
+.timetable-hour__text {
+  position: absolute;
+  transform: translate(-50%, 0);
+}
+
+/* Days notches */
+.timetable__days {
+  display: flex;
+  flex-direction: column;
+  min-width: 48px;
+  margin-top: 24px;
+}
+
+.timetable-day {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Timetable slots */
+.timetable__slots {
+  display: inline-flex;
+  flex-direction: column;
+  width: calc(48px * 97);
+  background-size: calc(48px * 8);
+  background-repeat: repeat;
+  background-image: linear-gradient(90deg, var(--bg-tertiary) 50%, transparent 0);
+}
+
+.timetable__slots-day {
+  height: 48px;
+  display: flex;
+  border: 1px solid var(--bg-tertiary);
+}
+
+.timetable-slot {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+  padding: 16px;
+  background-color: var(--accent);
+  border-radius: 128px;
+}
+
+* {
+}
