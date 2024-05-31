@@ -1,6 +1,13 @@
 .pomodoro {
 }
 
+.pomodoro__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
 /* Countdown timer (https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/) */
 .pomodoro-timer {
   position: relative;

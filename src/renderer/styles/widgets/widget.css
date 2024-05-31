@@ -7,12 +7,14 @@
 
 .widget-content {
   padding: 16px;
+  height: calc(100% - 32px);
 }
 
 /* Header */
 .widget-header {
   display: flex;
   align-items: center;
+  height: 32px;
 }
 
 .widget-header__title {
