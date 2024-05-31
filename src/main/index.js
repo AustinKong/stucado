@@ -10,8 +10,10 @@ import { runModel } from '@services/insights';
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1200,
+    minWidth: 1200,
+    height: 800,
+    minHeight: 800,
     show: false,
     autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),

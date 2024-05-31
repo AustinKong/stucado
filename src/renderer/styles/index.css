@@ -38,8 +38,6 @@ html, body {
   font-family: roboto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  width: 100%;
-  height: 100%;
 }
 
 /* Some default styles */
