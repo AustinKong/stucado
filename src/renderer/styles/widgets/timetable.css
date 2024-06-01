@@ -8,8 +8,17 @@
 }
 
 .timetable__scrollable {
-  overflow-x: scroll;
+  position: relative;
+  overflow-x: hidden;
   padding-left: 4px;
+}
+
+.timetable__current-time {
+  position: absolute;
+  top: 24px;
+  width: 2px;
+  height: calc(100% - 24px);
+  background-color: var(--accent);
 }
 
 /* Hours notches */
@@ -26,6 +35,8 @@
 .timetable-hour__text {
   position: absolute;
   transform: translate(-50%, 0);
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 
 /* Days notches */
@@ -41,6 +52,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.timetable-day__text {
+  color: var(--text-secondary);
+}
+
+.timetable-day__text--active {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 /* Timetable slots */
@@ -59,6 +79,10 @@
   border: 1px solid var(--bg-tertiary);
 }
 
+.timetable__slots-day--active {
+  background-color: var(--bg-tertiary);
+}
+
 .timetable-slot {
   display: flex;
   align-items: center;
@@ -69,5 +93,14 @@
   border-radius: 128px;
 }
 
-* {
+.timetable-slot__icon {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.timetable-slot__title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
 }
