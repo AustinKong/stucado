@@ -24,21 +24,20 @@ lateAfternoon Friday 4 7 67.2026135
 lateMorning Saturday 0 1 150.04
 `;
 
-function processRawData(rawData) {
-  rawData
-    .trim()
-    .split('\n')
-    .map((line) => {
-      const parts = line.trim().split(' ');
-      const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
-      updateDataPoint({
-        timeOfDay,
-        dayOfWeek,
-        hoursInClasses: parseFloat(hoursInClasses),
-        hoursFocused: parseFloat(hoursFocused),
-        productivity: parseFloat(productivity),
-      });
+async function processRawData(rawData) {
+  const lines = rawData.trim().split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    const parts = line.split(' ');
+    const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
+    await updateDataPoint({
+      timeOfDay,
+      dayOfWeek,
+      hoursInClasses: parseFloat(hoursInClasses),
+      hoursFocused: parseFloat(hoursFocused),
+      productivity: parseFloat(productivity),
     });
+  }
 }
 
 // Learning rate and iterations
@@ -118,7 +117,7 @@ export async function predictProductivity(time, day, hoursInClasses, hoursFocuse
     productivity: 0,
   };
   await deleteData();
-  processRawData(rawData);
+  await processRawData(rawData);
   return runGradientDescent(datapoint);
 }
 
