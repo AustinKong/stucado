@@ -36,7 +36,7 @@ function extractURL(url) {
   // e.g. 2021-2022
   const date = new Date();
   const academicYear =
-    date.getMonth() <= 4
+    date.getMonth() <= 8
       ? `${date.getFullYear() - 1}-${date.getFullYear()}`
       : `${date.getFullYear()}-${date.getFullYear() + 1}`;
 
