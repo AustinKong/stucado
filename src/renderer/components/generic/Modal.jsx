@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
-import { X } from '@phosphor-icons/react';
+import { X, CaretDown, CaretUp } from '@phosphor-icons/react';
+import { useState } from 'react';
 
 import '@styles/generic/modal.css';
 
@@ -88,4 +89,29 @@ export const ModalButtonSecondary = ({ text, onClick }) => {
       {text}
     </button>
   );
+};
+
+export const ModalNotice = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  if (isOpen) {
+    return (
+      <div className="modal-notice">
+        <div className="modal-notice__title" onClick={() => setIsOpen(false)}>
+          {title}
+          <CaretUp size="16" />
+        </div>
+        <div className="modal-notice__content">{children}</div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="modal-notice">
+        <div className="modal-notice__title" onClick={() => setIsOpen(true)}>
+          {title}
+          <CaretDown size="16" />
+        </div>
+      </div>
+    );
+  }
 };

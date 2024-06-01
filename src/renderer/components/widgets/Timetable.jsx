@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalButtonPrimary,
   ModalButtonSecondary,
+  ModalNotice
 } from '@components/generic/Modal';
 import { uploadTimetable } from '@services/timetable';
 import '@styles/widgets/timetable.css';
@@ -145,10 +146,10 @@ const UploadModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal title="Upload timetable" subtitle="Paste your NUS Mods timetable URL here" isOpen={isOpen} onClose={onClose}>
-      <p>
-        Important: New academic year starts on August 1st! Any timetables uploaded before that will have last years
-        classes. This is because NUS Mods API (which we use) does not update their data that early.
-      </p>
+      <ModalNotice title="Notice">
+        New academic year starts on August 1st! Any timetables uploaded before that will have last year&apos;s classes.
+        This is because NUS Mods API (which we use) does not update their data that early.
+      </ModalNotice>
       <ModalTextInput
         title="Timetable URL"
         nameKey="url"

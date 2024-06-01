@@ -6,11 +6,17 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  align-items: center;
 }
 
 /* Countdown timer (https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/) */
 .pomodoro-timer {
   position: relative;
+  max-width: 256px;
+}
+
+.pomodoro-timer__svg {
+  width: 100%;
 }
 
 .pomodoro-timer__circle {
@@ -66,3 +72,4 @@
   padding: 12px;
   border-radius: 50%;
 }
+
