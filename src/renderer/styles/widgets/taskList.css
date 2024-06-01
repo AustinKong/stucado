@@ -18,8 +18,9 @@
 
 /* Task item status */
 .task-item__status {
-  min-width: 12px;
-  min-height: 12px;
+  min-width: 14px;
+  min-height: 14px;
+  cursor: pointer;
   border-radius: 50%;
 }
 
@@ -38,6 +39,7 @@
 /* Task item content */
 .task-item__content {
   margin-left: 8px;
+  width: 80%;
 }
 
 .task-item__title {
@@ -52,7 +54,4 @@
 .task-item__edit {
   margin-left: auto;
   cursor: pointer;
-}
-
-* {
 }

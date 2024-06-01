@@ -6,11 +6,11 @@
   width: fit-content;
   padding: 48px 16px;
   align-items: center;
+  background-color: var(--bg-secondary);
 }
 
 /* Icon */
 .sidebar__icon-island {
-
 }
 
 .sidebar__icon {
@@ -36,7 +36,7 @@
 
 .sidebar__page--active {
   color: var(--text-primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--primary);
 }
 
 /* Logout */

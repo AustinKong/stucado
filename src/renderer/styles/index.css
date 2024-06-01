@@ -1,15 +1,17 @@
 :root {
-  --bg-primary: var(--bg-primary-dark);
+  --bg-primary: #ffffff;
   --bg-secondary: #f3f3f3;
   --bg-tertiary: #e6e6e684;
 
   --text-primary: #1c1c1c;
   --text-secondary: #a4a4a4;
+  --text-inverted: #ffffff;
 
-  --border-primary: var(--border-primary-dark);
+  --border-primary: #969696;
 
-  --accent: #2194e1;
-  --highlight: #53e333;
+  --accent: #496989;
+  --secondary: #E2F4C5;
+  --primary: #A8CD9F;
 
   --traffic-light-red: #ff5f58;
   --traffic-light-yellow: #ffbd2e;
@@ -51,4 +53,20 @@ a:hover,
 a:active {
   color: inherit;
   text-decoration: none;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 64px;
 }

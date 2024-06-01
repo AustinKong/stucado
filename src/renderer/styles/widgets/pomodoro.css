@@ -37,7 +37,7 @@
 .pomodoro-timer__path-remaining {
   stroke-width: 8px;
   stroke-linecap: round;
-  stroke: var(--accent);
+  stroke: var(--primary);
   transform: rotate(90deg);
   transform-origin: center;
 }
@@ -57,7 +57,7 @@
   background-color: var(--accent);
   padding: 24px;
   border-radius: 50%;
-  color: var(--text-primary)
+  color: var(--text-inverted)
 }
 
 .pomodoro-controls__secondary {

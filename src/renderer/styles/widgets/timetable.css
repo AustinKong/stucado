@@ -65,7 +65,7 @@
   height: 100%;
   gap: 8px;
   padding: 16px;
-  background-color: var(--accent);
+  background-color: var(--primary);
   border-radius: 128px;
 }
 

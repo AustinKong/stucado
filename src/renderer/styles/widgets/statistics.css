@@ -28,14 +28,22 @@
 .bar-chart__bars {
   display: flex;
   justify-content: space-evenly;
-  align-items: baseline;
+  align-items: flex-end;
   margin-top: auto;
   width: calc(100% - 32px);
 }
 
+.bar-chart__bar-container {
+  text-align: center;
+}
+
 .bar-chart__bar {
-  background-color: var(--accent);
+  background-color: var(--primary);
   width: 32px;
+}
+
+.bar-chart__bar-label {
+  font-size: 12px;
 }
 
 .bar-chart__x-axis {

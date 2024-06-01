@@ -11,9 +11,10 @@ const DUMMY_DATASET = [
   { key: '31 May', value: 36 },
   { key: '1 Jun', value: 35 },
   { key: '2 Jun', value: 3 },
+
 ];
 
-const PX_PER_UNIT = 8;
+const PX_PER_UNIT = 6;
 
 const Statistics = () => {
   return (
@@ -51,7 +52,10 @@ const BarChart = ({ data, ylim, yIncrement }) => {
       </div>
       <div className="bar-chart__bars">
         {data.map((item) => (
-          <div key={item.key} className="bar-chart__bar" style={{ height: item.value * PX_PER_UNIT }} />
+          <div key={item.key} className="bar-chart__bar-container">
+            <span className="bar-chart__bar-label">{item.value}</span>
+            <div className="bar-chart__bar" style={{ height: item.value * PX_PER_UNIT }} />
+          </div>
         ))}
       </div>
       <div className="bar-chart__x-axis">
