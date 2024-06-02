@@ -75,7 +75,14 @@
 /* Modal beside */
 .modal-beside {
   display: flex;
-  gap: 8px
+  gap: 8px;
+  height: 100%;
+}
+
+.modal-beside > *{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Modal footer */

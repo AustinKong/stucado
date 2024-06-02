@@ -1,5 +1,4 @@
 import { setTasks } from '@data/slices/tasksSlice';
-
 import { store } from '@data/store';
 
 // Retrieve tasks from backend, called once on app start
