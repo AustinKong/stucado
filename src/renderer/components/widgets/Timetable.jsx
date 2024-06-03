@@ -1,251 +1,168 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { Upload, CalendarBlank } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 
-import { uploadTimetable } from '@services/timetable';
-
 import { DaysOfWeek } from '@shared/constants';
-
+import { Widget, InteractionButton } from '@components/widgets/Widget';
+import {
+  Modal,
+  ModalTextInput,
+  ModalFooter,
+  ModalButtonPrimary,
+  ModalButtonSecondary,
+  ModalNotice
+} from '@components/generic/Modal';
+import { uploadTimetable } from '@services/timetable';
 import '@styles/widgets/timetable.css';
-import UploadIcon from '@assets/icons/upload.svg?react';
-import Modal from '@components/generic/Modal';
 
-const PERCENTAGE_PER_MINUTE = 100 / 60 / 24;
-
-const COLORS = [
-  '#FF6F61', // Coral
-  '#6B5B95', // Royal Purple
-  '#88B04B', // Yellow-Green
-  '#F7CAC9', // Rose Quartz
-  '#92A8D1', // Serenity
-  '#F7786B', // Peach Echo
-];
+// Minutes since midnight in increments of 15
+const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
+// 48px per 15 minutes
+const PX_PER_MINUTE = (48 * 4) / 60;
 
 const Timetable = () => {
-  const timetable = useSelector((state) => state.timetable);
-  const [date, setDate] = useState(new Date());
+  const schedule = useSelector((state) => state.timetable);
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false);
-  const [inputUrl, setInputUrl] = useState('');
 
   useEffect(() => {
-    const interval = setInterval(
-      () => {
-        setDate(new Date());
-      },
-      60 * 1000 - new Date().getMilliseconds()
-    );
-    // To cleanup and prevent memory leaks
+    handleRealTime();
+    const interval = setInterval(handleRealTime, 60000 - new Date().getSeconds() * 1000);
     return () => clearInterval(interval);
-  });
-
-  const handleSubmitUrl = () => {
-    void uploadTimetable(inputUrl);
-    setUploadModalIsOpen(false);
-    setInputUrl('');
-  };
-
-  return (
-    <div className="timetable">
-      <h2 className="timetable__title">
-        Schedule &nbsp;
-        <span className="timetable__subtitle">({DaysOfWeek[date.getDay()]})</span>
-        <UploadIcon className="timetable__upload" onClick={() => setUploadModalIsOpen(!uploadModalIsOpen)} />
-      </h2>
-
-      <div className="timetable__content">
-        {/* Hours of the day (12 AM ... 12 PM) on the top */}
-        <div className="timetable__hours">
-          {Array.from({ length: 25 }, (_, index) => index).map((time) => (
-            <time
-              key={time}
-              className="timetable__hour"
-              style={{
-                left: `${time * 60 * PERCENTAGE_PER_MINUTE}%`,
-              }}
-            >
-              {+time > 12 ? `${time - 12} PM` : +time === 0 ? '12 PM' : `${time} AM`}
-            </time>
-          ))}
-        </div>
-
-        {/* Timetable slots */}
-        <ol className="timetable__days">
-          {DaysOfWeek.map((day, index) => (
-            <li
-              key={index}
-              className={`timetable__day ${day === DaysOfWeek[date.getDay() - 1] ? 'timetable__day--active' : ''}`}
-            >
-              <div key={index} className="timetable__day-of-week">
-                <span>{day.substring(0, 3)}</span>
-              </div>
-
-              <div className="timetable__slot-container">
-                {timetable
-                  .filter((slot) => slot.schedule.day === day)
-                  .map((slot, index) => (
-                    <Slot
-                      key={index}
-                      title={slot.title}
-                      description={slot.description}
-                      color={COLORS[slot.id % COLORS.length]}
-                      left={`${slot.schedule.startTime * PERCENTAGE_PER_MINUTE}%`}
-                      width={`${(slot.schedule.endTime - slot.schedule.startTime) * PERCENTAGE_PER_MINUTE}%`}
-                    />
-                  ))}
-              </div>
-            </li>
-          ))}
-          <div
-            className="timetable__indicator"
-            style={{
-              left: `${(date.getHours() * 60 + date.getMinutes()) * PERCENTAGE_PER_MINUTE}%`,
-            }}
-          >
-            <p className="timetable__indicator-time">
-              {Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-                .format(date)
-                .substring(0, 5)}
-            </p>
-            <div className="timetable__indicator-line" />
-          </div>
-        </ol>
-      </div>
-
-      <Modal isOpen={uploadModalIsOpen} onClose={() => setUploadModalIsOpen(false)}>
-        <input
-          type="text"
-          placeholder="Paste your NUSMods URL here..."
-          value={inputUrl}
-          onChange={(e) => setInputUrl(e.target.value)}
-        />
-        <button onClick={handleSubmitUrl}>Submit URL</button>
-      </Modal>
-    </div>
-  );
-};
-
-const Slot = ({ title, description, color, left, width }) => {
-  return (
-    <div
-      className="timetable-slot"
-      style={{
-        color,
-        left,
-        width,
-      }}
-    >
-      <div className="timetable-slot__trim" style={{ backgroundColor: color }} />
-      <div className="timetable-slot__content">
-        <h3 className="timetable-slot__title">{title}</h3>
-        <p className="timetable-slot__description">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-/*
-const Timetable: React.FC = () => {
-  const timetable: TimetableSlot[] = useSelector((state: RootState) => state.timetable);
-
-  const [inputUrl, setInputUrl] = useState<string>('');
-  const [uploadModalIsOpen, setUploadModalIsOpen] = useState<boolean>(false);
-
-  const timetableRef = React.useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (timetableRef.current) {
-      timetableRef.current.scrollTop = (new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE * 16 - 300;
-    }
   }, []);
 
-  const dayOfWeekToday = DaysOfWeek[new Date().getDay() - 1];
+  const scrollableRef = useRef(null);
+  const currentTimeRef = useRef(null);
 
-  const handleSubmitUrl = (url: string) => {
-    setInputUrl('');
-    void uploadTimetable(url);
+  const handleRealTime = () => {
+    const minutesSinceMidnight = new Date().getHours() * 60 + new Date().getMinutes();
+    // Subtract a default offset of 2 hours before
+    scrollableRef.current.scrollLeft = minutesSinceMidnight * PX_PER_MINUTE - PX_PER_MINUTE * 120;
+    currentTimeRef.current.style.left = `${minutesSinceMidnight * PX_PER_MINUTE}px`;
   };
 
   return (
-    <div className='widget timetable'>
-      <span className='widget__header'>
-        <h2 className='widget__title'>Schedule</h2>
-        <h2 className='widget__subtitle'>({dayOfWeekToday})</h2>
-        <button
-          className='timetable__upload'
-          onClick={() => setUploadModalIsOpen(true)}
-        >
-          <UploadIcon />
-        </button>
-      </span>
-
-      <div 
-        className='timetable__timetable'
-        ref={timetableRef}
-      >
-        <div className='timetable__hours'>
-          {Array.from({ length: 25 }, (_, index) => index)
-            .map(time => (
-              <time 
-                key={time}
-                style={{ top: `${(time * 60) * REM_PER_MINUTE}rem` }}
-              >
-                {+time.toLocaleString() > 12 ? `${time - 12} PM` : `${time} AM`}
-              </time>
+    <Widget
+      className="timetable"
+      title={'Schedule (Monday)'}
+      interaction={
+        <InteractionButton icon={<Upload />} text="Upload timetable" onClick={() => setUploadModalIsOpen(true)} />
+      }
+    >
+      <div className="timetable__container">
+        <div className="timetable__days">
+          {DaysOfWeek.map((day) => (
+            <TimetableDay key={day} day={day} />
+          ))}
+        </div>
+        <div className="timetable__scrollable" ref={scrollableRef}>
+          <div className="timetable__hours">
+            {TIME.map((time) => (
+              <TimetableHour key={time} time={`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`} />
             ))}
-        </div>
-
-        <div className='timetable__slots'>
-          {timetable
-            .filter(slot => slot.schedule.day === dayOfWeekToday)
-            .map((slot, index) => {
-              return <TimetableSlotItem 
-                key={index} 
-                slot={slot} 
-                offset={REM_PER_MINUTE * slot.schedule.startTime}
-                height={REM_PER_MINUTE * (slot.schedule.endTime - slot.schedule.startTime)}
-              />
-            })
-          }
-        </div>
-
-        <div 
-          className='timetable__current-time-indicator'
-          style={{ top: `${(new Date().getHours() * 60 + new Date().getMinutes()) * REM_PER_MINUTE}rem` }}
-        >
-          <time>{`${new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours()}:${new Date().getMinutes() > 9 ? new Date().getMinutes() : '0' + new Date().getMinutes()}`}</time>
-          <div className='timetable__current-time-line' />
+          </div>
+          <div className="timetable__slots">
+            {DaysOfWeek.map((day, index) => (
+              <div
+                key={day}
+                className={
+                  index === new Date().getDay()
+                    ? 'timetable__slots-day timetable__slots-day--active'
+                    : 'timetable__slots-day'
+                }
+              >
+                {schedule
+                  .filter((slot) => slot.schedule.day === day)
+                  .reduce((acc, curr, index, arr) => {
+                    return acc.concat(
+                      <TimetableSlot
+                        key={index}
+                        slot={curr}
+                        width={PX_PER_MINUTE * (curr.schedule.endTime - curr.schedule.startTime)}
+                        marginLeft={
+                          index === 0
+                            ? PX_PER_MINUTE * curr.schedule.startTime
+                            : PX_PER_MINUTE * (curr.schedule.startTime - arr[index - 1].schedule.endTime)
+                        }
+                      />
+                    );
+                  }, [])}
+              </div>
+            ))}
+          </div>
+          <div className="timetable__current-time" ref={currentTimeRef} />
         </div>
       </div>
+      <UploadModal isOpen={uploadModalIsOpen} onClose={() => setUploadModalIsOpen(false)} />
+    </Widget>
+  );
+};
 
-      <Modal isOpen={uploadModalIsOpen} onClose={() => setUploadModalIsOpen(false)}>
-        <input
-          type='text'
-          placeholder='Paste your NUSMods URL here...'
-          value={inputUrl}
-          onChange={(e) => setInputUrl(e.target.value)}
-        />
-        {inputUrl && (
-          <button onClick={() => handleSubmitUrl(inputUrl)}>Submit URL</button>
-        )}
-      </Modal>
-
+const TimetableHour = ({ time }) => {
+  return (
+    <div className="timetable-hour">
+      <time className="timetable-hour__text">{time}</time>
     </div>
   );
 };
 
-const TimetableSlotItem: React.FC<{ slot: TimetableSlot, offset: number, height: number }> = ({ slot, offset, height }) => {
+const TimetableDay = ({ day }) => {
   return (
-    <div 
-      className='timetable__slot'
-      style={{ top: `${offset}rem`, height: `${height}rem` }}
-    >
-      <p className='timetable__item-title'>{slot.title}</p>
-      <p className='timetable__item-description'>{slot.description}</p>
+    <div className="timetable-day">
+      <span
+        className={
+          day === DaysOfWeek[new Date().getDay()]
+            ? 'timetable-day__text timetable-day__text--active'
+            : 'timetable-day__text'
+        }
+      >
+        {day.slice(0, 3)}
+      </span>
     </div>
   );
-}
+};
 
-export default Timetable;
+const TimetableSlot = ({ slot, width, marginLeft }) => {
+  return (
+    <div className="timetable-slot" style={{ width, marginLeft }}>
+      <CalendarBlank className="timetable-slot__icon" size="20px" />
+      <span className="timetable-slot__title">{slot.title}</span>
+    </div>
+  );
+};
 
-*/
+const UploadModal = ({ isOpen, onClose }) => {
+  const [formContent, setFormContent] = useState({ url: '' });
+
+  const handleChange = (event) => {
+    setFormContent({ ...formContent, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    void uploadTimetable(formContent.url);
+    setFormContent({ url: '' });
+    onClose();
+  };
+
+  return (
+    <Modal title="Upload timetable" subtitle="Paste your NUS Mods timetable URL here" isOpen={isOpen} onClose={onClose}>
+      <ModalNotice title="Notice">
+        New academic year starts on August 1st! Any timetables uploaded before that will have last year&apos;s classes.
+        This is because NUS Mods API (which we use) does not update their data that early.
+      </ModalNotice>
+      <ModalTextInput
+        title="Timetable URL"
+        nameKey="url"
+        value={formContent.url}
+        onChange={handleChange}
+        required={true}
+      />
+      <ModalFooter
+        left={<ModalButtonSecondary text="Cancel" onClick={onClose} />}
+        right={<ModalButtonPrimary text="Submit" onClick={handleSubmit} />}
+      />
+    </Modal>
+  );
+};
 
 export default Timetable;

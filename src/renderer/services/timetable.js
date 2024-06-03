@@ -14,6 +14,5 @@ export const retrieveTimetable = async () => {
 // TODO: URL validation
 export const uploadTimetable = async (url) => {
   const timetable = await window.timetableAPI.uploadTimetable(url);
-  console.log(timetable);
   store.dispatch(setTimetable(timetable));
 };

@@ -6,12 +6,15 @@ import icon from '../../resources/icon.png?asset';
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
 import { uploadTimetable, getTimetable } from '@services/timetable';
 import { runModel } from '@services/insights';
+import { triggerNotification } from '@services/pomodoro';
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1200,
+    minWidth: 1200,
+    height: 800,
+    minHeight: 800,
     show: false,
     autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -85,4 +88,6 @@ app.whenReady().then(() => {
   ipcMain.handle('get-timetable', getTimetable);
 
   ipcMain.handle('run-model', runModel);
+
+  ipcMain.on('trigger-notification', triggerNotification);
 });

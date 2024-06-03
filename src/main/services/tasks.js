@@ -25,9 +25,10 @@ export async function getTasks() {
  * @param estimatedTime - The user estimated time for completing the task.
  * @returns A promise that resolves to the created task.
  */
-export function createTask(_event, content, estimatedTime) {
+export function createTask(_event, title, description, estimatedTime) {
   const task = {
-    content,
+    title,
+    description,
     status: 'Pending',
     id: taskUID++,
     estimatedTime,

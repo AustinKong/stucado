@@ -5,7 +5,7 @@ import { retrieveTasks } from '@services/tasks';
 import { retrieveTimetable } from '@services/timetable';
 
 import Dashboard from '@components/pages/Dashboard';
-import Layout from '@components/Layout';
+import Layout from '@components/generic/Layout';
 
 function App() {
   useEffect(() => {

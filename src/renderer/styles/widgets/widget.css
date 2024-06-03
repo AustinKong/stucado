@@ -1,0 +1,38 @@
+/* Generic widget styles */
+.widget {
+  padding: 20px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: rgba(149, 157, 165, 0.074) 0px 8px 24px;
+}
+
+.widget-content {
+  padding: 16px;
+  height: calc(100% - 32px);
+}
+
+/* Header */
+.widget-header {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.widget-header__title {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+/* Interaction button */
+.widget__interaction-button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  gap: 4px;
+}
+
+.widget__interaction-button:hover {
+  cursor: pointer;
+}

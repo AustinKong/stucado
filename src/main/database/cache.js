@@ -32,7 +32,8 @@ export async function createCache() {
   await db.exec(`
 		CREATE TABLE IF NOT EXISTS tasks (
 			id INTEGER PRIMARY KEY,
-			content TEXT,
+			title TEXT,
+      description TEXT,
 			status TEXT,
 			estimated_time INTEGER,
 			begin_time INTEGER,
@@ -52,20 +53,21 @@ export async function deleteCache() {
 // Create task
 export async function createTask(task) {
   const db = await createCache();
-  const { id, content, status, estimatedTime, beginTime, endTime } = task;
+  const { id, title, description, status, estimatedTime, beginTime, endTime } = task;
 
   await db.run(
     `
-		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
-		VALUES (?, ?, ?, ?, ?, ?)
+		INSERT INTO tasks (id, title, description, status, estimated_time, begin_time, end_time)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
 		ON CONFLICT(id) DO UPDATE SET 
-			content = EXCLUDED.content,
+			title = EXCLUDED.title,
+      description = EXCLUDED.description,
 			status = EXCLUDED.status,
 			estimated_time = EXCLUDED.estimated_time,
 			begin_time = EXCLUDED.begin_time,
 			end_time = EXCLUDED.end_time;
 	`,
-    [id, content, status, estimatedTime, beginTime, endTime]
+    [id, title, description, status, estimatedTime, beginTime, endTime]
   );
 }
 
@@ -76,7 +78,8 @@ export async function readTasks() {
     const tasks = await db.all(`
       SELECT 
         id,
-        content, 
+        title,
+        description,
         status, 
         estimated_time AS estimatedTime, 
         begin_time AS beginTime, 
@@ -96,7 +99,8 @@ export async function readTask(id) {
     const rawTask = await db.get('SELECT * FROM tasks WHERE id = ?', id);
     const formattedTask = {
       id: rawTask.id,
-      content: rawTask.content,
+      title: rawTask.title,
+      description: rawTask.description,
       status: rawTask.status,
       estimatedTime: rawTask.estimated_time,
       beginTime: rawTask.begin_time,
@@ -112,20 +116,21 @@ export async function readTask(id) {
 //Update task
 export async function updateTask(task) {
   const db = await createCache();
-  const { id, content, status, estimatedTime, beginTime, endTime } = task;
+  const { id, title, description, status, estimatedTime, beginTime, endTime } = task;
 
   await db.run(
     `
-		INSERT INTO tasks (id, content, status, estimated_time, begin_time, end_time)
-		VALUES (?, ?, ?, ?, ?, ?)
+		INSERT INTO tasks (id, title, description, status, estimated_time, begin_time, end_time)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
 		ON CONFLICT(id) DO UPDATE SET 
-			content = EXCLUDED.content,
+      title = EXCLUDED.title,
+      description = EXCLUDED.description,
 			status = EXCLUDED.status,
 			estimated_time = EXCLUDED.estimated_time,
 			begin_time = EXCLUDED.begin_time,
 			end_time = EXCLUDED.end_time;
 	`,
-    [id, content, status, estimatedTime, beginTime, endTime]
+    [id, title, description, status, estimatedTime, beginTime, endTime]
   );
 }
 

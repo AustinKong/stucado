@@ -1,5 +1,4 @@
 import { setTasks } from '@data/slices/tasksSlice';
-
 import { store } from '@data/store';
 
 // Retrieve tasks from backend, called once on app start
@@ -8,8 +7,8 @@ export const retrieveTasks = async () => {
   store.dispatch(setTasks(tasks));
 };
 
-export const createTask = async (content, estimatedTime) => {
-  const task = await window.tasksAPI.createTask(content, estimatedTime);
+export const createTask = async (title, description, estimatedTime) => {
+  const task = await window.tasksAPI.createTask(title, description, estimatedTime);
   store.dispatch(setTasks([...store.getState().tasks, task]));
 };
 
@@ -23,8 +22,8 @@ export const incrementTaskStatus = async (id) => {
   task = await window.tasksAPI.updateTask({
     ...task,
     status: task.status === 'Pending' ? 'InProgress' : 'Completed',
-    beginTime: task.status === 'Pending' ? new Date() : task.beginTime,
-    endTime: task.status === 'InProgress' ? new Date() : task.endTime,
+    beginTime: task.status === 'Pending' ? new Date().getTime() : task.beginTime,
+    endTime: task.status === 'InProgress' ? new Date().getTime() : task.endTime,
   });
   store.dispatch(setTasks(store.getState().tasks.map((t) => (t.id === id ? task : t))));
 };
