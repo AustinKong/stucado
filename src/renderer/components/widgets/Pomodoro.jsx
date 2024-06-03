@@ -18,8 +18,7 @@ const FULL_DASH_ARRAY = 2 * Math.PI * 45;
 
 const Pomodoro = () => {
   const [editPomodoroModalIsOpen, setEditPomodoroModalIsOpen] = useState(false);
-  // https://react.dev/learn/referencing-values-with-refs
-  // TODO: Use this for the timeout id
+
   return (
     <Widget
       className="pomodoro"
@@ -122,8 +121,13 @@ const PomodoroControls = () => {
 
 const EditPomodoroModal = ({ isOpen, onClose }) => {
   const pomodoroSettings = useSelector((state) => state.pomodoro.settings);
+  const pomodoroSettingsConverted = {
+    workDurationMinutes: Math.floor(pomodoroSettings.workDuration / 60),
+    shortBreakDurationMinutes: Math.floor(pomodoroSettings.shortBreakDuration / 60),
+    longBreakDurationMinutes: Math.floor(pomodoroSettings.longBreakDuration / 60),
+  };
 
-  const [formContent, setFormContent] = useState(pomodoroSettings);
+  const [formContent, setFormContent] = useState(pomodoroSettingsConverted);
 
   const handleChange = (event) => {
     setFormContent({ ...formContent, [event.target.name]: event.target.value });
@@ -132,44 +136,47 @@ const EditPomodoroModal = ({ isOpen, onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     void updatePomodoroDurations(
-      formContent.workDuration,
-      formContent.shortBreakDuration,
-      formContent.longBreakDuration
+      formContent.workDurationMinutes * 60,
+      formContent.shortBreakDurationMinutes * 60,
+      formContent.longBreakDurationMinutes * 60
     );
     onClose();
   };
 
   const handleCancel = (event) => {
     event.preventDefault();
-    setFormContent(pomodoroSettings);
+    setFormContent(pomodoroSettingsConverted);
     onClose();
   };
 
   return (
     <Modal
       title="Edit Pomodoro Settings"
-      subtitle="Edit Pomodoro duration settings (units in seconds)"
+      subtitle="Edit Pomodoro duration (minutes) settings"
       isOpen={isOpen}
       onClose={onClose}
     >
       <ModalBeside>
         <ModalNumberInput
           title="Work duration"
-          nameKey="workDuration"
-          value={formContent.workDuration}
+          nameKey="workDurationMinutes"
+          value={formContent.workDurationMinutes}
           onChange={handleChange}
+          required={true}
         />
         <ModalNumberInput
           title="Short break duration"
-          nameKey="shortBreakDuration"
-          value={formContent.shortBreakDuration}
+          nameKey="shortBreakDurationMinutes"
+          value={formContent.shortBreakDurationMinutes}
           onChange={handleChange}
+          required={true}
         />
         <ModalNumberInput
           title="Long break duration"
-          nameKey="longBreakDuration"
-          value={formContent.longBreakDuration}
+          nameKey="longBreakDurationMinutes"
+          value={formContent.longBreakDurationMinutes}
           onChange={handleChange}
+          required={true}
         />
       </ModalBeside>
       <ModalFooter
