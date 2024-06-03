@@ -16,6 +16,7 @@ export const startPomodoro = async () => {
   store.dispatch(setPomodoroTimer({ isRunning: true }));
   // If timer is at 0, reset it
   if (store.getState().pomodoro.timer.timeLeft <= 0) {
+    await window.pomodoroAPI.triggerNotification(store.getState().pomodoro.timer.state);
     store.dispatch(
       setPomodoroTimer({ timeLeft: getStateDuration(store.getState().pomodoro.timer.state), percentageLeft: 100 })
     );
@@ -92,7 +93,7 @@ const getNextState = (state, sessions) => {
     default:
       return 0;
   }
-}
+};
 
 export const updatePomodoroDurations = async (workDuration, shortBreakDuration, longBreakDuration) => {
   store.dispatch(setPomodoroSettings({ workDuration, shortBreakDuration, longBreakDuration }));

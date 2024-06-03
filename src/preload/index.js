@@ -18,3 +18,8 @@ contextBridge.exposeInMainWorld('timetableAPI', {
 contextBridge.exposeInMainWorld('insightsAPI', {
   runModel: (inputs) => ipcRenderer.invoke('run-model', inputs),
 });
+
+contextBridge.exposeInMainWorld('pomodoroAPI', {
+  // getPomodoroSettings: () => ipcRenderer.invoke('get-pomodoro-settings'),
+  triggerNotification: (state) => ipcRenderer.send('trigger-notification', state),
+});

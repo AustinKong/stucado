@@ -140,12 +140,8 @@ const AddTaskModal = ({ isOpen, onClose }) => {
         />
       </ModalBeside>
       <ModalFooter
-        right={
-          <>
-            <ModalButtonSecondary text="Cancel" onClick={handleCancel} />
-            <ModalButtonPrimary text="Submit" onClick={handleSubmit} />
-          </>
-        }
+        left={<ModalButtonSecondary text="Cancel" onClick={handleCancel} />}
+        right={<ModalButtonPrimary text="Submit" onClick={handleSubmit} />}
       />
     </Modal>
   );

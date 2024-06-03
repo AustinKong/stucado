@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain, Notification } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
@@ -6,6 +6,7 @@ import icon from '../../resources/icon.png?asset';
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
 import { uploadTimetable, getTimetable } from '@services/timetable';
 import { runModel } from '@services/insights';
+import { triggerNotification } from '@services/pomodoro';
 
 function createWindow() {
   // Create the browser window.
@@ -87,4 +88,6 @@ app.whenReady().then(() => {
   ipcMain.handle('get-timetable', getTimetable);
 
   ipcMain.handle('run-model', runModel);
+
+  ipcMain.on('trigger-notification', triggerNotification);
 });

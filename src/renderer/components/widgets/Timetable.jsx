@@ -158,12 +158,8 @@ const UploadModal = ({ isOpen, onClose }) => {
         required={true}
       />
       <ModalFooter
-        right={
-          <>
-            <ModalButtonSecondary text="Cancel" onClick={onClose} />
-            <ModalButtonPrimary text="Submit" onClick={handleSubmit} />
-          </>
-        }
+        left={<ModalButtonSecondary text="Cancel" onClick={onClose} />}
+        right={<ModalButtonPrimary text="Submit" onClick={handleSubmit} />}
       />
     </Modal>
   );
