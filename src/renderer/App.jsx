@@ -6,12 +6,19 @@ import { retrieveTimetable } from '@services/timetable';
 
 import Dashboard from '@components/pages/Dashboard';
 import Layout from '@components/generic/Layout';
+import Onboarding from '@components/pages/Onboarding';
 
 function App() {
+  const requiresOnboarding = true;
+
   useEffect(() => {
     void retrieveTasks();
     void retrieveTimetable();
   }, []);
+
+  if (requiresOnboarding) {
+    return <Onboarding />;
+  }
 
   return (
     <HashRouter>

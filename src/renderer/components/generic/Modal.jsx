@@ -1,14 +1,16 @@
 import ReactDOM from 'react-dom';
 import { X, CaretDown, CaretUp } from '@phosphor-icons/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import '@styles/generic/modal.css';
 
 export const Modal = ({ isOpen, onClose, title, subtitle, children }) => {
+  /*
   useEffect(() => {
     // Disables scrolling when the modal is open
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
   }, [isOpen]);
+  */
 
   if (!isOpen) return null;
 
