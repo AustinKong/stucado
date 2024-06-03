@@ -5,7 +5,7 @@ import { ipcRenderer, contextBridge } from 'electron';
 // just add to the DOM global.
 contextBridge.exposeInMainWorld('tasksAPI', {
   getTasks: () => ipcRenderer.invoke('get-tasks'),
-  createTask: (content, estimatedTime) => ipcRenderer.invoke('create-task', content, estimatedTime),
+  createTask: (title, description, estimatedTime) => ipcRenderer.invoke('create-task', title, description, estimatedTime),
   updateTask: (task) => ipcRenderer.invoke('update-task', task),
   deleteTask: (id) => ipcRenderer.invoke('delete-task', id),
 });

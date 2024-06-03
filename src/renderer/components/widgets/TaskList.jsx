@@ -73,8 +73,8 @@ const TaskItem = ({ task }) => {
         onContextMenu={handleToggleTaskStatus}
       />
       <div className="task-item__content">
-        <p className="task-item__title">{task.content}</p>
-        <p className="task-item__description">Yet to add task descriptions</p>
+        <p className="task-item__title">{task.title}</p>
+        <p className="task-item__description">{task.description}</p>
       </div>
       <DotsThreeCircle
         className="task-item__edit"
@@ -89,7 +89,14 @@ const TaskItem = ({ task }) => {
 };
 
 const AddTaskModal = ({ isOpen, onClose }) => {
-  const [formContent, setFormContent] = useState({ content: '', estimatedTime: 0, description: '' });
+  const defaultState = {
+    title: '',
+    estimatedTimeHours: 0,
+    estimatedTimeMinutes: 15,
+    description: '',
+  };
+
+  const [formContent, setFormContent] = useState(defaultState);
 
   const handleChange = (event) => {
     setFormContent({ ...formContent, [event.target.name]: event.target.value });
@@ -97,44 +104,41 @@ const AddTaskModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    void createTask(formContent.content, formContent.estimatedTime);
-    setFormContent({ content: '', estimatedTime: 0, description: '' });
+    void createTask(
+      formContent.title,
+      formContent.description,
+      formContent.estimatedTimeHours * 60 + formContent.estimatedTimeMinutes
+    );
+    setFormContent(defaultState);
     onClose();
   };
 
   const handleCancel = (event) => {
     event.preventDefault();
-    setFormContent({ content: '', estimatedTime: 0, description: '' });
+    setFormContent(defaultState);
     onClose();
   };
 
   return (
     <Modal title="Add task" subtitle="Add a new task" isOpen={isOpen} onClose={onClose}>
+      <ModalTextInput title="Title" nameKey="title" value={formContent.title} onChange={handleChange} required={true} />
       <ModalTextInput
-        title="Content"
-        nameKey="content"
-        value={formContent.content}
-        onChange={handleChange}
-        required={true}
-      />
-      <ModalTextInput
-        title="Description (optional)"
+        title="Description"
         nameKey="description"
         value={formContent.description}
         onChange={handleChange}
       />
       <ModalBeside>
         <ModalNumberInput
-          title="Estimated time (minutes)"
-          nameKey="estimatedTime"
-          value={formContent.estimatedTime}
+          title="Estimated time (hours)"
+          nameKey="estimatedTimeHours"
+          value={formContent.estimatedTimeHours}
           onChange={handleChange}
-          required={true}
         />
         <ModalNumberInput
-          title="Estimated time (hours)"
-          nameKey="estimatedTime"
-          value={formContent.estimatedTime}
+          title="Estimated time (minutes)"
+          nameKey="estimatedTimeMinutes"
+          value={formContent.estimatedTimeMinutes}
           onChange={handleChange}
           required={true}
         />
@@ -148,7 +152,14 @@ const AddTaskModal = ({ isOpen, onClose }) => {
 };
 
 const EditTaskModal = ({ task, isOpen, onClose }) => {
-  const [formContent, setFormContent] = useState({ content: task.content, estimatedTime: task.estimatedTime });
+  const defaultState = {
+    title: task.title,
+    description: task.description,
+    estimatedTimeHours: Math.floor(task.estimatedTime / 60),
+    estimatedTimeMinutes: task.estimatedTime % 60,
+  };
+
+  const [formContent, setFormContent] = useState(defaultState);
 
   const handleChange = (event) => {
     setFormContent({ ...formContent, [event.target.name]: event.target.value });
@@ -156,7 +167,12 @@ const EditTaskModal = ({ task, isOpen, onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    void editTask({ ...task, ...formContent });
+    void editTask({
+      ...task,
+      title: formContent.title,
+      description: formContent.description,
+      estimatedTime: formContent.estimatedTimeHours * 60 + formContent.estimatedTimeMinutes,
+    });
     onClose();
   };
 
@@ -168,31 +184,30 @@ const EditTaskModal = ({ task, isOpen, onClose }) => {
 
   const handleCancel = (event) => {
     event.preventDefault();
-    setFormContent({ content: task.content, estimatedTime: task.estimatedTime });
+    setFormContent(defaultState);
     onClose();
   };
 
   return (
     <Modal title="Edit task" subtitle="Modify task information" isOpen={isOpen} onClose={onClose}>
+      <ModalTextInput title="Title" nameKey="title" value={formContent.title} onChange={handleChange} required={true} />
       <ModalTextInput
-        title="Content"
-        nameKey="content"
-        value={formContent.content}
+        title="Description"
+        nameKey="description"
+        value={formContent.description}
         onChange={handleChange}
-        required={true}
       />
       <ModalBeside>
         <ModalNumberInput
-          title="Estimated time (minutes)"
-          nameKey="estimatedTime"
-          value={formContent.estimatedTime}
+          title="Estimated time (hours)"
+          nameKey="estimatedTimeHours"
+          value={formContent.estimatedTimeHours}
           onChange={handleChange}
-          required={true}
         />
         <ModalNumberInput
-          title="Estimated time (hours)"
-          nameKey="estimatedTime"
-          value={formContent.estimatedTime}
+          title="Estimated time (minutes)"
+          nameKey="estimatedTimeMinutes"
+          value={formContent.estimatedTimeMinutes}
           onChange={handleChange}
           required={true}
         />

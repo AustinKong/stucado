@@ -7,8 +7,8 @@ export const retrieveTasks = async () => {
   store.dispatch(setTasks(tasks));
 };
 
-export const createTask = async (content, estimatedTime) => {
-  const task = await window.tasksAPI.createTask(content, estimatedTime);
+export const createTask = async (title, description, estimatedTime) => {
+  const task = await window.tasksAPI.createTask(title, description, estimatedTime);
   store.dispatch(setTasks([...store.getState().tasks, task]));
 };
 

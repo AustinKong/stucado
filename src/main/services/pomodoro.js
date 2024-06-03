@@ -15,7 +15,7 @@ export async function triggerNotification(_event, state) {
       message = 'Take a short break, be back soon!';
       break;
     case 'longBreak':
-      message = 'You deserve a long break!'
+      message = 'You deserve a long break!';
       break;
   }
 
