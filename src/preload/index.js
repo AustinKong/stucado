@@ -17,9 +17,16 @@ contextBridge.exposeInMainWorld('timetableAPI', {
 
 contextBridge.exposeInMainWorld('insightsAPI', {
   runModel: (inputs) => ipcRenderer.invoke('run-model', inputs),
+  initializeModel: (habit) => ipcRenderer.send('initialize-model', habit),
 });
 
 contextBridge.exposeInMainWorld('pomodoroAPI', {
   // getPomodoroSettings: () => ipcRenderer.invoke('get-pomodoro-settings'),
   triggerNotification: (state) => ipcRenderer.send('trigger-notification', state),
+});
+
+contextBridge.exposeInMainWorld('settingsAPI', {
+  getSettings: () => ipcRenderer.invoke('get-settings'),
+  updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
+  completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
 });

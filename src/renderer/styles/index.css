@@ -1,21 +1,74 @@
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f3f3f3;
-  --bg-tertiary: #e6e6e684;
+  /* Light mode colors */
+  --light-bg-primary: #ffffff;
+  --light-bg-secondary: #f3f3f3;
+  --light-bg-tertiary: #e6e6e684;
 
-  --text-primary: #1c1c1c;
-  --text-secondary: #a4a4a4;
-  --text-inverted: #ffffff;
+  --light-text-primary: #1c1c1c;
+  --light-text-secondary: #a4a4a4;
+  --light-text-inverted: #ffffff;
 
-  --border-primary: #969696;
+  --light-border-primary: #969696;
 
-  --accent: #496989;
-  --secondary: #E2F4C5;
-  --primary: #A8CD9F;
+  --light-accent: #496989;
+  --light-secondary: #E2F4C5;
+  --light-primary: #A8CD9F;
 
+  /* Dark mode colors */
+  --dark-bg-primary: #1c1c1c;
+  --dark-bg-secondary: #2c2c2c;
+  --dark-bg-tertiary: #3c3c3c;
+
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #a4a4a4;
+  --dark-text-inverted: #1c1c1c;
+
+  --dark-border-primary: #969696;
+
+  --dark-accent: #b7dbff;
+  --dark-secondary: #E2F4C5;
+  --dark-primary: #A8CD9F;
+
+  /* Some default colors */
   --traffic-light-red: #ff5f58;
   --traffic-light-yellow: #ffbd2e;
   --traffic-light-green: #28c76f;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: var(--light-bg-primary);
+    --bg-secondary: var(--light-bg-secondary);
+    --bg-tertiary: var(--light-bg-tertiary);
+
+    --text-primary: var(--light-text-primary);
+    --text-secondary: var(--light-text-secondary);
+    --text-inverted: var(--light-text-inverted);
+
+    --border-primary: var(--light-border-primary);
+
+    --accent: var(--light-accent);
+    --secondary: var(--light-secondary);
+    --primary: var(--light-primary);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-inverted: var(--dark-text-inverted);
+
+    --border-primary: var(--dark-border-primary);
+
+    --accent: var(--dark-accent);
+    --secondary: var(--dark-secondary);
+    --primary: var(--dark-primary);
+  }
 }
 
 @font-face {
@@ -40,7 +93,6 @@ html, body {
   font-family: roboto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  scrollbar-gutter: stable;
 }
 
 /* Some default styles */
