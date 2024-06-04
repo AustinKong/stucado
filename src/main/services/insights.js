@@ -10,3 +10,8 @@ function timeOfDayToCategorical(timeOfDay) {
   const timeOfDayIndex = Math.floor((((timeOfDay % 1440) / 60) * 8) / 24);
   return TimesOfDay[timeOfDayIndex];
 }
+
+export async function initializeModel(_event, habit) {
+  console.log('called initialize model from insights service @ main: ' + habit);
+  return habit;
+}

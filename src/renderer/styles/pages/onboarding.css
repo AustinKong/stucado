@@ -8,7 +8,7 @@
 /* Content (left side) section */
 .onboarding__content {
   height: 100%;
-  width: 50%;
+  width: 45%;
   border-radius: 32px 0 0 32px;
   background:
     linear-gradient(150deg, #ecedee, transparent 30%),
@@ -43,7 +43,7 @@
 
 /* Interaction (right side) section */
 .onboarding__interaction {
-  width: 50%;
+  width: 55%;
   height: 100%;
   border-radius: 0 32px 32px 0;
   background-color: var(--bg-secondary);
@@ -78,6 +78,14 @@
   border-radius: 8px;
   background-color: var(--accent);
   color: var(--text-inverted);
+  cursor: pointer;
+}
+
+.onboarding-interaction__button-secondary {
+  padding: 16px 32px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
   cursor: pointer;
 }
 
@@ -131,6 +139,91 @@
   height: 100%;
 }
 
+/* Upload section */
+.upload-section__instructions {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  width: 100%;
+}
 
+.upload-section__step {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--bg-secondary);
+}
+
+.upload-section__step-image {
+  width: 100%;
+}
+
+.upload-section__step-description {
+  height: 100%;
+  padding: 16px;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+}
+
+.upload-section__input {
+  all: unset;
+  margin: 32px 16px 0 16px;
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+/* Habits section */
+.habits-section__habits {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 70%;
+}
+
+.habits-section__habit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-primary);
+  box-shadow: rgba(149, 157, 165, 0.074) 0px 8px 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+
+  height: 33.33%;
+}
+
+.habits-section__habit--active {
+  background-color: var(--bg-primary);
+}
+
+.habits-section__habit-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px;
+}
+
+.habits-section__habit-title {
+  font-size: 24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.habits-section__habit-description {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.habits-section__habit-image {
+  height: 100%;
+}
 * {
 }

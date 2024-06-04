@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// All units in seconds
 const initialState = {
   theme: 'system',
+  hasOnboarded: false,
 };
 
 const settingsSlice = createSlice({

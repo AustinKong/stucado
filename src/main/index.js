@@ -5,8 +5,9 @@ import icon from '../../resources/icon.png?asset';
 
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
 import { uploadTimetable, getTimetable } from '@services/timetable';
-import { runModel } from '@services/insights';
+import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification } from '@services/pomodoro';
+import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
 
 function createWindow() {
   // Create the browser window.
@@ -88,6 +89,11 @@ app.whenReady().then(() => {
   ipcMain.handle('get-timetable', getTimetable);
 
   ipcMain.handle('run-model', runModel);
+  ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);
+
+  ipcMain.on('update-theme', updateTheme);
+  ipcMain.handle('get-settings', getSettings);
+  ipcMain.on('complete-onboarding', completeOnboarding);
 });
