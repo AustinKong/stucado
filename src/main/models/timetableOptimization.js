@@ -1,32 +1,44 @@
 import { DaysOfWeek } from '../../shared/constants.js';
+import { readTimetable, readTasks } from '../database/cache.js';
 
 export function getEmptySlots(timetable, startWork, endWork) {
-  const startWorkTime = startWork * 60; // 9:00 AM in minutes since midnight
-  const endWorkTime = endWork * 60; // 11:30 PM in minutes since midnight
+  const startWorkTime = startWork * 60;
+  const endWorkTime = endWork * 60;
 
   const emptySlots = DaysOfWeek.map((day) => ({
     day,
     slots: [],
   }));
 
-  // Organize timetable entries by day Sunday: [], Monday: [{slot1}], ...
+  // Organize timetable entries by day, { Sunday: [], Monday: [{slot1}], ... }
   const timetableByDay = DaysOfWeek.reduce((acc, day) => {
     acc[day] = timetable.filter((slot) => slot.schedule.day === day);
     return acc;
   }, {});
-  //console.log(timetableByDay);
 
   DaysOfWeek.forEach((day) => {
     const slots = timetableByDay[day].sort((a, b) => a.schedule.startTime - b.schedule.startTime);
-    //Find the first slot with startWorkTime as the startTime
-    //If there are schedule afterwards, use the schedule's startTime as the first slot's endTime
-    //Else use endWorkTime as the endTime of the empty slot
-    if (slots.length === 0 || slots[0].schedule.startTime > startWorkTime) {
+
+    // Handle case when there are no classes for the entire day
+    if (slots.length === 0) {
       emptySlots
         .find((e) => e.day === day)
         .slots.push({
           startTime: startWorkTime,
-          endTime: slots.length > 0 ? slots[0].schedule.startTime : endWorkTime,
+          endTime: endWorkTime,
+          day,
+        });
+      return;
+    }
+
+    //Find the first empty slot with startWorkTime as the startTime
+    //use the schedule's startTime as the first slot's endTime
+    if (slots[0].schedule.startTime > startWorkTime) {
+      emptySlots
+        .find((e) => e.day === day)
+        .slots.push({
+          startTime: startWorkTime,
+          endTime: slots[0].schedule.startTime,
           day,
         });
     }
@@ -57,7 +69,6 @@ export function getEmptySlots(timetable, startWork, endWork) {
         });
     }
   });
-  console.log(emptySlots);
   return emptySlots;
 }
 
@@ -98,10 +109,17 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
   return { updatedTimetable, remainingTasks };
 }
 
+export async function allocateTasks(startHour, endHour) {
+  const timetable = await readTimetable();
+  const tasks = await readTasks();
+  const emptySlotsByDay = getEmptySlots(timetable, startHour, endHour);
+  const today = DaysOfWeek[new Date().getDay()];
+  const emptySlotsToday = emptySlotsByDay.find((e) => e.day === today);
+  const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
+  return updatedTimetable;
+}
+
 /*
-sample implementation
-const emptySlotsByDay = getEmptySlots(timetable2, 9, 23.5); //start working from 9am to 11.30pm
-const today = 'Tuesday'; // or the time received from frontend, and call getDay()
-const emptySlotsToday = emptySlotsByDay.find((e) => e.day === today).slots;
-const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
+Sample implementation
+allocateTasks(9, 23.5) //start working from 9am to 11.30pm
 */
