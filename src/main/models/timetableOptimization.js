@@ -114,7 +114,7 @@ export async function allocateTasks(startHour, endHour) {
   const tasks = await readTasks();
   const emptySlotsByDay = getEmptySlots(timetable, startHour, endHour);
   const today = DaysOfWeek[new Date().getDay()];
-  const emptySlotsToday = emptySlotsByDay.find((e) => e.day === today);
+  const emptySlotsToday = emptySlotsByDay.find((e) => e.day === today).slots;
   const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
   return updatedTimetable;
 }
