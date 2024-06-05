@@ -1,5 +1,5 @@
 .statistics {
-  grid-column: span 2;
+  grid-area: statistics;
 }
 
 /* Bar chart */

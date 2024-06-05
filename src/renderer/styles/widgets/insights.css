@@ -1,4 +1,5 @@
 .insights {
+  grid-area: insights;
 }
 
 .insights__content {

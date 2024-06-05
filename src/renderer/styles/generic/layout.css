@@ -3,55 +3,123 @@
   height: 100%;
   display: inline-flex;
   flex-direction: column;
-  width: fit-content;
-  padding: 48px 16px;
+  padding: 48px 24px;
   align-items: center;
-  background-color: var(--bg-secondary);
+  background-color: #2e2659;
+  gap: 48px;
 }
 
 /* Icon */
 .sidebar__icon-island {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
 }
 
 .sidebar__icon {
   width: 32px;
 }
 
+.sidebar__title {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-inverted);
+}
+
 /* Page links */
 .sidebar__page-island {
   display: flex;
   flex-direction: column;
-  margin: auto;
   gap: 16px;
 }
 
 .sidebar__page {
-  padding: 8px;
+  padding: 12px;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .sidebar__page--inactive {
-  color: var(--text-secondary);
+  color: var(--text-inverted);
 }
 
 .sidebar__page--active {
-  color: var(--text-primary);
-  background-color: var(--primary);
+  color: var(--text-inverted);
+  background-color: #504973;
 }
 
 /* Logout */
-.sidebar__logout-island {}
+.sidebar__logout-island {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-inverted);
+}
+
+.sidebar__logout-island:hover {
+  color: var(--text-secondary);
+  cursor: pointer;
+}
 
 .sidebar__logout {
-  cursor: pointer;
-  color: var(--text-secondary);
+}
+
+.sidebar__logout-text {
 }
 
 .sidebar__logout:hover {
-  color: var(--text-primary);
 }
 
 /* Page */
 .page {
-  margin-left: 80px;
+  margin-left: 180px;
+}
+
+.page__banner {
+  padding: 32px 48px 12px 48px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page__title {
+  width: fit-content;
+  font-size: 32px;
+  font-family: inter;
+}
+
+.page__user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.page__user-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.page__user-email {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1400px) {
+  .sidebar {
+    display: none;
+  }
+
+  .page {
+    margin-left: 0;
+  }
 }

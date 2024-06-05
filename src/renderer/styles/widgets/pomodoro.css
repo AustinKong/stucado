@@ -1,4 +1,5 @@
 .pomodoro {
+  grid-area: pomodoro;
 }
 
 .pomodoro__content {

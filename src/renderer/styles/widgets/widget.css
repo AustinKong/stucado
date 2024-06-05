@@ -1,9 +1,10 @@
 /* Generic widget styles */
 .widget {
-  padding: 20px;
+  padding: 1.5rem;
   background-color: var(--bg-secondary);
-  border-radius: 12px;
-  box-shadow: rgba(149, 157, 165, 0.074) 0px 8px 24px;
+  border-radius: 0.75rem;
+  width: 100%;
+  box-shadow: var(--shadow);
 }
 
 .widget-content {
@@ -21,7 +22,7 @@
 .widget-header__title {
   font-weight: 500;
   font-size: 16px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 /* Interaction button */
@@ -29,7 +30,7 @@
   margin-left: auto;
   display: flex;
   align-items: center;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   gap: 4px;
 }
 

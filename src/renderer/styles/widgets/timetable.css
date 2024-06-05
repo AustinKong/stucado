@@ -1,5 +1,5 @@
 .timetable {
-  grid-column: span 3;
+  grid-area: timetable;
 }
 
 .timetable__container {
