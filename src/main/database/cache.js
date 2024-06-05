@@ -169,9 +169,11 @@ export async function readTimetable() {
 
 // Update timetable
 export async function updateTimetable(allSlots) {
+  await deleteTimetable();
   const db = await createCache();
 
   for (const slot of allSlots) {
+    console.log(slot);
     const { title, description, id, schedule } = slot;
     const { startTime, endTime, day } = schedule;
 
@@ -179,14 +181,13 @@ export async function updateTimetable(allSlots) {
       `
 			INSERT INTO timetable (id, title, description, start_time, end_time, day)
 			VALUES (?, ?, ?, ?, ?, ?)
-			ON CONFLICT(id) DO UPDATE SET
-        title = EXCLUDED.title,
-				description = EXCLUDED.description,
-				start_time = EXCLUDED.start_time,
-				end_time = EXCLUDED.end_time,
-				day = EXCLUDED.day;
 	`,
       [id, title, description, startTime, endTime, day]
     );
   }
+}
+
+export async function deleteTimetable() {
+  const db = await createCache();
+  await db.exec('DELETE FROM timetable');
 }
