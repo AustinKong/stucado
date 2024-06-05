@@ -1,16 +1,13 @@
 import { DaysOfWeek } from '../../shared/constants.js';
 import { readTimetable, readTasks } from '../database/cache.js';
 
-export function getEmptySlots(timetable, startWork, endWork) {
-  const startWorkTime = startWork * 60;
-  const endWorkTime = endWork * 60;
-
+export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   const emptySlots = DaysOfWeek.map((day) => ({
     day,
     slots: [],
   }));
 
-  // Organize timetable entries by day, { Sunday: [], Monday: [{slot1}], ... }
+  //Organize timetable entries by day, { Sunday: [], Monday: [{slot1}], ... }
   const timetableByDay = DaysOfWeek.reduce((acc, day) => {
     acc[day] = timetable.filter((slot) => slot.schedule.day === day);
     return acc;
@@ -19,8 +16,8 @@ export function getEmptySlots(timetable, startWork, endWork) {
   DaysOfWeek.forEach((day) => {
     const slots = timetableByDay[day].sort((a, b) => a.schedule.startTime - b.schedule.startTime);
 
-    // Handle case when there are no classes for the entire day
-    if (slots.length === 0) {
+    //Handle case when there are no classes for the entire day
+    if (slots.length === 0 || startWorkTime === 0) {
       emptySlots
         .find((e) => e.day === day)
         .slots.push({
@@ -32,7 +29,7 @@ export function getEmptySlots(timetable, startWork, endWork) {
     }
 
     //Find the first empty slot with startWorkTime as the startTime
-    //use the schedule's startTime as the first slot's endTime
+    //Use the schedule's startTime as the first slot's endTime
     if (slots[0].schedule.startTime > startWorkTime) {
       emptySlots
         .find((e) => e.day === day)
@@ -109,17 +106,42 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
   return { updatedTimetable, remainingTasks };
 }
 
-export async function allocateTasks(startHour, endHour) {
+//startTime & endTime are in the form of minutes since midnight
+export async function allocateTasks(startTime, endTime) {
   const timetable = await readTimetable();
   const tasks = await readTasks();
-  const emptySlotsByDay = getEmptySlots(timetable, startHour, endHour);
-  const today = DaysOfWeek[new Date().getDay()];
-  const emptySlotsToday = emptySlotsByDay.find((e) => e.day === today).slots;
+
+  const startWorkTime = new Date().setHours(startTime / 60, startTime % 60, 0, 0);
+  let endWorkTime = new Date().setHours(endTime / 60, endTime % 60, 0, 0);
+  const today = DaysOfWeek[new Date(startWorkTime).getDay()];
+  let nextDay = DaysOfWeek[new Date(startWorkTime).getDay()];
+  let emptySlots = [];
+  let emptySlotsNextDay = [];
+
+  //if user work past midnight
+  if (startTime > endTime) {
+    const duration = endTime + 24 * 60 - startTime; //in minutes
+    const hours = startTime / 60 + duration / 60;
+    const mins = (startTime % 60) + (duration % 60);
+    endWorkTime = new Date(startWorkTime).setHours(hours, mins, 0, 0);
+    nextDay = DaysOfWeek[new Date(endWorkTime).getDay()];
+    emptySlots = getEmptySlots(timetable, startTime, 1440); //set to 12am
+    emptySlotsNextDay = getEmptySlots(timetable, 0, endTime);
+  }
+
+  let emptySlotsToday = emptySlots.find((e) => e.day === today).slots;
+
+  if (nextDay != today) {
+    emptySlotsNextDay = emptySlotsNextDay.find((e) => e.day === nextDay).slots;
+    emptySlotsNextDay.filter((slot) => slot.endTime <= endTime);
+    emptySlotsToday = [...emptySlotsToday, ...emptySlotsNextDay];
+  }
+
   const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
   return updatedTimetable;
 }
 
 /*
 Sample implementation
-allocateTasks(9, 23.5) //start working from 9am to 11.30pm
+allocateTasks(540, 1440) //start working from 9am to 12am
 */
