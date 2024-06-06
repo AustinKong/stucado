@@ -4,6 +4,7 @@ import Timetable from '@components/widgets/Timetable';
 import Pomodoro from '@components/widgets/Pomodoro';
 import Insights from '@components/widgets/Insights';
 import Statistics from '@components/widgets/Statistics';
+import HeatMap from '@components/widgets/Heatmap';
 import { HoursFocused, TasksCompleted, AverageProductivity } from '@components/widgets/Tracking';
 
 const Dashboard = () => {
@@ -17,6 +18,7 @@ const Dashboard = () => {
       <Insights />
       <Statistics />
       <Pomodoro />
+      <HeatMap />
     </div>
   );
 };
