@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import { X, CaretDown, CaretUp } from '@phosphor-icons/react';
 import { useState } from 'react';
 
-import '@styles/generic/modal.css';
+import './styles.css';
 
 export const Modal = ({ isOpen, onClose, title, subtitle, children }) => {
   /*

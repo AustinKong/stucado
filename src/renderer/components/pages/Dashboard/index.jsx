@@ -1,4 +1,4 @@
-import '@styles/pages/dashboard.css';
+import './styles.css';
 import TaskList from '@components/widgets/TaskList';
 import Timetable from '@components/widgets/Timetable';
 import Pomodoro from '@components/widgets/Pomodoro';

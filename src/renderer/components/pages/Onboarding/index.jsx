@@ -7,7 +7,7 @@ import { initializeModel } from '@services/insights';
 import LightThemeImage from '@assets/images/lightTheme.png';
 import UploadInstructions1 from '@assets/images/uploadInstructions1.png';
 import UploadInstructions2 from '@assets/images/uploadInstructions2.png';
-import '@styles/pages/onboarding.css';
+import './styles.css';
 
 const Onboarding = () => {
   const [step, setStep] = useState(0);

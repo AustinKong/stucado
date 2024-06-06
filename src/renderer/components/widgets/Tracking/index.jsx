@@ -1,6 +1,6 @@
 import { IconContext, Clock, CheckSquare, Book, DotsThreeCircleVertical } from '@phosphor-icons/react';
 
-import '@styles/widgets/tracking.css';
+import './styles.css';
 
 const Tracking = ({ gridArea, title, subtext, bgColor, icon, text }) => {
   return (

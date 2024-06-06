@@ -25,7 +25,6 @@ export default defineConfig({
         '@components': resolve('src/renderer/components'),
         '@data': resolve('src/renderer/data'),
         '@services': resolve('src/renderer/services'),
-        '@styles': resolve('src/renderer/styles'),
         '@shared': resolve('src/shared'),
       },
     },

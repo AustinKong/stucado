@@ -2,7 +2,7 @@ import { PlusCircle, DotsThreeCircle } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import '@styles/widgets/taskList.css';
+import './styles.css';
 import { Widget, InteractionButton } from '@components/widgets/Widget';
 import { incrementTaskStatus, decrementTaskStatus, createTask } from '@services/tasks';
 import {

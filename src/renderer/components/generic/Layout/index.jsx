@@ -5,7 +5,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import { setTheme } from '@services/settings';
 import blankAvatar from '@assets/images/blankAvatar.webp';
 import appIcon from '@assets/images/appIcon.png';
-import '@styles/generic/layout.css';
+import './styles.css';
 
 const NAVLINKS = [
   { icon: <SquaresFour />, to: '/' },

@@ -2,7 +2,7 @@ import { Widget, InteractionButton } from '@components/widgets/Widget';
 import { ArrowsClockwise } from '@phosphor-icons/react';
 
 import workingImage from '@assets/illustrations/working.png';
-import '@styles/widgets/insights.css';
+import './styles.css';
 
 const Insights = () => {
   return (

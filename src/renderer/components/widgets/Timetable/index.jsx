@@ -13,7 +13,7 @@ import {
   ModalNotice
 } from '@components/generic/Modal';
 import { uploadTimetable } from '@services/timetable';
-import '@styles/widgets/timetable.css';
+import './styles.css';
 
 // Minutes since midnight in increments of 15
 const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
