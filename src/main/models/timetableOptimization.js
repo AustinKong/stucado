@@ -1,5 +1,5 @@
 import { DaysOfWeek } from '../../shared/constants.js';
-import { readTimetable, readTasks } from '../database/cache.js';
+import { readTimetable, readTasks, updateTaskSlots, updateTask } from '../database/cache.js';
 
 export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   const emptySlots = DaysOfWeek.map((day) => ({
@@ -84,8 +84,8 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
       if (task.estimatedTime <= slotDuration) {
         allocatedTasks.push({
           id: nextID,
-          title: task.content,
-          description: task.content, //needs to change to task's description once implemented
+          title: task.title,
+          description: task.description, //needs to change to task's description once implemented
           schedule: {
             startTime: slot.startTime,
             endTime: slot.startTime + task.estimatedTime,
@@ -102,8 +102,7 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
       remainingTasks.push(task);
     }
   });
-  const updatedTimetable = [...timetable, ...allocatedTasks];
-  return { updatedTimetable, remainingTasks };
+  return allocatedTasks;
 }
 
 //startTime & endTime are in the form of minutes since midnight
@@ -115,7 +114,7 @@ export async function allocateTasks(startTime, endTime) {
   let endWorkTime = new Date().setHours(endTime / 60, endTime % 60, 0, 0);
   const today = DaysOfWeek[new Date(startWorkTime).getDay()];
   let nextDay = DaysOfWeek[new Date(startWorkTime).getDay()];
-  let emptySlots = [];
+  let emptySlots = getEmptySlots(timetable, startTime, endTime);
   let emptySlotsNextDay = [];
 
   //if user work past midnight
@@ -137,8 +136,10 @@ export async function allocateTasks(startTime, endTime) {
     emptySlotsToday = [...emptySlotsToday, ...emptySlotsNextDay];
   }
 
-  const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
-  return updatedTimetable;
+  const allocatedTasks = bestFitDecreasing(tasks, emptySlotsToday, timetable);
+  console.log(allocatedTasks);
+  await updateTaskSlots(allocatedTasks);
+  return allocatedTasks;
 }
 
 /*
