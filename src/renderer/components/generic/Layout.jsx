@@ -1,66 +1,95 @@
-import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut } from '@phosphor-icons/react';
+import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut, Moon, Sun } from '@phosphor-icons/react';
+import { useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 
+import { setTheme } from '@services/settings';
 import blankAvatar from '@assets/images/blankAvatar.webp';
 import appIcon from '@assets/images/appIcon.png';
 import '@styles/generic/layout.css';
 
 const NAVLINKS = [
-  { icon: <SquaresFour />, text: 'Dashboard', to: '/' },
-  { icon: <CalendarBlank />, text: 'Timetable', to: '/timetable' },
-  { icon: <ChartLine />, text: 'Statistics', to: '/insights' },
-  { icon: <Faders />, text: 'Settings', to: '/settings' },
+  { icon: <SquaresFour />, to: '/' },
+  { icon: <CalendarBlank />, to: '/timetable' },
+  { icon: <ChartLine />, to: '/insights' },
+  { icon: <Faders />, to: '/settings' },
 ];
+
+const Sidebar = () => {
+  return (
+    <aside className="sidebar">
+      <img src={appIcon} alt="App Icon" className="sidebar__app-icon" />
+
+      <nav className="sidebar__link-group">
+        {NAVLINKS.map(({ icon, to }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              isActive ? 'sidebar__link sidebar__link--active' : 'sidebar__link sidebar__link--inactive'
+            }
+          >
+            <IconContext.Provider
+              value={{
+                size: 24,
+              }}
+            >
+              {icon}
+            </IconContext.Provider>
+          </NavLink>
+        ))}
+      </nav>
+
+      <SignOut className="sidebar__logout" size="24" />
+    </aside>
+  );
+};
+
+const PageBanner = () => {
+  return (
+    <div className="page-banner">
+      <h1 className="page-banner__title">Dashboard</h1>
+      <ThemeToggle />
+      <UserProfile />
+    </div>
+  );
+};
+
+const ThemeToggle = () => {
+  const [selectedTheme, setSelectedTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setSelectedTheme(selectedTheme === 'light' ? 'dark' : 'light');
+    setTheme(selectedTheme);
+  };
+
+  return (
+    <div className="page-banner__theme-toggle" onClick={toggleTheme}>
+      {selectedTheme === 'light' ? <Moon size="24" /> : <Sun size="24" />}
+    </div>
+  );
+};
+
+const UserProfile = () => {
+  return (
+    <div className="page-banner__user-profile">
+      <img src={blankAvatar} alt="User avatar" className="page-banner__user-avatar" />
+      <span className="page-banner__user-details">
+        <p className="page-banner__username">John Doe</p>
+        <p className="page-banner__user-email">johndoe@gmail.com</p>
+      </span>
+    </div>
+  );
+};
 
 const Layout = () => {
   return (
-    <IconContext.Provider
-      value={{
-        size: 24,
-        weight: 'regular',
-        mirrored: false,
-      }}
-    >
-      <aside className="sidebar">
-        <div className="sidebar__icon-island">
-          <img src={appIcon} alt="App Icon" className="sidebar__icon" />
-          <h1 className="sidebar__title">Stucado</h1>
-        </div>
-
-        <div className="sidebar__page-island">
-          {NAVLINKS.map(({ icon, text, to }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                isActive ? 'sidebar__page sidebar__page--active' : 'sidebar__page sidebar__page--inactive'
-              }
-            >
-              {icon}
-              {text}
-            </NavLink>
-          ))}
-        </div>
-
-        <div className="sidebar__logout-island">
-          <SignOut className="sidebar__logout" />
-          <p className="sidebar__logout-text">Logout</p>
-        </div>
-      </aside>
-      <section className="page">
-        <div className="page__banner">
-          <h2 className="page__title">Dashboard</h2>
-          <div className="page__user-profile">
-            <img src={blankAvatar} alt="User avatar" className="page__user-avatar" />
-            <span className="page__user-details">
-              <p className="page__user-name">John Doe</p>
-              <p className="page__user-email">johnnydoe@gmail.com</p>
-            </span>
-          </div>
-        </div>
+    <>
+      <Sidebar />
+      <PageBanner />
+      <div className="page">
         <Outlet />
-      </section>
-    </IconContext.Provider>
+      </div>
+    </>
   );
 };
 
