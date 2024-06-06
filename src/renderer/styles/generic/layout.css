@@ -5,7 +5,7 @@
   flex-direction: column;
   padding: 48px 24px;
   align-items: center;
-  background-color: #2e2659;
+  background-color: #0d3042;
   gap: 48px;
 }
 
@@ -24,7 +24,7 @@
 .sidebar__title {
   font-size: 16px;
   font-weight: 400;
-  color: var(--text-inverted);
+  color: #ffffff;
 }
 
 /* Page links */
@@ -43,12 +43,12 @@
 }
 
 .sidebar__page--inactive {
-  color: var(--text-inverted);
+  color: #ffffff;
 }
 
 .sidebar__page--active {
-  color: var(--text-inverted);
-  background-color: #504973;
+  color: #ffffff;
+  background-color: #ffffff33;
 }
 
 /* Logout */

@@ -4,12 +4,11 @@
 
 .timetable__container {
   display: flex;
-  flex-direction: row;
 }
 
 .timetable__scrollable {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding-left: 4px;
 }
 
@@ -89,7 +88,7 @@
   height: 100%;
   gap: 8px;
   padding: 16px;
-  background-color: var(--primary);
+  background-color: #B9CEEB;
   border-radius: 128px;
 }
 

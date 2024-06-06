@@ -26,7 +26,7 @@ export const HoursFocused = () => {
       gridArea="hoursFocused"
       title="Hours Focused"
       subtext="Time spent being productive today"
-      bgColor="#d8e2fb"
+      bgColor="#d5d1e9"
       icon={<Clock />}
       text={'3 hrs'}
     />
@@ -39,7 +39,7 @@ export const TasksCompleted = () => {
       gridArea="tasksCompleted"
       title="Tasks Completed"
       subtext="Number of tasks completed today"
-      bgColor="#f7e2df"
+      bgColor="#FDD998"
       icon={<CheckSquare />}
       text={'5 tasks'}
     />
@@ -52,7 +52,7 @@ export const AverageProductivity = () => {
       gridArea="averageProductivity"
       title="Average Productivity"
       subtext="Your average productivity today"
-      bgColor="#daeaea"
+      bgColor="#C7DCA7"
       icon={<Book />}
       text={'125%'}
     />

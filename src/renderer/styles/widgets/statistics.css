@@ -38,7 +38,7 @@
 }
 
 .bar-chart__bar {
-  background-color: var(--primary);
+  background-color: #E1ACAC;
   width: 32px;
 }
 
