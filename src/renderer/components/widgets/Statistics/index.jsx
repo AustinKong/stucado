@@ -1,7 +1,7 @@
 import { Widget, InteractionButton } from '@components/widgets/Widget';
 import { ArrowsClockwise } from '@phosphor-icons/react';
 
-import '@styles/widgets/statistics.css';
+import './styles.css';
 
 const DUMMY_DATASET = [
   { key: '27 May', value: 10 },
@@ -11,7 +11,6 @@ const DUMMY_DATASET = [
   { key: '31 May', value: 36 },
   { key: '1 Jun', value: 35 },
   { key: '2 Jun', value: 3 },
-
 ];
 
 const PX_PER_UNIT = 6;

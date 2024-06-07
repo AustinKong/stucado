@@ -1,5 +1,5 @@
 .statistics {
-  grid-column: span 2;
+  grid-area: statistics;
 }
 
 /* Bar chart */
@@ -38,7 +38,7 @@
 }
 
 .bar-chart__bar {
-  background-color: var(--primary);
+  background-color: #E1ACAC;
   width: 32px;
 }
 

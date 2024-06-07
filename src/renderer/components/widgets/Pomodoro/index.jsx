@@ -12,7 +12,7 @@ import {
 } from '@components/generic/Modal';
 import { pausePomodoro, startPomodoro, stopPomodoro, skipPomodoro, updatePomodoroDurations } from '@services/pomodoro';
 import { Widget, InteractionButton } from '@components/widgets/Widget';
-import '@styles/widgets/pomodoro.css';
+import './styles.css';
 
 const FULL_DASH_ARRAY = 2 * Math.PI * 45;
 

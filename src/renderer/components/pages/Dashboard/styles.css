@@ -1,0 +1,28 @@
+.dashboard {
+  padding: 3rem;
+  display: grid;
+  grid-gap: 2rem;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /*grid-template-areas: 
+    'hoursFocused tasksCompleted averageProductivity taskList'
+    'timetable timetable timetable taskList'
+    'insights pomodoro statistics statistics';
+  */
+  grid-template-areas: 
+    'taskList hoursFocused tasksCompleted averageProductivity'
+    'taskList timetable timetable timetable'
+    'statistics statistics pomodoro insights';
+  
+}
+
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas: 
+      'hoursFocused tasksCompleted averageProductivity'
+      'timetable timetable timetable'
+      'taskList insights pomodoro'
+      'taskList statistics statistics';
+  }
+}

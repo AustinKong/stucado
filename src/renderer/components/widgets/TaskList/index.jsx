@@ -2,7 +2,7 @@ import { PlusCircle, DotsThreeCircle } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import '@styles/widgets/taskList.css';
+import './styles.css';
 import { Widget, InteractionButton } from '@components/widgets/Widget';
 import { incrementTaskStatus, decrementTaskStatus, createTask } from '@services/tasks';
 import {
@@ -35,7 +35,7 @@ const TaskList = () => {
   return (
     <Widget
       className="task-list"
-      title={'Tasks (3)'}
+      title={`Tasks (${tasks.length})`}
       interaction={
         <InteractionButton icon={<PlusCircle />} text="Add a new task" onClick={() => setAddTaskModalIsOpen(true)} />
       }
@@ -67,21 +67,23 @@ const TaskItem = ({ task }) => {
 
   return (
     <li className="task-item">
-      <div
-        className={`task-item__status task-item__status--${taskStatusToCSS(task.status)}`}
-        onClick={handleToggleTaskStatus}
-        onContextMenu={handleToggleTaskStatus}
-      />
-      <div className="task-item__content">
-        <p className="task-item__title">{task.title}</p>
-        <p className="task-item__description">{task.description}</p>
+      <div className="task-item__container">
+        <div className="task-item__content">
+          <p className="task-item__title">{task.title}</p>
+          <p className="task-item__description">{task.description}</p>
+        </div>
+        <DotsThreeCircle className="task-item__edit" size="24" onClick={() => setEditTaskModalIsOpen(true)} />
       </div>
-      <DotsThreeCircle
-        className="task-item__edit"
-        size="24"
-        color="var(--text-secondary)"
-        onClick={() => setEditTaskModalIsOpen(true)}
-      />
+      <div className="task-item__tags">
+        <div
+          className="task-item__tag task-item__status-tag"
+          onClick={handleToggleTaskStatus}
+          onContextMenu={handleToggleTaskStatus}
+        >
+          <div className={`task-item__status task-item__status--${taskStatusToCSS(task.status)}`} />
+          {task.status}
+        </div>
+      </div>
 
       <EditTaskModal task={task} isOpen={editTaskModalIsOpen} onClose={() => setEditTaskModalIsOpen(false)} />
     </li>

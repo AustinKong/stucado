@@ -1,0 +1,68 @@
+.heatmap {
+}
+
+.heatmap__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.heatmap__days {
+  display: flex;
+  gap: 4px;
+}
+
+.heatmap__day {
+  font-size: 16px;
+  width: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.heatmap__container {
+  display: grid;
+  gap: 4px;
+}
+
+.heatmap-tile {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.heatmap-tile--0 {
+  background-color: #ffffff;
+}
+
+.heatmap-tile--1 {
+  background-color: #5bcd61;
+}
+
+.heatmap-tile--2 {
+  background-color: #43a24a;
+}
+
+.heatmap-tile--3 {
+  background-color: #226937;
+}
+
+.heatmap-tile--4 {
+  background-color: #19422b;
+}
+
+.heatmap__legend {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.heatmap__legend-container {
+  display: flex;
+  gap: 4px;
+}
+
+.heatmap__legend-container .heatmap-tile {
+  outline: 1px solid var(--border-primary);
+}

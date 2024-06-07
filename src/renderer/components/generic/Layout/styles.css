@@ -1,0 +1,121 @@
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 36px 8px;
+  align-items: center;
+  background-color: #0d3042;
+}
+
+/* App Icon */
+.sidebar__app-icon {
+  width: 32px;
+}
+
+/* Page links */
+.sidebar__link-group {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar__link {
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__link--inactive {
+  color: #ffffff;
+}
+
+.sidebar__link--active {
+  color: #ffffff;
+  background-color: #ffffff33;
+}
+
+/* Logout */
+.sidebar__logout {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-inverted);
+}
+
+.sidebar__logout:hover {
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+
+
+/* Page Banner */
+.page-banner {
+  margin-left: 64px;
+  padding: 24px 32px 12px 32px;
+  display: flex;
+  align-items: center;
+}
+
+/* Page Title */
+.page-banner__title {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-right: auto;
+}
+
+/* Theme Toggle */
+.page-banner__theme-toggle {
+  margin-right: 48px;
+}
+
+/* User Profile */
+.page-banner__user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-banner__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.page-banner__username {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.page-banner__user-email {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+
+/* Page */
+.page {
+  margin-left: 64px;
+}
+
+@media (max-width: 1400px) {
+  .sidebar {
+    display: none;
+  }
+
+  .page-banner {
+    margin-left: 0;
+  }
+
+  .page {
+    margin-left: 0;
+  }
+}

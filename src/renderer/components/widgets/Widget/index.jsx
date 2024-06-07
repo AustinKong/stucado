@@ -1,6 +1,5 @@
 import { IconContext } from '@phosphor-icons/react';
-
-import '@styles/widgets/widget.css';
+import './styles.css';
 
 export const Widget = ({ className, title, interaction, children }) => {
   return (
