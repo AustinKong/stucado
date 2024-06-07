@@ -40,6 +40,18 @@ export async function createCache() {
 			end_time INTEGER
 		);
 	`);
+
+  await db.exec(`
+		CREATE TABLE IF NOT EXISTS task_slots (
+			id INTEGER PRIMARY KEY,
+			title TEXT,
+      description TEXT,
+			start_time INTEGER,
+			end_time INTEGER,
+      day TEXT
+		);
+	`);
+
   return db;
 }
 
@@ -47,6 +59,7 @@ export async function deleteCache() {
   const db = await createCache();
   await db.exec('DELETE FROM timetable');
   await db.exec('DELETE FROM tasks');
+  await db.exec('DELETE FROM task_slots');
 }
 
 /* Task manipulation */
@@ -173,7 +186,6 @@ export async function updateTimetable(allSlots) {
   const db = await createCache();
 
   for (const slot of allSlots) {
-    console.log(slot);
     const { title, description, id, schedule } = slot;
     const { startTime, endTime, day } = schedule;
 
@@ -187,7 +199,55 @@ export async function updateTimetable(allSlots) {
   }
 }
 
+// Delete timetable
 export async function deleteTimetable() {
   const db = await createCache();
   await db.exec('DELETE FROM timetable');
+}
+
+
+/* Task slots manipulation */
+// Read taskSlots
+export async function readTaskSlots() {
+  const db = await createCache();
+  try {
+    const allocatedTasks = await db.all('SELECT * FROM task_slots');
+    const taskSlots = allocatedTasks.map(({ id, title, description, start_time, end_time, day }) => {
+      return {
+        id,
+        title,
+        description,
+        schedule: {
+          startTime: start_time,
+          endTime: end_time,
+          day,
+        },
+      };
+    });
+    return taskSlots;
+  } catch (err) {
+    console.error('Error retrieving taskSlots: ', err);
+  }
+}
+
+export async function deleteTaskSlots() {
+  const db = await createCache();
+  await db.exec('DELETE FROM task_slots');
+}
+
+export async function updateTaskSlots(allocatedTasks) {
+  await deleteTaskSlots();
+  const db = await createCache();
+  for (const task of allocatedTasks) {
+    const { title, description, id, schedule } = task;
+    const { startTime, endTime, day } = schedule;
+
+    await db.run(
+      `
+			INSERT INTO task_slots (id, title, description, start_time, end_time, day)
+			VALUES (?, ?, ?, ?, ?, ?)
+	`,
+      [id, title, description, startTime, endTime, day]
+    );
+  }
 }

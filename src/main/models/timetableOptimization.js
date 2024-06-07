@@ -1,5 +1,5 @@
 import { DaysOfWeek } from '../../shared/constants.js';
-import { readTimetable, readTasks } from '../database/cache.js';
+import { readTimetable, readTasks, updateTaskSlots } from '../database/cache.js';
 
 export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   const emptySlots = DaysOfWeek.map((day) => ({
@@ -69,7 +69,7 @@ export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   return emptySlots;
 }
 
-export function bestFitDecreasing(tasks, emptySlots, timetable) {
+export function bestFitDecreasing(emptySlots, tasks, timetable) {
   let nextID = timetable.length;
   tasks.sort((a, b) => b.estimatedTime - a.estimatedTime);
 
@@ -80,12 +80,13 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
     let placed = false;
 
     for (let slot of emptySlots) {
-      const slotDuration = slot.endTime - slot.startTime;
-      if (task.estimatedTime <= slotDuration) {
+      let slotDuration = slot.endTime - slot.startTime;
+      let taskSlotEndTime = slot.startTime + task.estimatedTime;
+      if (task.estimatedTime <= slotDuration && taskSlotEndTime <= 1440) {
         allocatedTasks.push({
           id: nextID,
-          title: task.content,
-          description: task.content, //needs to change to task's description once implemented
+          title: task.title,
+          description: task.description,
           schedule: {
             startTime: slot.startTime,
             endTime: slot.startTime + task.estimatedTime,
@@ -96,52 +97,69 @@ export function bestFitDecreasing(tasks, emptySlots, timetable) {
         slot.startTime += task.estimatedTime;
         placed = true;
         break;
+      } else if (task.estimatedTime <= slotDuration && taskSlotEndTime > 1440) {
+        allocatedTasks.push(
+          {
+            id: nextID,
+            title: task.title,
+            description: task.description,
+            schedule: {
+              startTime: slot.startTime,
+              endTime: 1440,
+              day: slot.day,
+            },
+          },
+          {
+            id: nextID + 1,
+            title: task.title,
+            description: task.description,
+            schedule: {
+              startTime: 0,
+              endTime: taskSlotEndTime - 1440,
+              day: DaysOfWeek[new Date().getDay() + 1],
+            },
+          }
+        );
+        nextID += 2;
+        slot.startTime += task.estimatedTime - 1440;
+        slot.endTime -= 1440;
+        slot.day = DaysOfWeek[new Date().getDay() + 1];
+        placed = true;
+        break;
       }
     }
     if (!placed) {
       remainingTasks.push(task);
     }
   });
-  const updatedTimetable = [...timetable, ...allocatedTasks];
-  return { updatedTimetable, remainingTasks };
+  return allocatedTasks;
 }
 
 //startTime & endTime are in the form of minutes since midnight
 export async function allocateTasks(startTime, endTime) {
   const timetable = await readTimetable();
   const tasks = await readTasks();
-
-  const startWorkTime = new Date().setHours(startTime / 60, startTime % 60, 0, 0);
-  let endWorkTime = new Date().setHours(endTime / 60, endTime % 60, 0, 0);
-  const today = DaysOfWeek[new Date(startWorkTime).getDay()];
-  let nextDay = DaysOfWeek[new Date(startWorkTime).getDay()];
-  let emptySlots = [];
-  let emptySlotsNextDay = [];
+  const pendingTasks = tasks.filter((task) => task.status == 'Pending');
+  const today = DaysOfWeek[new Date().getDay()];
+  let endWorkTime = endTime;
 
   //if user work past midnight
   if (startTime > endTime) {
-    const duration = endTime + 24 * 60 - startTime; //in minutes
-    const hours = startTime / 60 + duration / 60;
-    const mins = (startTime % 60) + (duration % 60);
-    endWorkTime = new Date(startWorkTime).setHours(hours, mins, 0, 0);
-    nextDay = DaysOfWeek[new Date(endWorkTime).getDay()];
-    emptySlots = getEmptySlots(timetable, startTime, 1440); //set to 12am
-    emptySlotsNextDay = getEmptySlots(timetable, 0, endTime);
+    endWorkTime = endTime + 24 * 60; //in minutes
   }
 
+  const emptySlots = getEmptySlots(timetable, startTime, endWorkTime);
   let emptySlotsToday = emptySlots.find((e) => e.day === today).slots;
+  console.log(emptySlotsToday);
 
-  if (nextDay != today) {
-    emptySlotsNextDay = emptySlotsNextDay.find((e) => e.day === nextDay).slots;
-    emptySlotsNextDay.filter((slot) => slot.endTime <= endTime);
-    emptySlotsToday = [...emptySlotsToday, ...emptySlotsNextDay];
-  }
-
-  const { updatedTimetable, remainingTasks } = bestFitDecreasing(tasks, emptySlotsToday, timetable);
-  return updatedTimetable;
+  const allocatedTasks = bestFitDecreasing(emptySlotsToday, pendingTasks, timetable);
+  //console.log(allocatedTasks);
+  await updateTaskSlots(allocatedTasks);
+  console.log(allocatedTasks);
+  return allocatedTasks;
 }
 
 /*
 Sample implementation
-allocateTasks(540, 1440) //start working from 9am to 12am
+allocateTasks(540, 60) //start working from 9am to 1am
 */

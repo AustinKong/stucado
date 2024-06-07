@@ -1,6 +1,6 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readTimetable, readTasks } from './cache.js';
-import { updateDataPoint } from './database.js';
+import { readTimetable, readTasks } from '../database/cache.js';
+import { updateDataPoint } from '../database/database.js';
 
 export function getTimeOfDay(hour) {
   const index = Math.floor(hour / 3);
