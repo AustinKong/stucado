@@ -6,6 +6,12 @@ export const setTheme = (theme) => {
   window.settingsAPI.updateTheme(theme);
 };
 
+export const setReceiveNotifications = (receiveNotifications) => {
+  // TODO: Implement this function
+  store.dispatch(setSettings({ receiveNotifications }));
+  window.settingsAPI.updateReceiveNotifications(receiveNotifications);
+};
+
 export const completeOnboarding = () => {
   console.log('user has completed onboarding')
   window.settingsAPI.completeOnboarding();

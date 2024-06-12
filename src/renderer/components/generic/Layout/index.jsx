@@ -1,6 +1,6 @@
 import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut, Moon, Sun } from '@phosphor-icons/react';
 import { useState } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 
 import { setTheme } from '@services/settings';
 import blankAvatar from '@assets/images/blankAvatar.webp';
@@ -9,7 +9,7 @@ import './styles.css';
 
 const NAVLINKS = [
   { icon: <SquaresFour />, to: '/' },
-  { icon: <CalendarBlank />, to: '/timetable' },
+  { icon: <CalendarBlank />, to: '/schedule' },
   { icon: <ChartLine />, to: '/insights' },
   { icon: <Faders />, to: '/settings' },
 ];
@@ -45,9 +45,15 @@ const Sidebar = () => {
 };
 
 const PageBanner = () => {
+  const location = useLocation();
+  const locationName =
+    location.pathname === '/'
+      ? 'Dashboard'
+      : location.pathname.slice(1).charAt(0).toUpperCase() + location.pathname.slice(2);
+
   return (
     <div className="page-banner">
-      <h1 className="page-banner__title">Dashboard</h1>
+      <h1 className="page-banner__title">{locationName}</h1>
       <ThemeToggle />
       <UserProfile />
     </div>

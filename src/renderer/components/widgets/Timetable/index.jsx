@@ -10,7 +10,7 @@ import {
   ModalFooter,
   ModalButtonPrimary,
   ModalButtonSecondary,
-  ModalNotice
+  ModalNotice,
 } from '@components/generic/Modal';
 import { uploadTimetable } from '@services/timetable';
 import './styles.css';
@@ -21,7 +21,7 @@ const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
 const PX_PER_MINUTE = (48 * 4) / 60;
 
 const Timetable = () => {
-  const schedule = useSelector((state) => state.timetable);
+  const timetable = useSelector((state) => state.timetable);
   const [uploadModalIsOpen, setUploadModalIsOpen] = useState(false);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Timetable = () => {
                     : 'timetable__slots-day'
                 }
               >
-                {schedule
+                {timetable
                   .filter((slot) => slot.schedule.day === day)
                   .reduce((acc, curr, index, arr) => {
                     return acc.concat(
