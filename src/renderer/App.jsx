@@ -6,6 +6,8 @@ import { retrieveTimetable } from '@services/timetable';
 import { retrieveSettings } from '@services/settings';
 
 import Dashboard from '@components/pages/Dashboard';
+import Settings from '@components/pages/Settings';
+import Schedule from '@components/pages/Schedule';
 import Layout from '@components/generic/Layout';
 import Onboarding from '@components/pages/Onboarding';
 import { useSelector } from 'react-redux';
@@ -28,6 +30,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </HashRouter>
