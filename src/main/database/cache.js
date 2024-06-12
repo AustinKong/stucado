@@ -156,6 +156,15 @@ export async function deleteTask(id) {
   }
 }
 
+export async function deleteCompletedTasks() {
+  const db = await createCache();
+  try {
+    await db.exec(`DELETE FROM tasks WHERE status = 'Completed'`);
+  } catch (err) {
+    console.log('Error deleting completed tasks');
+  }
+}
+
 /* Timetable manipulation */
 // Read timetable
 export async function readTimetable() {

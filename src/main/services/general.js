@@ -1,5 +1,5 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readTimetable, readTasks } from '../database/cache.js';
+import { readTimetable, readTasks, deleteCompletedTasks } from '../database/cache.js';
 import { updateDataPoint } from '../database/database.js';
 
 export function getTimeOfDay(hour) {
@@ -97,6 +97,12 @@ export async function createDataPoints() {
       currTime.setTime(nextTimeOfDay.getTime());
     }
   }
+}
+
+export async function handleLogOut() {
+  await createDataPoints();
+  await deleteCompletedTasks();
+  return new Date().getTime();
 }
 
 //to test run
