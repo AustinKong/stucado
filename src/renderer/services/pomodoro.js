@@ -1,4 +1,4 @@
-import { setPomodoroSettings, setPomodoroTimer, setPomodoroTracker } from '@data/slices/pomodoroSlice';
+import { setPomodoroSettings, setPomodoroTimer /*, setPomodoroTracker*/ } from '@data/slices/pomodoroSlice';
 import { store } from '@data/store';
 
 let interval;
@@ -7,11 +7,21 @@ export const retrievePomodoroSettings = async () => {
   // TODO: Have settings saved to cache
 };
 
+/**
+ * Pauses the Pomodoro timer.
+ * @async
+ * @returns {Promise<void>}
+ */
 export const pausePomodoro = async () => {
   store.dispatch(setPomodoroTimer({ isRunning: false }));
   clearInterval(interval);
 };
 
+/**
+ * Starts the Pomodoro timer.
+ * @async
+ * @returns {Promise<void>}
+ */
 export const startPomodoro = async () => {
   store.dispatch(setPomodoroTimer({ isRunning: true }));
   // If timer is at 0, reset it
@@ -24,11 +34,20 @@ export const startPomodoro = async () => {
   interval = setInterval(updateTimer, 1000);
 };
 
+/**
+ * Stops the Pomodoro timer.
+ * @async
+ * @returns {Promise<void>}
+ */
 export const stopPomodoro = async () => {
   store.dispatch(setPomodoroTimer({ isRunning: false, timeLeft: 0, percentageLeft: 100, state: 'work', sessions: 0 }));
   clearInterval(interval);
 };
 
+/**
+ * Skips the current pomodoro session to the end. And starts the next state.
+ * @returns {Promise<void>} A promise that resolves when the new pomodoro session starts.
+ */
 export const skipPomodoro = async () => {
   const timer = store.getState().pomodoro.timer;
   clearInterval(interval);
@@ -64,18 +83,20 @@ const updateTimer = () => {
 
 // Utility function to get the duration of a state
 const getStateDuration = (state) => {
+  const pomodoroSettings = store.getState().pomodoro.settings;
   switch (state) {
     case 'work':
-      return store.getState().pomodoro.settings.workDuration;
+      return pomodoroSettings.workDuration;
     case 'shortBreak':
-      return store.getState().pomodoro.settings.shortBreakDuration;
+      return pomodoroSettings.shortBreakDuration;
     case 'longBreak':
-      return store.getState().pomodoro.settings.longBreakDuration;
+      return pomodoroSettings.longBreakDuration;
     default:
       return 0;
   }
 };
 
+// Utility function to get the next state based on the current state and number of sessions
 const getNextState = (state, sessions) => {
   switch (state) {
     case 'work':
@@ -95,6 +116,13 @@ const getNextState = (state, sessions) => {
   }
 };
 
+/**
+ * Updates the durations for the Pomodoro timer.
+ * @param {number} workDuration - The duration of the work period in minutes.
+ * @param {number} shortBreakDuration - The duration of the short break period in minutes.
+ * @param {number} longBreakDuration - The duration of the long break period in minutes.
+ * @returns {Promise<void>} - A promise that resolves when the Pomodoro settings are updated.
+ */
 export const updatePomodoroDurations = async (workDuration, shortBreakDuration, longBreakDuration) => {
   store.dispatch(setPomodoroSettings({ workDuration, shortBreakDuration, longBreakDuration }));
 };
