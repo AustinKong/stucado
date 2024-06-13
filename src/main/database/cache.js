@@ -31,7 +31,7 @@ export async function createCache() {
 
   await db.exec(`
 		CREATE TABLE IF NOT EXISTS tasks (
-			id INTEGER PRIMARY KEY,
+			id TEXT PRIMARY KEY,
 			title TEXT,
       description TEXT,
 			status TEXT,
