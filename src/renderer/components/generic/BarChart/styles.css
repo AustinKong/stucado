@@ -1,0 +1,24 @@
+.bar-chart {
+  position: relative;
+}
+
+.bar-chart__chart {
+}
+
+.bar-chart text {
+  font-size: 12px;
+  fill: #333;
+}
+
+.bar-chart__tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  pointer-events: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transform: translateX(-50%);
+}
+
+* {
+}

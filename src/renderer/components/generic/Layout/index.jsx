@@ -10,7 +10,7 @@ import './styles.css';
 const NAVLINKS = [
   { icon: <SquaresFour />, to: '/' },
   { icon: <CalendarBlank />, to: '/schedule' },
-  { icon: <ChartLine />, to: '/insights' },
+  { icon: <ChartLine />, to: '/statistics' },
   { icon: <Faders />, to: '/settings' },
 ];
 
