@@ -4,11 +4,11 @@ import { updateProductivityStats } from '../database/stats.js';
 import { getProductivity } from './general.js';
 
 /* Helper functions for past productivity statistics */
-function getDateHour(date) {
+export function getDateHour(date) {
   return new Date(date).getHours();
 }
 
-function getTimeIntervals(beginTime, endTime) {
+export function getTimeIntervals(beginTime, endTime) {
   const intervals = [];
   let current = new Date(beginTime).setHours(getDateHour(beginTime), 0);
   let end = new Date(endTime).setHours(getDateHour(endTime), 0);
@@ -26,7 +26,7 @@ function getTimeIntervals(beginTime, endTime) {
 }
 
 /* Get past productivity */
-export async function getPastProductivity() {
+export async function generatePastProductivity() {
   const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
   const productivityData = {};
@@ -78,4 +78,20 @@ export async function getPastProductivity() {
 
     updateProductivityStats(prod);
   });
+}
+
+/* Today's productivity for home page */
+export function generateProductivityToday(tasks) {
+  //const tasks = await readTasks();
+  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  let totalDuration = 0;
+  let totalProductivity = 0;
+  completedTasks.forEach((task) => {
+    const duration = (task.endTime - task.beginTime) / 60 / 1000;
+    console.log(duration);
+    console.log(getProductivity(task));
+    totalProductivity += getProductivity(task) * duration;
+    totalDuration += duration;
+  });
+  return Math.round((totalProductivity / totalDuration) * 100) / 100;
 }
