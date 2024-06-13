@@ -1,16 +1,16 @@
 .heatmap {
-}
-
-.heatmap__content {
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
 }
 
 .heatmap__days {
   display: flex;
-  gap: 4px;
+  width: 100%;
 }
 
 .heatmap__day {
@@ -18,17 +18,21 @@
   width: 16px;
   text-align: center;
   color: var(--text-secondary);
+  flex-grow: 1;
 }
 
 .heatmap__container {
   display: grid;
   gap: 4px;
+  width: 100%;
 }
 
 .heatmap-tile {
-  width: 16px;
-  height: 16px;
+  width: 100%;
+  min-width: 4px;
+  aspect-ratio: 1;
   border-radius: 2px;
+  position: relative;
 }
 
 .heatmap-tile--0 {
@@ -56,13 +60,35 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 100%;
 }
 
 .heatmap__legend-container {
   display: flex;
   gap: 4px;
+  flex-grow: 1;
+  position: relative;
 }
 
 .heatmap__legend-container .heatmap-tile {
   outline: 1px solid var(--border-primary);
+}
+
+.heatmap-tile__tooltip {
+  position: absolute;
+  display: none;
+  font-size: 16px;
+  background-color: var(--bg-secondary);
+  padding: 8px;
+  z-index: 1000;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  border: 1px solid #ccc;
+}
+
+.heatmap-tile:hover .heatmap-tile__tooltip {
+  display: block;
 }

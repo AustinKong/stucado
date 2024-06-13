@@ -1,0 +1,30 @@
+.line-chart {
+  position: relative;
+}
+
+.line-chart__x-key {
+  font-size: 12px;
+  fill: var(--text-secondary);
+}
+
+.line-chart__path {
+  stroke: blue;
+  stroke-width: 1px;
+  fill: none;
+}
+
+.line-chart__tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  pointer-events: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -100%);
+}
+
+.line-chart__tooltip-circle {
+  fill: red;
+  stroke: black;
+  stroke-width: 2px;
+}

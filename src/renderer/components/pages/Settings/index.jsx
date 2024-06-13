@@ -103,7 +103,7 @@ const AppearanceSettings = () => {
         onChange={(e) => setTheme(e.target.value)}
       />
     </div>
-  )
+  );
 };
 
 const SettingsToggle = ({ title, description, value, onChange }) => {
