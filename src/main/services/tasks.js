@@ -1,11 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
 import {
   readTasks as readTasksCache,
   createTask as createTaskCache,
   updateTask as updateTaskCache,
   deleteTask as deleteTaskCache,
 } from '@database/cache.js';
-
-let taskUID = 0;
 
 /**
  * Retrieves the list of tasks.
@@ -14,7 +13,6 @@ let taskUID = 0;
  */
 export async function getTasks() {
   const tasks = await readTasksCache();
-  taskUID = tasks.length;
   return tasks;
 }
 
@@ -30,7 +28,7 @@ export function createTask(_event, title, description, estimatedTime) {
     title,
     description,
     status: 'Pending',
-    id: taskUID++,
+    id: uuidv4(),
     estimatedTime,
   };
   void createTaskCache(task);
