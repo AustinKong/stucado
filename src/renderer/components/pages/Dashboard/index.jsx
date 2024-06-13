@@ -3,7 +3,7 @@ import TaskList from '@components/widgets/TaskList';
 import Timetable from '@components/widgets/Timetable';
 import Pomodoro from '@components/widgets/Pomodoro';
 import Insights from '@components/widgets/Insights';
-// import Statistics from '@components/widgets/Statistics';
+import PastProductivityLineChart from '@components/widgets/statistics/PastProductivityLineChart';
 import { HoursFocused, TasksCompleted, AverageProductivity } from '@components/widgets/Tracking';
 
 const Dashboard = () => {
@@ -16,6 +16,7 @@ const Dashboard = () => {
       <Timetable />
       <Insights />
       <Pomodoro />
+      <PastProductivityLineChart />
     </div>
   );
 };

@@ -1,0 +1,41 @@
+.summary {
+  grid-area: summary;
+}
+
+.summary-cards {
+  display: flex;
+  width: 100%;
+}
+
+.summary-card {
+  flex-grow: 1;
+  padding: 32px;
+}
+
+.summary-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.summary-card__trend {
+  display: flex;
+  gap: 8px;
+}
+
+.summary-card__trend--up {
+  color: green;
+}
+
+.summary-card__trend--down {
+  color: red;
+}
+
+.summary-card__subtitle {
+  color: var(--text-secondary);
+  display: flex;
+  gap: 8px;
+}
+
+* {
+}

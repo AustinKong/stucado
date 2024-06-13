@@ -2,4 +2,7 @@
   padding: 3rem;
   display: grid;
   grid-gap: 2rem;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: 'summary summary hours-focused-heatmap';
 }

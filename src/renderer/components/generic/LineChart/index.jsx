@@ -20,19 +20,19 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
     };
   }, []);
 
-  const margin = { top: 16, right: 16, bottom: 32, left: 16 };
+  const margin = { top: 16, right: 16, bottom: 32, left: 32 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
   const xValues = data.map((d) => d[xKey]);
   const yValues = data.map((d) => d[yKey]);
 
-  const xMin = Math.min(...xValues);
-  const xMax = Math.max(...xValues);
+  // const xMin = Math.min(...xValues);
+  // const xMax = Math.max(...xValues);
   const yMin = Math.min(...yValues);
   const yMax = Math.max(...yValues);
 
-  const xScale = (d) => ((d - xMin) / (xMax - xMin)) * innerWidth;
+  const xScale = (d) => (data.findIndex((p) => p[xKey] === d) / (data.length - 1)) * innerWidth;
   const yScale = (d) => innerHeight - ((d - yMin) / (yMax - yMin)) * innerHeight;
 
   const linePath = data.map((d, i) => `${i === 0 ? 'M' : 'L'}${xScale(d[xKey])},${yScale(d[yKey])}`).join(' ');
