@@ -47,7 +47,7 @@ export async function readProductivityStats() {
         productivity,
       FROM productivity_stats
     `);
-  } catch (err){
+  } catch (err) {
     console.error('Error retrieving productivityStats: ', err);
   }
 }
