@@ -20,7 +20,7 @@ export async function createCache() {
 
   await db.exec(`
 		CREATE TABLE IF NOT EXISTS timetable (
-			id INTEGER PRIMARY KEY,
+			id TEXT PRIMARY KEY,
       title TEXT,
 			description TEXT,
 			start_time INTEGER,
