@@ -1,5 +1,5 @@
 import { IconContext, GridFour, CheckSquare, Student } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import { DaysOfWeek } from '@shared/constants';
@@ -85,12 +85,28 @@ const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
 const PX_PER_MINUTE = (48 * 4) / 60;
 
 const ScheduleTimetable = ({ timetable }) => {
-  console.log(DaysOfWeek);
-  console.log(timetable);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    handleRealTime();
+    const interval = setInterval(handleRealTime, 60000 - new Date().getSeconds() * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentTimeLineRef = useRef(null);
+  const todayTimeLineRef = useRef(null);
+
+  const handleRealTime = () => {
+    setCurrentTime(new Date());
+    const minutesSinceMidnight = currentTime.getHours() * 60 + currentTime.getMinutes();
+    currentTimeLineRef.current.style.top = `${minutesSinceMidnight * PX_PER_MINUTE}px`;
+    todayTimeLineRef.current.style.left = `calc(100% / 7 * ${currentTime.getDay()})`;
+  };
+
   return (
     <div className="schedule-timetable">
       <div className="schedule-timetable__header">
-        <div className="schedule-timetable__time-label">HMT 07+1</div>
+        <div className="schedule-timetable__time-label">GMT{new Date().getTimezoneOffset() / 60}</div>
         <div className="schedule-timetable__days">
           {DaysOfWeek.map((day) => (
             <div key={day} className="schedule-timetable__day">
@@ -130,6 +146,14 @@ const ScheduleTimetable = ({ timetable }) => {
                   }, [])}
               </div>
             ))}
+            <div className="schedule-timetable__now" ref={currentTimeLineRef}>
+              <div className="schedule-timetable__now-time">
+                {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </div>
+              <div className="schedule-timetable__now-line" ref={todayTimeLineRef}>
+                <div className="schedule-timetable__now-circle" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

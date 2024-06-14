@@ -52,7 +52,7 @@ const PomodoroTimer = () => {
         return 'Short break';
       case 'longBreak':
         return 'Long break';
-    };
+    }
   };
 
   return (

@@ -120,6 +120,7 @@
 .schedule-timetable__slots {
   display: flex;
   flex-grow: 1;
+  position: relative;
 }
 
 .schedule-timetable__slots-day {
@@ -140,4 +141,34 @@
 .schedule-timetable__scrollable {
   height: calc(100vh - 256px);
   overflow-y: scroll;
+}
+
+.schedule-timetable__now {
+  width: 100%;
+  position: absolute;
+  border-top: 2px solid lightgray;
+}
+
+.schedule-timetable__now-time {
+  position: absolute;
+  top: 0;
+  left: -32px;
+  transform: translate(-100%, -50%);
+  background-color: var(--bg-primary);
+  padding: 4px 0;
+}
+
+.schedule-timetable__now-line {
+  position: absolute;
+  top: -2px;
+  width: calc(100% / 7);
+  border-top: 2px solid red;
+}
+
+.schedule-timetable__now-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, calc(-50% - 1px));
+  background-color: red;
 }
