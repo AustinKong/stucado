@@ -59,7 +59,6 @@ export const ModalNumberInput = ({ title, nameKey, value, onChange, required = f
       <input
         className="modal-input__input"
         type="number"
-        min="0"
         name={nameKey}
         value={value}
         onChange={onChange}

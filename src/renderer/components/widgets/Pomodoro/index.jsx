@@ -1,6 +1,7 @@
 import { IconContext, GearSix, FastForward, Play, Pause, Stop } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { clamp } from '@shared/utils.js';
 
 import {
   Modal,
@@ -130,7 +131,8 @@ const EditPomodoroModal = ({ isOpen, onClose }) => {
   const [formContent, setFormContent] = useState(pomodoroSettingsConverted);
 
   const handleChange = (event) => {
-    setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    const formattedTime = clamp(Number(event.target.value), 0, 180).toString();
+    setFormContent({ ...formContent, [event.target.name]: formattedTime });
   };
 
   const handleSubmit = (event) => {
