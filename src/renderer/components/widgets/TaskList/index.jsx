@@ -118,7 +118,7 @@ const AddTaskModal = ({ isOpen, onClose }) => {
     void createTask(
       formContent.title,
       formContent.description,
-      formContent.estimatedTimeHours * 60 + formContent.estimatedTimeMinutes
+      formContent.estimatedTimeHours * 60 + Number(formContent.estimatedTimeMinutes)
     );
     setFormContent(defaultState);
     onClose();
@@ -190,7 +190,7 @@ const EditTaskModal = ({ task, isOpen, onClose }) => {
       ...task,
       title: formContent.title,
       description: formContent.description,
-      estimatedTime: formContent.estimatedTimeHours * 60 + formContent.estimatedTimeMinutes,
+      estimatedTime: formContent.estimatedTimeHours * 60 + Number(formContent.estimatedTimeMinutes),
     });
     onClose();
   };
