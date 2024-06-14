@@ -29,7 +29,6 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
-  background-color: var(--bg-secondary);
 }
 
 .modal__title {
@@ -144,5 +143,6 @@
   margin-top: 4px;
 }
 
-* {
+.modal-error {
+  color: var(--traffic-light-red);
 }

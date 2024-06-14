@@ -59,7 +59,6 @@ export const ModalNumberInput = ({ title, nameKey, value, onChange, required = f
       <input
         className="modal-input__input"
         type="number"
-        min="0"
         name={nameKey}
         value={value}
         onChange={onChange}
@@ -121,4 +120,9 @@ export const ModalNotice = ({ title, children }) => {
       </div>
     );
   }
+};
+
+export const ModalError = ({ text, isShown }) => {
+  if (!isShown) return null;
+  return <div className="modal-error">{text}</div>;
 };

@@ -1,5 +1,5 @@
-import { DotsThreeVertical, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
-import { Widget, InteractionButton } from '@components/widgets/Widget';
+import { ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
+import { Widget } from '@components/widgets/Widget';
 
 import './styles.css';
 
@@ -8,11 +8,7 @@ const Tracking = ({ title, unit, pastData, currentData }) => {
   const changePercentage = ((currentData - pastData[pastData.length - 1]) / pastData[pastData.length - 1]) * 100;
 
   return (
-    <Widget
-      className="tracking"
-      title={title}
-      interaction={<InteractionButton icon={<DotsThreeVertical />} onClick={() => console.log('Edit')} />}
-    >
+    <Widget className="tracking" title={title}>
       <div className="tracking__content">
         <TrackingHistogram data={pastData.concat(currentData)} />
         <TrackingStatistic value={currentData} unit={unit} trend={changePercentage} />

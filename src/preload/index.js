@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('timetableAPI', {
 });
 
 contextBridge.exposeInMainWorld('insightsAPI', {
-  runModel: (inputs) => ipcRenderer.invoke('run-model', inputs),
+  runModel: () => ipcRenderer.invoke('run-model'),
   initializeModel: (habit) => ipcRenderer.send('initialize-model', habit),
 });
 
@@ -29,4 +29,10 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
+});
+
+contextBridge.exposeInMainWorld('statisticsAPI', {
+  getHoursFocused: (range) => ipcRenderer.invoke('get-hours-focused', range),
+  getTasksCompleted: (range) => ipcRenderer.invoke('get-tasks-completed', range),
+  getAverageProductivity: (range) => ipcRenderer.invoke('get-average-productivity', range),
 });

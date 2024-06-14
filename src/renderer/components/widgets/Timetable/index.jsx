@@ -11,6 +11,7 @@ import {
   ModalButtonPrimary,
   ModalButtonSecondary,
   ModalNotice,
+  ModalError
 } from '@components/generic/Modal';
 import { uploadTimetable } from '@services/timetable';
 import './styles.css';
@@ -132,16 +133,22 @@ const TimetableSlot = ({ slot, width, marginLeft }) => {
 
 const UploadModal = ({ isOpen, onClose }) => {
   const [formContent, setFormContent] = useState({ url: '' });
+  const [successfulUpload, setSuccessfulUpload] = useState(true);
 
   const handleChange = (event) => {
     setFormContent({ ...formContent, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    void uploadTimetable(formContent.url);
-    setFormContent({ url: '' });
-    onClose();
+    const success = await uploadTimetable(formContent.url);
+    setSuccessfulUpload(success);
+    if (success) {
+      setFormContent({ url: '' });
+      onClose();
+    } else {
+      setFormContent({ url: '' });
+    }
   };
 
   return (
@@ -150,6 +157,7 @@ const UploadModal = ({ isOpen, onClose }) => {
         New academic year starts on August 1st! Any timetables uploaded before that will have last year&apos;s classes.
         This is because NUS Mods API (which we use) does not update their data that early.
       </ModalNotice>
+      <ModalError text="Error uploading timetable, please retry..." isShown={!successfulUpload} />
       <ModalTextInput
         title="Timetable URL"
         nameKey="url"
@@ -158,7 +166,15 @@ const UploadModal = ({ isOpen, onClose }) => {
         required={true}
       />
       <ModalFooter
-        left={<ModalButtonSecondary text="Cancel" onClick={onClose} />}
+        left={
+          <ModalButtonSecondary
+            text="Cancel"
+            onClick={() => {
+              onClose();
+              setSuccessfulUpload(true);
+            }}
+          />
+        }
         right={<ModalButtonPrimary text="Submit" onClick={handleSubmit} />}
       />
     </Modal>

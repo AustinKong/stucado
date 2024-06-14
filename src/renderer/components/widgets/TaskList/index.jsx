@@ -15,6 +15,7 @@ import {
   ModalButtonSecondary,
 } from '@components/generic/Modal';
 import { deleteTask, editTask } from '@services/tasks';
+import { clamp } from '@shared/utils.js';
 
 /*
   Tasks are in format of: {
@@ -101,7 +102,15 @@ const AddTaskModal = ({ isOpen, onClose }) => {
   const [formContent, setFormContent] = useState(defaultState);
 
   const handleChange = (event) => {
-    setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    if (event.target.name === 'estimatedTimeHours') {
+      const estimatedTimeHours = clamp(Number(event.target.value), 0, 23).toString();
+      setFormContent({ ...formContent, estimatedTimeHours });
+    } else if (event.target.name === 'estimatedTimeMinutes') {
+      const estimatedTimeMinutes = clamp(Number(event.target.value), 0, 59).toString();
+      setFormContent({ ...formContent, estimatedTimeMinutes });
+    } else {
+      setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    }
   };
 
   const handleSubmit = (event) => {
@@ -164,7 +173,15 @@ const EditTaskModal = ({ task, isOpen, onClose }) => {
   const [formContent, setFormContent] = useState(defaultState);
 
   const handleChange = (event) => {
-    setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    if (event.target.name === 'estimatedTimeHours') {
+      const estimatedTimeHours = clamp(Number(event.target.value), 0, 23).toString();
+      setFormContent({ ...formContent, estimatedTimeHours });
+    } else if (event.target.name === 'estimatedTimeMinutes') {
+      const estimatedTimeMinutes = clamp(Number(event.target.value), 0, 59).toString();
+      setFormContent({ ...formContent, estimatedTimeMinutes });
+    } else {
+      setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    }
   };
 
   const handleSubmit = (event) => {
