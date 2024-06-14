@@ -30,3 +30,9 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
 });
+
+contextBridge.exposeInMainWorld('statisticsAPI', {
+  getHoursFocused: (range) => ipcRenderer.invoke('get-hours-focused', range),
+  getTasksCompleted: (range) => ipcRenderer.invoke('get-tasks-completed', range),
+  getAverageProductivity: (range) => ipcRenderer.invoke('get-average-productivity', range),
+});

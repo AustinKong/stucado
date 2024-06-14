@@ -8,6 +8,7 @@ import { uploadTimetable, getTimetable } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification } from '@services/pomodoro';
 import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
+import { getHoursFocused, getTasksCompleted, getAverageProductivity } from '@services/statistics';
 
 function createWindow() {
   // Create the browser window.
@@ -96,4 +97,8 @@ app.whenReady().then(() => {
   ipcMain.on('update-theme', updateTheme);
   ipcMain.handle('get-settings', getSettings);
   ipcMain.on('complete-onboarding', completeOnboarding);
+
+  ipcMain.handle('get-hours-focused', getHoursFocused);
+  ipcMain.handle('get-tasks-completed', getTasksCompleted);
+  ipcMain.handle('get-average-productivity', getAverageProductivity);
 });

@@ -9,18 +9,14 @@ import './styles.css';
 const Insights = () => {
   const [message, setMessage] = useState(null);
 
-  useEffect(() => {
-    generateMessage().then((response) => {
-      setMessage(response);
-    });
-  }, []);
-
   const refresh = () => {
     setMessage(null);
     generateMessage().then((response) => {
       setMessage(response);
     });
   };
+
+  useEffect(refresh, []);
 
   return (
     <Widget

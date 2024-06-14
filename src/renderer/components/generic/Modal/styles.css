@@ -144,5 +144,6 @@
   margin-top: 4px;
 }
 
-* {
+.modal-error {
+  color: var(--traffic-light-red);
 }

@@ -122,3 +122,8 @@ export const ModalNotice = ({ title, children }) => {
     );
   }
 };
+
+export const ModalError = ({ text, isShown }) => {
+  if (!isShown) return null;
+  return <div className="modal-error">{text}</div>;
+};

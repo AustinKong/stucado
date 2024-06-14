@@ -10,13 +10,22 @@ export const retrieveTimetable = async () => {
   store.dispatch(setTimetable(timetable));
 };
 
-// TODO: URL validation
 /**
  * Uploads a timetable from the given URL. Then dispatches the timetable to the store.
  * @param {string} url - The Nus Mods URL of the timetable to upload.
- * @returns {Promise<void>} - A promise that resolves when the timetable is uploaded.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the timetable is uploaded successfully.
  */
 export const uploadTimetable = async (url) => {
+  const isValid = urlValidation(url);
+  if (!isValid) {
+    return false;
+  }
   const timetable = await window.timetableAPI.uploadTimetable(url);
   store.dispatch(setTimetable(timetable));
+  return true;
+};
+
+const urlValidation = (url) => {
+  const regex = /^https:\/\/nusmods\.com\/timetable\/sem-([1-4])\/share\?[^ ]+$/;
+  return regex.test(url);
 };
