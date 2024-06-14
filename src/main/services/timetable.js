@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 import { readTimetable, updateTimetable } from '@database/cache';
 
@@ -48,7 +49,6 @@ function extractURL(url) {
 
 async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
   const timetable = [];
-  let index = 0;
 
   for (const enrolledLesson of enrolledLessons) {
     const moduleCode = enrolledLesson.substring(0, enrolledLesson.indexOf('='));
@@ -67,24 +67,25 @@ async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
         enrolledLessonType.indexOf(':')
       );
 
-      const lessonData = moduleInfo.semesterData
+      const lessonDatas = moduleInfo.semesterData
         .filter((semesterData) => semesterData.semester === semester)[0]
         .timetable.filter(
           (lessonData) =>
             lessonData.classNo === classNo && lessonData.lessonType.substring(0, 3).toUpperCase() === lessonType
-        )[0];
+        );
 
-      timetable.push({
-        title: `${moduleCode} ${lessonData.lessonType} ${classNo}`,
-        description: `${lessonData.startTime} - ${lessonData.endTime} @ ${lessonData.venue}`,
-        id: index,
-        schedule: {
-          startTime: militaryTimeToMinutes(lessonData.startTime),
-          endTime: militaryTimeToMinutes(lessonData.endTime),
-          day: lessonData.day,
-        },
-      });
-      index++;
+      for (const lessonData of lessonDatas) {
+        timetable.push({
+          title: `${moduleCode} ${lessonData.lessonType} ${classNo}`,
+          description: `${lessonData.startTime} - ${lessonData.endTime} @ ${lessonData.venue}`,
+          id: uuidv4(),
+          schedule: {
+            startTime: militaryTimeToMinutes(lessonData.startTime),
+            endTime: militaryTimeToMinutes(lessonData.endTime),
+            day: lessonData.day,
+          },
+        });
+      }
     }
   }
 
