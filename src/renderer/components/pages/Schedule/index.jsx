@@ -1,7 +1,17 @@
 import { IconContext, GridFour, CheckSquare, Student } from '@phosphor-icons/react';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import {
+  Modal,
+  ModalTextInput,
+  ModalNumberInput,
+  ModalBeside,
+  ModalFooter,
+  ModalButtonPrimary,
+  ModalButtonSecondary,
+} from '@components/generic/Modal';
 
+import { clamp } from '@shared/utils.js';
 import { DaysOfWeek } from '@shared/constants';
 import Calendar from '@components/generic/Calendar';
 import './styles.css';
@@ -19,6 +29,7 @@ const Schedule = () => {
       <div className="schedule__sidebar">
         <Calendar />
         <ScheduleEventQueue timetable={timetable} />
+        <ScheduleTools />
       </div>
     </div>
   );
@@ -62,7 +73,7 @@ const ScheduleEventQueue = ({ timetable }) => {
 
   return (
     <div className="schedule-event-queue">
-      <div className="schedule-event-queue__title">Upcoming Events Today</div>
+      <div className="schedule-event-queue__title">Events Today</div>
       <div className="schedule-event-queue__list">
         {sortedTimetable.map((slot, index) => {
           return <ScheduleEvent key={index} slot={slot} />;
@@ -81,6 +92,19 @@ const ScheduleEvent = ({ slot }) => {
   );
 };
 
+const ScheduleTools = () => {
+  const [addModalIsOpen, setAddModalIsOpen] = useState(false);
+
+  return (
+    <div className="schedule-tools">
+      <button className="schedule-tools__add" onClick={() => setAddModalIsOpen(true)}>
+        Add new timetable slot
+      </button>
+      <AddTimetableSlotModal isOpen={addModalIsOpen} onClose={() => setAddModalIsOpen(false)} />
+    </div>
+  );
+};
+
 const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
 const PX_PER_MINUTE = (48 * 4) / 60;
 
@@ -88,6 +112,7 @@ const ScheduleTimetable = ({ timetable }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
+    scrollableRef.current.scrollTop = (currentTime.getHours() - 1.5) * 60 * PX_PER_MINUTE;
     handleRealTime();
     const interval = setInterval(handleRealTime, 60000 - new Date().getSeconds() * 1000);
     return () => clearInterval(interval);
@@ -95,6 +120,7 @@ const ScheduleTimetable = ({ timetable }) => {
 
   const currentTimeLineRef = useRef(null);
   const todayTimeLineRef = useRef(null);
+  const scrollableRef = useRef(null);
 
   const handleRealTime = () => {
     setCurrentTime(new Date());
@@ -116,7 +142,7 @@ const ScheduleTimetable = ({ timetable }) => {
         </div>
       </div>
 
-      <div className="schedule-timetable__scrollable">
+      <div className="schedule-timetable__scrollable" ref={scrollableRef}>
         <div className="schedule-timetable__content">
           <div className="schedule-timetable__hours">
             {TIME.map((time) => (
@@ -162,14 +188,197 @@ const ScheduleTimetable = ({ timetable }) => {
 };
 
 const ScheduleTimetableSlot = ({ slot, height, marginTop }) => {
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+
   return (
-    <div className="schedule-timetable-slot" style={{ height, marginTop }}>
-      <div className="schedule-timetable-slot__title">{slot.title}</div>
-      <div className="schedule-timetable-slot__time">
-        {`${Math.floor(slot.schedule.startTime / 60)}:${String(slot.schedule.startTime % 60).padStart(2, '0')}`} -
-        {`${Math.floor(slot.schedule.endTime / 60)}:${String(slot.schedule.endTime % 60).padStart(2, '0')}`}
+    <>
+      <div className="schedule-timetable-slot" style={{ height, marginTop }} onClick={() => setEditModalIsOpen(true)}>
+        <div className="schedule-timetable-slot__title">{slot.title}</div>
+        <div className="schedule-timetable-slot__time">
+          {`${Math.floor(slot.schedule.startTime / 60)}:${String(slot.schedule.startTime % 60).padStart(2, '0')}`} -
+          {`${Math.floor(slot.schedule.endTime / 60)}:${String(slot.schedule.endTime % 60).padStart(2, '0')}`}
+        </div>
       </div>
-    </div>
+      <EditTimetableSlotModal slot={slot} isOpen={editModalIsOpen} onClose={() => setEditModalIsOpen(false)} />
+    </>
+  );
+};
+
+const EditTimetableSlotModal = ({ slot, isOpen, onClose }) => {
+  const defaultState = {
+    title: slot.title,
+    description: slot.description,
+    startTimeHours: Math.floor(slot.schedule.startTime / 60),
+    startTimeMinutes: slot.schedule.startTime % 60,
+    endTimeHours: Math.floor(slot.schedule.endTime / 60),
+    endTimeMinutes: slot.schedule.endTime % 60,
+  };
+
+  const [formContent, setFormContent] = useState(defaultState);
+
+  const handleChange = (event) => {
+    if (event.target.name === 'startTimeHours' || event.target.name === 'endTimeHours') {
+      const value = clamp(Number(event.target.value), 0, 23).toString();
+      setFormContent({ ...formContent, [event.target.name]: value });
+    } else if (event.target.name === 'startTimeMinutes' || event.target.name === 'endTimeMinutes') {
+      const value = clamp(Number(event.target.value), 0, 59).toString();
+      setFormContent({ ...formContent, [event.target.name]: value });
+    } else {
+      setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    }
+  };
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    onClose();
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    setFormContent(defaultState);
+    onClose();
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formContent);
+    onClose();
+  };
+
+  return (
+    <Modal title="Edit timetable slot" subtitle="Modify timetable slot information" isOpen={isOpen} onClose={onClose}>
+      <ModalTextInput title="Title" nameKey="title" value={formContent.title} onChange={handleChange} required={true} />
+      <ModalTextInput
+        title="Description"
+        nameKey="description"
+        value={formContent.description}
+        onChange={handleChange}
+      />
+      <ModalBeside>
+        <ModalNumberInput
+          title="Start time (hours)"
+          nameKey="startTimeHours"
+          value={formContent.startTimeHours}
+          onChange={handleChange}
+        />
+        <ModalNumberInput
+          title="Start time (minutes)"
+          nameKey="startTimeMinutes"
+          value={formContent.startTimeMinutes}
+          onChange={handleChange}
+        />
+      </ModalBeside>
+      <ModalBeside>
+        <ModalNumberInput
+          title="End time (hours)"
+          nameKey="endTimeHours"
+          value={formContent.endTimeHours}
+          onChange={handleChange}
+        />
+        <ModalNumberInput
+          title="End time (minutes)"
+          nameKey="endTimeMinutes"
+          value={formContent.endTimeMinutes}
+          onChange={handleChange}
+        />
+      </ModalBeside>
+      <ModalFooter
+        left={<ModalButtonSecondary text="Delete" onClick={handleDelete} />}
+        right={
+          <>
+            <ModalButtonSecondary text="Cancel" onClick={handleCancel} />
+            <ModalButtonPrimary text="Submit" onClick={handleSubmit} />
+          </>
+        }
+      />
+    </Modal>
+  );
+};
+
+const AddTimetableSlotModal = ({ isOpen, onClose }) => {
+  const defaultState = {
+    title: '',
+    description: '',
+    day: DaysOfWeek[new Date().getDay()],
+    startTimeHours: Math.floor(new Date().getHours()),
+    startTimeMinutes: new Date().getMinutes(),
+    endTimeHours: Math.floor(new Date().getHours()),
+    endTimeMinutes: new Date().getMinutes(),
+  };
+
+  const [formContent, setFormContent] = useState(defaultState);
+
+  const handleChange = (event) => {
+    if (event.target.name === 'startTimeHours' || event.target.name === 'endTimeHours') {
+      const value = clamp(Number(event.target.value), 0, 23).toString();
+      setFormContent({ ...formContent, [event.target.name]: value });
+    } else if (event.target.name === 'startTimeMinutes' || event.target.name === 'endTimeMinutes') {
+      const value = clamp(Number(event.target.value), 0, 59).toString();
+      setFormContent({ ...formContent, [event.target.name]: value });
+    } else {
+      setFormContent({ ...formContent, [event.target.name]: event.target.value });
+    }
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    setFormContent(defaultState);
+    onClose();
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formContent);
+    onClose();
+  };
+
+  return (
+    <Modal
+      title="Add timetable slot"
+      subtitle="Create a new recurring timetable slot"
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      <ModalTextInput title="Title" nameKey="title" value={formContent.title} onChange={handleChange} required={true} />
+      <ModalTextInput
+        title="Description"
+        nameKey="description"
+        value={formContent.description}
+        onChange={handleChange}
+      />
+      <ModalBeside>
+        <ModalNumberInput
+          title="Start time (hours)"
+          nameKey="startTimeHours"
+          value={formContent.startTimeHours}
+          onChange={handleChange}
+        />
+        <ModalNumberInput
+          title="Start time (minutes)"
+          nameKey="startTimeMinutes"
+          value={formContent.startTimeMinutes}
+          onChange={handleChange}
+        />
+      </ModalBeside>
+      <ModalBeside>
+        <ModalNumberInput
+          title="End time (hours)"
+          nameKey="endTimeHours"
+          value={formContent.endTimeHours}
+          onChange={handleChange}
+        />
+        <ModalNumberInput
+          title="End time (minutes)"
+          nameKey="endTimeMinutes"
+          value={formContent.endTimeMinutes}
+          onChange={handleChange}
+        />
+      </ModalBeside>
+      <ModalFooter
+        left={<ModalButtonSecondary text="Cancel" onClick={handleCancel} />}
+        right={<ModalButtonPrimary text="Submit" onClick={handleSubmit} />}
+      />
+    </Modal>
   );
 };
 
