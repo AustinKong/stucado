@@ -1,5 +1,5 @@
 .calendar {
-  width: 300px;
+  width: 20vw;
   margin: 0 auto;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -22,7 +22,10 @@
 
 .calendar__day-name, .calendar__day, .calendar__empty-day {
   padding: 10px;
-  text-align: center;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .calendar__day-name {

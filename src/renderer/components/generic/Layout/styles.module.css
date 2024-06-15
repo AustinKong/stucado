@@ -1,0 +1,18 @@
+.page {
+  margin-left: var(--ds-space-800);
+  padding: var(--ds-space-400);
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+    display: none;
+  }
+
+  .page-banner {
+    margin-left: 0;
+  }
+
+  .page {
+    margin-left: 0;
+  }
+}
