@@ -24,6 +24,55 @@ export function getTimeIntervals(beginTime, endTime) {
   return intervals;
 }
 
+/* Helper function to merge all intervals for tasks and pomodoro sessions */
+export function mergeInterval(tasks, pomodoro) {
+  const intervals = [];
+
+  tasks.forEach((task) => {
+    intervals.push({
+      startTime: task.beginTime,
+      endTime: task.endTime,
+    });
+  });
+
+  pomodoro.forEach((session) => {
+    intervals.push({
+      startTime: new Date(session.startTime).getTime(),
+      endTime: new Date(session.endTime).getTime(),
+    });
+  });
+
+  intervals.sort((a, b) => a.startTime - b.startTime);
+
+  if (intervals.length == 0) return [];
+  const result = [intervals[0]];
+
+  for (let i = 1; i < intervals.length; i++) {
+    const lastInterval = result[result.length - 1];
+    const currInterval = intervals[i];
+    // To separate the intervals of today and tmr
+    if (new Date(currInterval.startTime).getDay() != new Date(currInterval.endTime).getDay()) {
+      result.push(
+        {
+          startTime: currInterval.startTime,
+          endTime: new Date(currInterval.startTime).setHours(23, 59, 59, 999),
+        },
+        {
+          startTime: new Date(currInterval.startTime).setHours(24, 0, 0, 0),
+          endTime: currInterval.endTime,
+        }
+      );
+      continue;
+    }
+    if (currInterval.startTime > lastInterval.endTime) {
+      result.push(currInterval);
+    } else {
+      lastInterval.endTime = new Date(Math.max(currInterval.endTime, lastInterval.endTime));
+    }
+  }
+  return result;
+}
+
 /* Get past productivity by hour*/
 export async function generateHourlyProductivity() {
   const tasks = await readTasks();
@@ -97,55 +146,6 @@ export async function generateProductivityToday(tasks) {
   await updateAvgProductivity(prod);
 }
 
-/* Helper function to merge all intervals for tasks and pomodoro sessions */
-export function mergeInterval(tasks, pomodoro) {
-  const intervals = [];
-
-  tasks.forEach((task) => {
-    intervals.push({
-      startTime: task.beginTime,
-      endTime: task.endTime,
-    });
-  });
-
-  pomodoro.forEach((session) => {
-    intervals.push({
-      startTime: new Date(session.startTime).getTime(),
-      endTime: new Date(session.endTime).getTime(),
-    });
-  });
-
-  intervals.sort((a, b) => a.startTime - b.startTime);
-
-  if (intervals.length == 0) return [];
-  const result = [intervals[0]];
-
-  for (let i = 1; i < intervals.length; i++) {
-    const lastInterval = result[result.length - 1];
-    const currInterval = intervals[i];
-    // To separate the intervals of today and tmr
-    if (new Date(currInterval.startTime).getDay() != new Date(currInterval.endTime).getDay()) {
-      result.push(
-        {
-          startTime: currInterval.startTime,
-          endTime: new Date(currInterval.startTime).setHours(23, 59, 59, 999),
-        },
-        {
-          startTime: new Date(currInterval.startTime).setHours(24, 0, 0, 0),
-          endTime: currInterval.endTime,
-        }
-      );
-      continue;
-    }
-    if (currInterval.startTime > lastInterval.endTime) {
-      result.push(currInterval);
-    } else {
-      lastInterval.endTime = new Date(Math.max(currInterval.endTime, lastInterval.endTime));
-    }
-  }
-  return result;
-}
-
 /* Hours focused per day */
 export async function generateHoursFocused() {
   const tasks = await readTasks();
@@ -173,3 +173,14 @@ export async function generateHoursFocused() {
     });
   }
 }
+
+/* Find completed tasks per day */
+export async function countCompletedTasks() {
+  const tasks = await readTasks();
+  // Find tasks that are completed
+  const completedTasks = tasks.filter((task) => task.status == 'Completed'); //&& new Date(task.beginTime).toDateString() == new Date().toDateString()
+  return completedTasks.length;
+}
+
+// generateProductivityToday, generateHoursFocused, countCompletedTasks will need to be called when toggle task & during app restart
+// generateHourlyProductivity would only be called during logout, assuming user logs out everyday
