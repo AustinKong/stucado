@@ -17,18 +17,14 @@ export async function createStatsDatabase() {
     CREATE TABLE IF NOT EXISTS productivity_stats (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       hour TEXT,
-      day TEXT,
-      date TEXT
+      date TEXT,
       productivity REAL
     );
   `);
 
   await db.exec(`
     CREATE TABLE IF NOT EXISTS hours_focused (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      hour TEXT,
-      day TEXT,
-      date TEXT
+      date TEXT PRIMARY KEY,
       hours_focused REAL
     );
   `);
@@ -42,9 +38,8 @@ export async function readProductivityStats() {
       SELECT
         id,
         hour,
-        day,
         date,
-        productivity,
+        productivity
       FROM productivity_stats
     `);
   } catch (err) {
@@ -54,13 +49,42 @@ export async function readProductivityStats() {
 
 export async function updateProductivityStats(prod) {
   const db = await createStatsDatabase();
-  const { hour, day, date, productivity } = prod;
+  const { hour, date, productivity } = prod;
 
   await db.run(
     `
-    INSERT INTO productivity_stats (hour, day, date, productivity)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO productivity_stats (hour, date, productivity)
+    VALUES (?, ?, ?)
   `,
-    [hour, day, date, productivity]
+    [hour, date, productivity]
+  );
+}
+
+export async function readHoursFocused() {
+  const db = await createStatsDatabase();
+  try {
+    await db.all(`
+      SELECT
+        date,
+        hours_focused
+      FROM productivity_stats
+    `);
+  } catch (err) {
+    console.error('Error retrieving hours focused stats: ', err);
+  }
+}
+
+export async function updateHoursFocused(hours) {
+  const db = await createStatsDatabase();
+  const { date, hoursFocused } = hours;
+
+  await db.run(
+    `
+    INSERT INTO hours_focused (date, hours_focused)
+    VALUES (?, ?)
+    ON CONFLICT(date) DO UPDATE SET
+      hours_focused = hours_focused + EXCLUDED.hours_focused
+  `,
+    [date, hoursFocused]
   );
 }

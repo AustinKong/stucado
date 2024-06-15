@@ -1,6 +1,5 @@
-import { DaysOfWeek } from '../../shared/constants.js';
-import { readTasks } from '../database/cache.js';
-import { updateProductivityStats } from '../database/stats.js';
+import { readTasks, readPomodoro } from '../database/cache.js';
+import { updateHoursFocused, updateProductivityStats } from '../database/stats.js';
 import { getProductivity } from './general.js';
 
 /* Helper functions for past productivity statistics */
@@ -37,9 +36,8 @@ export async function generatePastProductivity() {
 
     intervals.forEach((interval, index) => {
       const hour = new Date(interval).getHours();
-      const dayOfWeek = DaysOfWeek[new Date(interval).getDay()];
       const date = new Date(interval).toDateString();
-      const key = `${hour}-${dayOfWeek}-${date}`;
+      const key = `${hour}-${date}`;
 
       if (!productivityData[key]) {
         productivityData[key] = [];
@@ -59,7 +57,7 @@ export async function generatePastProductivity() {
   });
 
   Object.keys(productivityData).forEach((key) => {
-    const [hour, dayOfWeek, date] = key.split('-');
+    const [hour, date] = key.split('-');
     const productivities = productivityData[key];
 
     const totalDuration = productivities.reduce((acc, entry) => acc + entry.durationInMinutes, 0);
@@ -71,7 +69,6 @@ export async function generatePastProductivity() {
 
     const prod = {
       time: hour,
-      dayOfWeek,
       date,
       productivity: avgProductivity,
     };
@@ -80,7 +77,7 @@ export async function generatePastProductivity() {
   });
 }
 
-/* Today's productivity for home page */
+/* Average productivity per day */
 export function generateProductivityToday(tasks) {
   //const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
@@ -94,4 +91,81 @@ export function generateProductivityToday(tasks) {
     totalDuration += duration;
   });
   return Math.round((totalProductivity / totalDuration) * 100) / 100;
+}
+
+/* Helper function to merge all intervals for tasks and pomodoro sessions */
+export function mergeInterval(tasks, pomodoro) {
+  const intervals = [];
+
+  tasks.forEach((task) => {
+    intervals.push({
+      startTime: task.beginTime,
+      endTime: task.endTime,
+    });
+  });
+
+  pomodoro.forEach((session) => {
+    intervals.push({
+      startTime: new Date(session.startTime).getTime(),
+      endTime: new Date(session.endTime).getTime(),
+    });
+  });
+
+  intervals.sort((a, b) => a.startTime - b.startTime);
+
+  if (intervals.length == 0) return [];
+  const result = [intervals[0]];
+
+  for (let i = 1; i < intervals.length; i++) {
+    const lastInterval = result[result.length - 1];
+    const currInterval = intervals[i];
+    // To separate the intervals of today and tmr
+    if (new Date(currInterval.startTime).getDay() != new Date(currInterval.endTime).getDay()) {
+      result.push(
+        {
+          startTime: currInterval.startTime,
+          endTime: new Date(currInterval.startTime).setHours(23, 59, 59, 999),
+        },
+        {
+          startTime: new Date(currInterval.startTime).setHours(24, 0, 0, 0),
+          endTime: currInterval.endTime,
+        }
+      );
+      continue;
+    }
+    if (currInterval.startTime > lastInterval.endTime) {
+      result.push(currInterval);
+    } else {
+      lastInterval.endTime = new Date(Math.max(currInterval.endTime, lastInterval.endTime));
+    }
+  }
+  return result;
+}
+
+/* Hours focused per day */
+export async function generateHoursFocused(tasks, pomodoro) {
+  //const tasks = await readTasks();
+  //const pomodoro = await readPomodoro();
+  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+
+  const mergedIntervals = mergeInterval(completedTasks, pomodoro);
+
+  const hoursFocusedByDay = {};
+
+  mergedIntervals.forEach((interval) => {
+    const date = new Date(interval.startTime).toDateString();
+    const duration = (interval.endTime - interval.startTime) / 1000 / 60 / 60;
+
+    if (!hoursFocusedByDay[date]) {
+      hoursFocusedByDay[date] = 0;
+    }
+    hoursFocusedByDay[date] += duration;
+  });
+
+  for (const date in hoursFocusedByDay) {
+    await updateHoursFocused({
+      date: date,
+      hoursFocused: hoursFocusedByDay[date],
+    });
+  }
 }

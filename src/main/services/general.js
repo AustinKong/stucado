@@ -102,8 +102,8 @@ export async function createDataPoints() {
 
 export async function handleLogOut() {
   await createDataPoints();
-  await deleteCompletedTasks();
   await generatePastProductivity();
+  await deleteCompletedTasks();
   //TODO: delete pomodoro data
   return new Date().getTime();
 }
