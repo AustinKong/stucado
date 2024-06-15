@@ -23,6 +23,13 @@ export async function createStatsDatabase() {
   `);
 
   await db.exec(`
+    CREATE TABLE IF NOT EXISTS avg_productivity (
+      date TEXT PRIMARY KEY,
+      productivity REAL
+    );
+  `);
+
+  await db.exec(`
     CREATE TABLE IF NOT EXISTS hours_focused (
       date TEXT PRIMARY KEY,
       hours_focused REAL
@@ -57,6 +64,35 @@ export async function updateProductivityStats(prod) {
     VALUES (?, ?, ?)
   `,
     [hour, date, productivity]
+  );
+}
+
+export async function readAvgProductivity() {
+  const db = await createStatsDatabase();
+  try {
+    await db.all(`
+        SELECT 
+          date,
+          productivity
+        FROM avg_productivity
+    `);
+  } catch (err) {
+    console.error('Error retrieving average productivity: ', err);
+  }
+}
+
+export async function updateAvgProductivity(prod) {
+  const db = await createStatsDatabase();
+  const { date, productivity } = prod;
+
+  await db.run(
+    `
+    INSERT INTO hours_focused (date, productivity)
+    VALUES (?, ?)
+    ON CONFLICT(date) DO UPDATE SET
+      productivity = productivity + EXCLUDED.productivity
+  `,
+    [date, productivity]
   );
 }
 

@@ -1,5 +1,5 @@
 import { readTasks, readPomodoro } from '../database/cache.js';
-import { updateHoursFocused, updateProductivityStats } from '../database/stats.js';
+import { updateAvgProductivity, updateHoursFocused, updateProductivityStats } from '../database/stats.js';
 import { getProductivity } from './general.js';
 
 /* Helper functions for past productivity statistics */
@@ -24,8 +24,8 @@ export function getTimeIntervals(beginTime, endTime) {
   return intervals;
 }
 
-/* Get past productivity */
-export async function generatePastProductivity() {
+/* Get past productivity by hour*/
+export async function generateHourlyProductivity() {
   const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
   const productivityData = {};
@@ -78,7 +78,7 @@ export async function generatePastProductivity() {
 }
 
 /* Average productivity per day */
-export function generateProductivityToday(tasks) {
+export async function generateProductivityToday(tasks) {
   //const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
   let totalDuration = 0;
@@ -90,7 +90,11 @@ export function generateProductivityToday(tasks) {
     totalProductivity += getProductivity(task) * duration;
     totalDuration += duration;
   });
-  return Math.round((totalProductivity / totalDuration) * 100) / 100;
+  const prod = {
+    date: new Date(task.beginTime).toDateString(),
+    productivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
+  };
+  await updateAvgProductivity(prod);
 }
 
 /* Helper function to merge all intervals for tasks and pomodoro sessions */
@@ -143,9 +147,9 @@ export function mergeInterval(tasks, pomodoro) {
 }
 
 /* Hours focused per day */
-export async function generateHoursFocused(tasks, pomodoro) {
-  //const tasks = await readTasks();
-  //const pomodoro = await readPomodoro();
+export async function generateHoursFocused() {
+  const tasks = await readTasks();
+  const pomodoro = await readPomodoro();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
 
   const mergedIntervals = mergeInterval(completedTasks, pomodoro);
@@ -165,7 +169,7 @@ export async function generateHoursFocused(tasks, pomodoro) {
   for (const date in hoursFocusedByDay) {
     await updateHoursFocused({
       date: date,
-      hoursFocused: hoursFocusedByDay[date],
+      hoursFocused: Math.round(hoursFocusedByDay[date] * 100) / 100,
     });
   }
 }
