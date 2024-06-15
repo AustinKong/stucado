@@ -71,7 +71,7 @@ async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
         .filter((semesterData) => semesterData.semester === semester)[0]
         .timetable.filter(
           (lessonData) =>
-            lessonData.classNo === classNo && lessonData.lessonType.substring(0, 3).toUpperCase() === lessonType
+            lessonData.classNo === classNo && lessonTypeToAbbreviation(lessonData.lessonType) === lessonType
         );
 
       for (const lessonData of lessonDatas) {
@@ -90,6 +90,28 @@ async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
   }
 
   return timetable;
+}
+
+// Utility function to convert lesson type to abbreviation
+function lessonTypeToAbbreviation(lessonType) {
+  switch (lessonType) {
+    case 'Tutorial':
+      return 'TUT';
+    case 'Sectional Teaching':
+      return 'SEC';
+    case 'Laboratory':
+      return 'LAB';
+    case 'Recitation':
+      return 'REC';
+    case 'Lecture':
+      return 'LEC';
+    case 'Workshop':
+      return 'WS';
+    default:
+      // Failsafe is to use first three letters of lesson type
+      console.error('Unknown lesson type encountered, contact developer!');
+      return lessonType.slice(0, 3).toUpperCase();
+  }
 }
 
 // GET request to NUSMods API to get single module information
