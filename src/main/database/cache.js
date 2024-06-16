@@ -52,6 +52,14 @@ export async function createCache() {
 		);
 	`);
 
+  await db.exec(`
+		CREATE TABLE IF NOT EXISTS pomodoro (
+			id TEXT PRIMARY KEY,
+			start_time INTEGER,
+			end_time INTEGER
+		);
+	`);
+
   return db;
 }
 
@@ -60,6 +68,7 @@ export async function deleteCache() {
   await db.exec('DELETE FROM timetable');
   await db.exec('DELETE FROM tasks');
   await db.exec('DELETE FROM task_slots');
+  //await db.exec('DELETE FROM pomodoro');
 }
 
 /* Task manipulation */
@@ -259,4 +268,38 @@ export async function updateTaskSlots(allocatedTasks) {
       [id, title, description, startTime, endTime, day]
     );
   }
+}
+
+export async function readPomodoro() {
+  const db = await createCache();
+  try {
+    const sessions = await db.all(`
+      SELECT 
+        id,
+        start_time AS startTime, 
+        end_time AS endTime 
+      FROM pomodoro
+    `);
+    return sessions;
+  } catch (err) {
+    console.error('Error retrieving tasks: ', err);
+  }
+}
+
+export async function deletePomodoro() {
+  const db = await createCache();
+  await db.exec('DELETE FROM pomodoro');
+}
+
+export async function updatePomodoro(session) {
+  const db = await createCache();
+  const { id, startTime, endTime } = session;
+
+  await db.run(
+    `
+    INSERT INTO pomodoro (id, start_time, end_time)
+    VALUES (?, ?, ?)
+  `,
+    [id, startTime, endTime]
+  );
 }
