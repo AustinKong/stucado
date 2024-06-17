@@ -1,0 +1,44 @@
+.onboarding {
+  width: 100vw;
+  height: 100vh;
+  padding: 24px;
+  display: flex;
+  background-color: var(--sunken);
+}
+
+.onboarding__content {
+  height: 100%;
+  width: 45%;
+  border-radius: 32px 0 0 32px;
+  background:
+    linear-gradient(150deg, #ecedee, transparent 30%),
+    linear-gradient(330deg, rgb(210, 206, 242), transparent 30%),
+    linear-gradient(225deg, #fbf0c9, #fbdce7, #e2fae1, powderblue);
+
+  padding: 20% 96px;
+}
+
+.onboarding__title {
+  font-family: inter;
+  font-size: var(--font-size-600);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.onboarding__description {
+  font-family: inter;
+  font-size: var(--font-size-300);
+  margin-top: var(--space-300);
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+
+.onboarding__interaction {
+  padding: var(--space-800);
+  width: 55%;
+  background-color: var(--surface);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}

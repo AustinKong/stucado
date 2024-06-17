@@ -99,6 +99,7 @@
   --surface-raised: #FFFFFF;
   --surface-raised-hovered: #f9fafb;
   --surface-raised-pressed: #DCDFE4;
+  --surface-raised-selected: #eaebee;
 
   --background-input: #FFFFFF;
   --background-input-hovered: #F7F8F9;

@@ -1,0 +1,61 @@
+.welcome__themes {
+  margin-top: var(--space-400);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+  height: 70%;
+}
+
+.welcome__theme {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--space-200);
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--surface-raised);
+  height: 33.33%;
+  box-shadow: var(--shadow-raised);
+}
+
+.welcome__theme:hover {
+  background-color: var(--surface-raised-hovered);
+}
+
+.welcome__theme:active {
+  background-color: var(--surface-raised-pressed);
+}
+
+.welcome__themeActive {
+  background-color: var(--surface-raised-selected);
+}
+
+.welcome__themeLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-100);
+  padding: var(--space-600);
+}
+
+.welcome__themeTitle {
+  font-size: var(--space-300);
+  display: flex;
+  gap: var(--space-100);
+  align-items: center;
+}
+
+.welcome__themeDescription {
+  font-size: var(--space-200);
+  color: var(--text-secondary);
+}
+
+.welcome__themeImage {
+  height: 100%;
+}
+
+.welcome__footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}

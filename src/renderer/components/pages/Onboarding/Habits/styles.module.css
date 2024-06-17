@@ -1,0 +1,62 @@
+.habits {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 70%;
+}
+
+.habits__habit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-raised);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--surface-raised);
+
+  height: 33.33%;
+}
+
+.habits__habitActive {
+  background-color: var(--surface-raised-selected);
+}
+
+.habits__habit:hover {
+  background-color: var(--surface-raised-hovered);
+}
+
+.habits__habit:active {
+  background-color: var(--surface-raised-pressed);
+}
+
+.habits__habitLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px;
+}
+
+.habits__habitTitle {
+  font-size: 24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.habits__habitDescription {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.habits__habitImage {
+  max-height: 100%;
+}
+
+.habits__footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
