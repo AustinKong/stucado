@@ -1,4 +1,4 @@
-import './styles.css';
+import styles from './styles.module.css';
 import { DaysOfWeek } from '@shared/constants';
 
 const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, tooltip = 'key:' }) => {
@@ -11,18 +11,18 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
   };
 
   return (
-    <div className="heatmap">
-      <div className="heatmap__days">
+    <div className={styles.heatmap}>
+      <div className={styles.heatmap__days}>
         {daysOfWeek
           .map((day) => day.slice(0, 1))
           .map((day, index) => (
-            <span key={index} className="heatmap__day">
+            <span key={index} className={styles.heatmap__day}>
               {day}
             </span>
           ))}
       </div>
       <div
-        className="heatmap__container"
+        className={styles.heatmap__container}
         style={{
           gridTemplateColumns: `repeat(${dimensions.columns}, 1fr)`,
           gridTemplateRows: `repeat(${dimensions.rows}, 1fr)`,
@@ -32,9 +32,9 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
           <HeatMapTile key={index} level={level} tooltip={`${tooltip} ${data[index]}`} />
         ))}
       </div>
-      <div className="heatmap__legend">
+      <div className={styles.heatmap__legend}>
         Less
-        <div className="heatmap__legend-container">
+        <div className={styles.heatmap__legendContainer}>
           {[...Array(levels + 1).keys()].map((level) => (
             <HeatMapTile key={level} level={level} tooltip={null} />
           ))}
@@ -46,9 +46,22 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
 };
 
 const HeatMapTile = ({ level, tooltip }) => {
+  const LEVEL_COLORS = [
+    '#f0f0f0',
+    '#d9ed92',
+    '#b5e48c',
+    '#99d98c',
+    '#76c893',
+    '#52b69a',
+    '#34a0a4',
+    '#168aad',
+    '#1a759f',
+    '#1e6091',
+  ];
+
   return (
-    <div className={`heatmap-tile heatmap-tile--${level}`}>
-      {tooltip && <div className="heatmap-tile__tooltip">{tooltip}</div>}
+    <div className={styles.heatmapTile} style={{ backgroundColor: LEVEL_COLORS[level] }}>
+      {tooltip && <div className={styles.heatmapTile__tooltip}>{tooltip}</div>}
     </div>
   );
 };

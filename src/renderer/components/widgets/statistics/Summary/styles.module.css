@@ -1,0 +1,8 @@
+.summary {
+  grid-area: summary;
+}
+
+.summaryCards {
+  display: flex;
+  width: 100%;
+}

@@ -1,8 +1,8 @@
 import { ArrowsClockwise } from '@phosphor-icons/react';
 
-import { Widget, InteractionButton } from '@components/widgets/Widget';
+import Widget, { InteractionButton } from '@components/widgets/Widget';
 import LineChart from '@components/generic/LineChart';
-import './styles.css';
+import styles from './styles.module.css';
 
 const DUMMY_DATASET = [
   { 'Days before': 'Monday', Productivity: 10 },
@@ -24,7 +24,7 @@ const DUMMY_DATASET = [
 const PastProductivityLineChart = () => {
   return (
     <Widget
-      className="past-productivity-line-chart"
+      className={styles.pastProductivityLineChart}
       title={'Past Productivity'}
       interaction={
         <InteractionButton icon={<ArrowsClockwise />} text="Last 14 days" onClick={() => console.log('click')} />

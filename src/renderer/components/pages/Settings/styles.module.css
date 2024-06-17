@@ -1,0 +1,116 @@
+.settings {
+  padding: var(--space-600);
+  display: flex;
+}
+
+.settings__subpage {
+  flex-grow: 1;
+  padding: 0 var(--space-800);
+}
+
+.settings__navbar {
+  display: flex;
+  gap: var(--space-050);
+  flex-direction: column;
+  width: 180px;
+}
+
+.settings__navlink {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-100);
+  color: var(--text-secondary);
+  padding: var(--space-150);
+  width: 100%;
+}
+
+.settings__navlink:hover {
+  background-color: var(--background-hovered);
+}
+
+.settings__navlink:active {
+  background-color: var(--background-pressed);
+}
+
+.settings__navlinkActive {
+  color: var(--text);
+  background-color: var(--background-selected);
+  border-radius: 8px;
+}
+
+.settings__subpageTitle {
+  margin-bottom: var(--space-200);
+}
+
+/* Common elements */
+
+/* Toggle (switch) */
+.settingsToggle {
+  display: flex;
+  align-items: center;
+}
+
+.settingsToggle__description {
+  color: var(--text-secondary);
+}
+
+.settingsToggle__label {
+  margin-left: auto;
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+}
+
+.settingsToggle__input {
+  display: none;
+}
+
+.settingsToggle__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-input);
+  border: 1px solid var(--border-input);
+  transition: .2s;
+  border-radius: 28px;
+}
+
+.settingsToggle__slider:before {
+  position: absolute;
+  content: "";
+  height: 23px;
+  width: 23px;
+  left: 1px;
+  bottom: 2px;
+  background-color: var(--background);
+  transition: .2s;
+  border-radius: 50%;
+}
+
+.settingsToggle__input:checked + .settingsToggle__slider {
+  background-color: var(--background-brand)
+}
+
+.settingsToggle__input:checked + .settingsToggle__slider:before {
+  transform: translateX(20px);
+  background-color: var(--background);
+}
+
+/* Dropdown */
+.settingsDropdown {
+  display: flex;
+  align-items: center;
+}
+
+.settingsDropdown__description {
+  color: var(--text-secondary);
+}
+
+.settingsDropdown__picker {
+  margin-left: auto;
+}

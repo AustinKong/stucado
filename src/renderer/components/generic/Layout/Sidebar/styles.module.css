@@ -1,0 +1,55 @@
+.sidebar {
+  position: fixed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: var(--space-800);
+  align-items: center;
+  border-right: 1px solid var(--border);
+}
+
+.sidebar__divider {
+  width: 60%;
+  height: 0.5px;
+  background-color: var(--border);
+}
+
+/* Group */
+.sidebar__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-100);
+}
+
+.sidebar__groupTitle {
+  margin-top: var(--space-200);
+}
+
+/* Icons */
+.sidebar__appIcon {
+  width: var(--space-400);
+  margin: var(--space-200) 0;
+}
+
+.navIcon {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: var(--space-150);
+  transition: background-color 0.2s, color 0.1s;
+}
+
+.navIcon:hover {
+  background-color: var(--background-hovered);
+}
+
+.navIconActive {
+  background-color: var(--background-selected);
+  color: var(--icon-selected);
+}
+
+.navIconActive:hover {
+  background-color: var(--background-selected);
+  color: var(--icon-selected);
+}

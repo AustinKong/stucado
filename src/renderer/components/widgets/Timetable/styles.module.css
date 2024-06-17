@@ -1,0 +1,106 @@
+.timetable {
+  grid-area: timetable;
+}
+
+.timetable__container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.timetable__scrollable {
+  position: relative;
+  overflow-x: hidden;
+  padding-left: var(--space-050);
+}
+
+.timetable__currentTime {
+  position: absolute;
+  top: var(--space-300);
+  width: 2px;
+  height: calc(100% - 24px);
+  background-color: var(--background-brand);
+}
+
+/* Hours notches */
+.timetable__hours {
+  display: flex;
+}
+
+.timetableHour {
+  min-width: var(--space-600);
+  height: 24px;
+  position: relative;
+}
+
+.timetableHour__text {
+  position: absolute;
+  transform: translate(-50%, 0);
+  color: var(--text-secondary);
+  font-size: var(--font-size-050);
+}
+
+/* Days notches */
+.timetable__days {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--space-600);
+  margin-top: 24px;
+}
+
+.timetableDay {
+  height: var(--space-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timetableDay__text {
+  color: var(--text-secondary);
+}
+
+.timetableDay__textActive {
+  color: var(--text);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Timetable slots */
+.timetable__slots {
+  display: inline-flex;
+  flex-direction: column;
+  width: calc(var(--space-600) * 97);
+  background-size: calc(var(--space-600) * 8);
+  background-repeat: repeat;
+  background-image: linear-gradient(90deg, var(--sunken) 50%, transparent 0);
+}
+
+.timetable__slotsDay {
+  height: var(--space-600);
+  display: flex;
+  border: 1px solid var(--border);
+}
+
+.timetable__slotsDayActive {
+  background-color: var(--sunken);
+}
+
+.timetableSlot {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: var(--space-100);
+  padding: var(--space-200);
+  background-color: var(--surface-raised);
+  border: 2px solid var(--border);
+}
+
+.timetableSlot__icon {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+.timetableSlot__title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

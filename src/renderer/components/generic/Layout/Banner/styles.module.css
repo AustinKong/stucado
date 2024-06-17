@@ -1,0 +1,31 @@
+.banner {
+  margin-left: var(--space-800);
+  padding: var(--space-400);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  height: var(--space-800);
+  gap: var(--space-400);
+}
+
+.banner__title {
+  text-transform: capitalize;
+  margin-right: auto;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.profile__details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}

@@ -1,0 +1,19 @@
+.barChart {
+  position: relative;
+}
+
+.barChart text {
+  font-size: var(--font-size-075);
+  fill: var(--text);
+}
+
+.barChart__tooltip {
+  position: absolute;
+  background-color: var(--surface-overlay);
+  border: 1px solid var(--border);
+  padding: var(--space-050);
+  pointer-events: none;
+  box-shadow: var(--shadow-overlay);
+  transform: translateX(-50%);
+  z-index: 800;
+}

@@ -1,5 +1,6 @@
+/*
 :root {
-  /* Light mode colors */
+  /* Light mode colors
   --light-bg-primary: #f3f3f3;
   --light-bg-secondary: #ffffff;
   --light-bg-tertiary: #e6e6e684;
@@ -14,7 +15,7 @@
   --light-secondary: #E2F4C5;
   --light-primary: #A8CD9F;
 
-  /* Dark mode colors */
+  /* Dark mode colors
   --dark-bg-primary: #1c1c1c;
   --dark-bg-secondary: #2c2c2c;
   --dark-bg-tertiary: #3c3c3c;
@@ -29,14 +30,16 @@
   --dark-secondary: #E2F4C5;
   --dark-primary: #A8CD9F;
 
-  /* Some default colors */
+  /* Some default colors
   --traffic-light-red: #ff5f58;
   --traffic-light-yellow: #ffbd2e;
   --traffic-light-green: #28c76f;
 
   --shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px;
 }
+*/
 
+/*
 @media (prefers-color-scheme: light) {
   :root {
     --bg-primary: var(--light-bg-primary);
@@ -72,19 +75,64 @@
     --primary: var(--dark-primary);
   }
 }
+*/
 
-@font-face {
-  font-family: inter;
-  src: url('../assets/fonts/Inter-VariableFont.ttf');
+/* Body Text */
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-200);
+  line-height: var(--font-line-height-200);
+  font-weight: var(--font-weight-regular);
 }
 
-@font-face {
-  font-family: roboto;
-  src: url('../assets/fonts/Roboto-VariableFont.ttf');
+/* Heading Large */
+h1 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-600);
+  line-height: var(--font-line-height-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Heading Medium */
+h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-400);
+  line-height: var(--font-line-height-500);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Heading Small */
+h3 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-300);
+  line-height: var(--font-line-height-400);
+  font-weight: var(--font-weight-medium);
+}
+
+h4 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-200);
+  line-height: var(--font-line-height-300);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Small Text */
+small {
+  font-size: var(--font-size-075);
+  line-height: var(--font-line-height-075);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+}
+
+/* Code Text */
+code {
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-100);
+  line-height: var(--font-line-height-100);
+  font-weight: var(--font-weight-regular);
 }
 
 /* Some universal styles */
-
 * {
   margin: 0;
   padding: 0;
@@ -92,10 +140,7 @@
 }
 
 html, body {
-  font-family: roboto, sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 16px;
+  background-color: var(--surface);
 }
 
 /* Some default styles */
@@ -113,17 +158,27 @@ a:active {
   text-decoration: none;
 }
 
+input {
+  all: unset;
+}
+
+input::placeholder {
+}
+
+input:hover {
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--sunken);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: var(--background-brand);
   border-radius: 64px;
 }

@@ -1,0 +1,11 @@
+.pomodoro {
+  grid-area: pomodoro;
+}
+
+.pomodoro__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}

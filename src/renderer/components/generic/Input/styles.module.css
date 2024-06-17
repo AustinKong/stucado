@@ -1,0 +1,42 @@
+.input {
+  width: 100%;
+}
+
+.input__label {
+
+}
+
+.input__wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--space-100);
+  background-color: var(--background-input);
+  border-radius: 8px;
+  border: 1px solid var(--border-input);
+  padding: var(--space-050) var(--space-100);
+}
+
+.input__wrapper:hover {
+  background-color: var(--background-input-hovered);
+}
+
+.input__wrapper:active {
+  background-color: var(--background-input-pressed);
+}
+
+.input__input {
+  all: unset;
+  width: 100%;
+  color: var(--text-tertiary);
+}
+
+.input__icon {
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.input__requiredStar {
+  color: var(--text-danger);
+}

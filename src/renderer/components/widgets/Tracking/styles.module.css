@@ -1,0 +1,6 @@
+.tracking__content {
+  display: flex;
+  gap: 10%;
+  padding: 0 var(--space-200);
+  height: 100%;
+}

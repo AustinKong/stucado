@@ -1,0 +1,31 @@
+.statistic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-100);
+  gap: var(--space-100);
+}
+
+.statistic__subtitle {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  gap: var(--space-100);
+}
+
+.statistic__trend {
+  display: flex;
+  align-items: center;
+  padding: var(--space-050);
+  color: var(--text-inverse);
+  border-radius: 50%;
+}
+
+.statistic__trendUp {
+  background-color: var(--background-success);
+}
+
+.statistic__trendDown {
+  background-color: var(--background-danger);
+}

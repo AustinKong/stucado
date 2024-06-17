@@ -1,0 +1,46 @@
+.taskItem {
+  transition: background-color 0.1s;
+  display: flex;
+  align-items: center;
+  padding: var(--space-100) var(--space-150);
+  gap: var(--space-200);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.taskItem:hover {
+  background-color: var(--surface-hovered);
+}
+
+.taskItem:active {
+  background-color: var(--surface-pressed);
+}
+
+.taskItem__edit {
+  cursor: pointer;
+  color: var(--icon);
+}
+
+.taskItem__status {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: var(--background-danger);
+}
+
+.taskItem__content {
+  flex-grow: 1;
+  max-width: 80%;
+  overflow-x: hidden;
+}
+
+.taskItem__title {
+  
+}
+
+.taskItem__description {
+  color: var(--text-secondary);
+}
+
+* {
+}

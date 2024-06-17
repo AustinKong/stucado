@@ -1,0 +1,42 @@
+.textArea {
+  width: 100%;
+}
+
+.textArea__label {
+
+}
+
+.textArea__wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--space-100);
+  background-color: var(--background-input);
+  border-radius: 8px;
+  border: 1px solid var(--border-input);
+  padding: var(--space-050) var(--space-100);
+}
+
+.textArea__wrapper:hover {
+  background-color: var(--background-input-hovered);
+}
+
+.textArea__wrapper:active {
+  background-color: var(--background-input-pressed);
+}
+
+.textArea__input {
+  all: unset;
+  width: 100%;
+  color: var(--text-tertiary);
+}
+
+.textArea__icon {
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+.textArea__requiredStar {
+  color: var(--text-danger);
+}
