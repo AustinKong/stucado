@@ -25,7 +25,7 @@ export async function createStatsDatabase() {
   await db.exec(`
     CREATE TABLE IF NOT EXISTS avg_productivity (
       date TEXT PRIMARY KEY,
-      productivity REAL
+      avg_productivity REAL
     );
   `);
 
@@ -35,7 +35,22 @@ export async function createStatsDatabase() {
       hours_focused REAL
     );
   `);
+
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS completed_tasks (
+      date TEXT PRIMARY KEY,
+      tasks REAL
+    );
+  `);
   return db;
+}
+
+export async function deleteStats() {
+  const db = await createStatsDatabase();
+  await db.run('DELETE FROM productivity_stats');
+  await db.run('DELETE FROM avg_productivity');
+  await db.run('DELETE FROM hours_focused');
+  await db.run('DELETE FROM completed_tasks');
 }
 
 export async function readProductivityStats() {
@@ -62,7 +77,6 @@ export async function deleteAllProdStats() {
 
 export async function deleteProductivityStats(id) {
   const db = await createStatsDatabase();
-  console.log('trying to delete');
   try {
     await db.run('DELETE FROM productivity_stats WHERE id = ?', id);
   } catch (err) {
@@ -89,7 +103,7 @@ export async function readAvgProductivity() {
     await db.all(`
         SELECT 
           date,
-          productivity
+          avg_productivity
         FROM avg_productivity
     `);
   } catch (err) {
@@ -99,16 +113,16 @@ export async function readAvgProductivity() {
 
 export async function updateAvgProductivity(prod) {
   const db = await createStatsDatabase();
-  const { date, productivity } = prod;
+  const { date, avgProductivity } = prod;
 
   await db.run(
     `
-    INSERT INTO hours_focused (date, productivity)
+    INSERT INTO avg_productivity (date, avg_productivity)
     VALUES (?, ?)
     ON CONFLICT(date) DO UPDATE SET
-      productivity = productivity + EXCLUDED.productivity
+      avg_productivity = avg_productivity + EXCLUDED.avg_productivity
   `,
-    [date, productivity]
+    [date, avgProductivity]
   );
 }
 
@@ -119,7 +133,7 @@ export async function readHoursFocused() {
       SELECT
         date,
         hours_focused
-      FROM productivity_stats
+      FROM hours_focused
     `);
   } catch (err) {
     console.error('Error retrieving hours focused stats: ', err);
@@ -138,5 +152,34 @@ export async function updateHoursFocused(hours) {
       hours_focused = hours_focused + EXCLUDED.hours_focused
   `,
     [date, hoursFocused]
+  );
+}
+
+export async function readCompletedTasks() {
+  const db = await createStatsDatabase();
+  try {
+    await db.all(`
+      SELECT
+        date,
+        tasks
+      FROM completed_tasks
+    `);
+  } catch (err) {
+    console.error('Error retrieving number of tasks completed stats: ', err);
+  }
+}
+
+export async function updateCompletedTasks(data) {
+  const db = await createStatsDatabase();
+  const { date, tasks } = data;
+
+  await db.run(
+    `
+    INSERT INTO completed_tasks (date, tasks)
+    VALUES (?, ?)
+    ON CONFLICT(date) DO UPDATE SET
+      tasks = tasks + EXCLUDED.tasks
+  `,
+    [date, tasks]
   );
 }

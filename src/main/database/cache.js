@@ -68,7 +68,7 @@ export async function deleteCache() {
   await db.exec('DELETE FROM timetable');
   await db.exec('DELETE FROM tasks');
   await db.exec('DELETE FROM task_slots');
-  //await db.exec('DELETE FROM pomodoro');
+  await db.exec('DELETE FROM pomodoro');
 }
 
 /* Task manipulation */
@@ -223,7 +223,6 @@ export async function deleteTimetable() {
   await db.exec('DELETE FROM timetable');
 }
 
-
 /* Task slots manipulation */
 // Read taskSlots
 export async function readTaskSlots() {
@@ -289,6 +288,24 @@ export async function readPomodoro() {
 export async function deletePomodoro() {
   const db = await createCache();
   await db.exec('DELETE FROM pomodoro');
+}
+
+export async function deletePastPomodoro() {
+  const db = await createCache();
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  try {
+    await db.run(
+      `
+      DELETE FROM pomodoro
+      WHERE DATE(start_time / 1000, 'unixepoch') != ?
+         OR DATE(end_time / 1000, 'unixepoch') != ?
+    `,
+      [currentDate, currentDate]
+    );
+  } catch (err) {
+    console.error('Error deleting past pomodoro sessions: ', err);
+  }
 }
 
 export async function updatePomodoro(session) {

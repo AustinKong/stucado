@@ -3,6 +3,7 @@ import {
   deleteProductivityStats,
   readProductivityStats,
   updateAvgProductivity,
+  updateCompletedTasks,
   updateHoursFocused,
   updateProductivityStats,
 } from '../database/stats.js';
@@ -73,7 +74,7 @@ export function mergeInterval(tasks, pomodoro) {
     if (currInterval.startTime > lastInterval.endTime) {
       result.push(currInterval);
     } else {
-      lastInterval.endTime = new Date(Math.max(currInterval.endTime, lastInterval.endTime));
+      lastInterval.endTime = new Date(Math.max(currInterval.endTime, lastInterval.endTime)).getTime();
     }
   }
   return result;
@@ -132,18 +133,18 @@ export async function generateHourlyProductivity() {
 }
 
 /* Average productivity per day */
-export async function generateProductivityToday(tasks) {
-  //const tasks = await readTasks();
+export async function generateAvgProductivity() {
+  const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
   let totalDuration = 0;
   let totalProductivity = 0;
-  for (const task of completedTasks) {
+  for await (const task of completedTasks) {
     const duration = (task.endTime - task.beginTime) / 60 / 1000;
     totalProductivity += getProductivity(task) * duration;
     totalDuration += duration;
     const prod = {
       date: new Date(task.beginTime).toDateString(),
-      productivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
+      avgProductivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
     };
     await updateAvgProductivity(prod);
   }
@@ -181,8 +182,15 @@ export async function generateHoursFocused() {
 export async function countCompletedTasks() {
   const tasks = await readTasks();
   // Find tasks that are completed
-  const completedTasks = tasks.filter((task) => task.status == 'Completed'); //&& new Date(task.beginTime).toDateString() == new Date().toDateString()
-  return completedTasks.length;
+  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  if (completedTasks.length > 0) {
+    const data = {
+      date: new Date(tasks[0].beginTime).toDateString(),
+      tasks: completedTasks.length,
+    };
+
+    await updateCompletedTasks(data);
+  }
 }
 
 // generateProductivityToday, generateHoursFocused, countCompletedTasks will need to be called when toggle task & during app restart
@@ -193,7 +201,7 @@ export async function deleteOldProdStats() {
   const today = new Date();
   const twoWeeksAgo = new Date(today);
   twoWeeksAgo.setDate(today.getDate() - 14);
-  for (const prod of productivityStats) {
+  for await (const prod of productivityStats) {
     const date = new Date(prod.date);
     if (date < twoWeeksAgo) {
       await deleteProductivityStats(prod.id);
