@@ -14,7 +14,7 @@ function App() {
   const hasOnboarded = useSelector((state) => state.settings.hasOnboarded);
   useRetrieveData();
 
-  if (!hasOnboarded) {
+  if (/*!hasOnboarded*/ true) {
     return <Onboarding />;
   }
 
