@@ -41,7 +41,7 @@ export async function createStatsDatabase() {
 export async function readProductivityStats() {
   const db = await createStatsDatabase();
   try {
-    await db.all(`
+    const stats = await db.all(`
       SELECT
         id,
         hour,
@@ -49,8 +49,24 @@ export async function readProductivityStats() {
         productivity
       FROM productivity_stats
     `);
+    return stats;
   } catch (err) {
     console.error('Error retrieving productivityStats: ', err);
+  }
+}
+
+export async function deleteAllProdStats() {
+  const db = await createStatsDatabase();
+  await db.run('DELETE FROM productivity_stats');
+}
+
+export async function deleteProductivityStats(id) {
+  const db = await createStatsDatabase();
+  console.log('trying to delete');
+  try {
+    await db.run('DELETE FROM productivity_stats WHERE id = ?', id);
+  } catch (err) {
+    console.log('Error deleting task ' + id);
   }
 }
 
