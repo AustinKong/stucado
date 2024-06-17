@@ -1,11 +1,11 @@
 import Heatmap from '@components/generic/Heatmap';
-import { Widget } from '@components/widgets/Widget';
-import './styles.css';
+import Widget from '@components/widgets/Widget';
+import styles from './styles.module.css';
 
 const HoursFocusedHeatmap = () => {
   return (
-    <Widget title="HoursFocused by day of week" className="hours-focused-heatmap">
-      <div className="hours-focused-heatmap__content">
+    <Widget title="HoursFocused by day of week" className={styles.hoursFocusedHeatmap}>
+      <div className={styles.hoursFocusedHeatmap__content}>
         <Heatmap
           data={[
             3, 5, 2, 1, 4, 3, 2, 4, 2, 1, 3, 2, 5, 4, 1, 3, 2, 4, 5, 3, 2, 2, 4, 5, 3, 2, 1, 4, 5, 2, 1, 4, 3, 2, 5, 3,

@@ -1,128 +1,71 @@
 import ReactDOM from 'react-dom';
-import { X, CaretDown, CaretUp } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { Warning, WarningDiamond } from '@phosphor-icons/react';
+import { useRef, useEffect } from 'react';
 
-import './styles.css';
+import styles from './styles.module.css';
 
-export const Modal = ({ isOpen, onClose, title, subtitle, children }) => {
-  /*
+// Basic modal with clicking outside to cancel
+export const Modal = ({ onClose, size = 'small', children }) => {
+  const modalRef = useRef();
+
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
   useEffect(() => {
-    // Disables scrolling when the modal is open
-    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
-  }, [isOpen]);
-  */
-
-  if (!isOpen) return null;
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return ReactDOM.createPortal(
     <>
-      <div className="modal__overlay" />
-      <div className="modal">
-        <div className="modal__title">{title}</div>
-        <div className="modal__subtitle">{subtitle}</div>
-        <div className="modal__close" onClick={onClose}>
-          <X className="modal__close-icon" size="20" />
-        </div>
-        <form className="modal__content">{children}</form>
+      <div className={styles.blanket} />
+      <div
+        className={styles.modal}
+        ref={modalRef}
+        style={{ width: size === 'small' ? '30vw' : size === 'medium' ? '40vw' : '50vw' }}
+      >
+        {children}
       </div>
     </>,
     document.getElementById('portal')
   );
 };
 
-export const ModalTextInput = ({ title, nameKey, value, onChange, required = false }) => {
+// Empty container for modal header, should include modal title
+export const ModalHeader = ({ children }) => {
+  return <div className={styles.modalHeader}>{children}</div>;
+};
+
+// Empty container for modal body
+export const ModalBody = ({ children }) => {
+  return <div className={styles.modalBody}>{children}</div>;
+};
+
+// Empty container for modal footer, should include modal buttons
+export const ModalFooter = ({ children }) => {
+  return <div className={styles.modalFooter}>{children}</div>;
+};
+
+// Appearance can be 'warn', 'danger' or nothing
+export const ModalTitle = ({ appearance, children }) => {
   return (
-    <div className="modal-input">
-      <label className="modal-input__title">
-        {title}
-        {required && <span className="modal-input__requiredStar">*</span>}
-      </label>
-      <input
-        className="modal-input__input"
-        type="text"
-        name={nameKey}
-        value={value}
-        onChange={onChange}
-        required={required}
-      />
-    </div>
+    <h2 className={styles.modalTitle}>
+      {appearance === 'warn' && (
+        <Warning size="28" weight="fill" color="var(--text-warning)" className={styles.modalTitle__icon} />
+      )}
+      {appearance === 'danger' && (
+        <WarningDiamond size="28" weight="fill" color="var(--text-danger)" className={styles.modalTitle__icon} />
+      )}
+      {children}
+    </h2>
   );
 };
 
-export const ModalNumberInput = ({ title, nameKey, value, onChange, required = false }) => {
-  return (
-    <div className="modal-input">
-      <label className="modal-input__title">
-        {title}
-        {required && <span className="modal-input__requiredStar">*</span>}
-      </label>
-      <input
-        className="modal-input__input"
-        type="number"
-        name={nameKey}
-        value={value}
-        onChange={onChange}
-        required={required}
-      />
-    </div>
-  );
+export const ModalSubtitle = ({ children }) => {
+  return <h3 className={styles.modalSubtitle}>{children}</h3>;
 };
 
-export const ModalBeside = ({ children }) => {
-  return <div className="modal-beside">{children}</div>;
-};
-
-export const ModalFooter = ({ left, right }) => {
-  return (
-    <div className="modal-footer">
-      <div className="modal-footer__left">{left}</div>
-      <div className="modal-footer__right">{right}</div>
-    </div>
-  );
-};
-
-export const ModalButtonPrimary = ({ text, onClick }) => {
-  return (
-    <button className="modal-button--primary" onClick={onClick}>
-      {text}
-    </button>
-  );
-};
-
-export const ModalButtonSecondary = ({ text, onClick }) => {
-  return (
-    <button className="modal-button--secondary" onClick={onClick}>
-      {text}
-    </button>
-  );
-};
-
-export const ModalNotice = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  if (isOpen) {
-    return (
-      <div className="modal-notice">
-        <div className="modal-notice__title" onClick={() => setIsOpen(false)}>
-          {title}
-          <CaretUp size="16" />
-        </div>
-        <div className="modal-notice__content">{children}</div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="modal-notice">
-        <div className="modal-notice__title" onClick={() => setIsOpen(true)}>
-          {title}
-          <CaretDown size="16" />
-        </div>
-      </div>
-    );
-  }
-};
-
-export const ModalError = ({ text, isShown }) => {
-  if (!isShown) return null;
-  return <div className="modal-error">{text}</div>;
-};
+export default Modal;

@@ -1,0 +1,20 @@
+.filter {
+  display: flex;
+  border-bottom: 1px solid var(--text);
+  width: 100%;
+  gap: var(--space-200);
+}
+
+.filter__tab {
+  display: flex;
+  align-items: center;
+  padding: var(--space-100) var(--space-200) var(--space-100) var(--space-050);
+  gap: var(--space-100);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.filter__tabActive {
+  color: var(--background-brand);
+  border-bottom: 2px solid var(--background-brand);
+}

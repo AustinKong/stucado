@@ -1,0 +1,58 @@
+.button {
+  all: unset;
+  padding: var(--space-100) var(--space-200);
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--background-brand);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-inverse);
+}
+
+.button:hover {
+  background-color: var(--background-brand-hovered);
+}
+
+.button:active {
+  background-color: var(--background-brand-pressed);
+}
+
+.buttonWarn {
+  background-color: var(--background-warning);
+  color: var(--text-warning-inverse);
+}
+
+.buttonWarn:hover {
+  background-color: var(--background-warning-hovered);
+}
+
+.buttonWarn:active {
+  background-color: var(--background-warning-pressed);
+}
+
+.buttonDanger {
+  background-color: var(--background-danger);
+  color: var(--text-inverse);
+}
+
+.buttonDanger:hover {
+  background-color: var(--background-danger-hovered);
+}
+
+.buttonDanger:active {
+  background-color: var(--background-danger-pressed);
+}
+
+.buttonSecondary {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.buttonSecondary:hover {
+  background-color: var(--background-hovered);
+  color: var(--text);
+}
+
+.buttonSecondary:active {
+  background-color: var(--background-pressed);
+  color: var(--text);
+}

@@ -1,18 +1,15 @@
 .dashboard {
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: var(--space-200);
+  padding: var(--space-200);
+  background-color: var(--ds-surface-sunken);
+  height: 100%;
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  /*grid-template-areas: 
-    'hoursFocused tasksCompleted averageProductivity taskList'
-    'timetable timetable timetable taskList'
-    'insights pomodoro statistics statistics';
-  */
   grid-template-areas: 
-    'taskList hoursFocused tasksCompleted averageProductivity'
-    'taskList timetable timetable timetable'
-    'past-productivity-line-chart past-productivity-line-chart pomodoro insights';
-  
+    'taskList hoursFocused tasksCompleted averageProductivity '
+    'taskList timetable timetable insights'
+    'pomodoro pomodoro pomodoro pomodoro'
 }
 
 @media (max-width: 1200px) {

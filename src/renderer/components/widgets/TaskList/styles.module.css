@@ -1,0 +1,14 @@
+.taskList {
+  grid-area: taskList;
+}
+
+.taskList__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.taskList__list {
+  list-style: none;
+  flex-grow: 1;
+}

@@ -1,0 +1,7 @@
+.hoursFocusedHeatmap {
+  grid-area: hours-focused-heatmap;
+}
+
+.hoursFocusedHeatmap__content {
+  padding: 0 var(--space-800);
+}

@@ -1,63 +1,25 @@
-import { ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
-import { Widget } from '@components/widgets/Widget';
+import Widget from '@components/widgets/Widget';
+import Histogram from '@components/widgets/Tracking/Histogram';
+import Statistic from '@components/widgets/Tracking/Statistic';
 
-import './styles.css';
+import styles from './styles.module.css';
 
 const Tracking = ({ title, unit, pastData, currentData }) => {
   // Choose to display upwards trend or downwards trend UI based on this
   const changePercentage = ((currentData - pastData[pastData.length - 1]) / pastData[pastData.length - 1]) * 100;
 
   return (
-    <Widget className="tracking" title={title}>
-      <div className="tracking__content">
-        <TrackingHistogram data={pastData.concat(currentData)} />
-        <TrackingStatistic value={currentData} unit={unit} trend={changePercentage} />
+    <Widget className={styles.tracking} title={title}>
+      <div className={styles.tracking__content}>
+        <Histogram data={pastData.concat(currentData)} />
+        <Statistic value={currentData} unit={unit} trend={changePercentage} />
       </div>
     </Widget>
   );
 };
 
-const TrackingStatistic = ({ value, unit, trend }) => {
-  return (
-    <div className="tracking-statistic">
-      <h3 className="tracking-statistic__title">
-        {value}
-        {unit}
-      </h3>
-      <div className="tracking-statistic__subtitle">
-        <div
-          className={
-            trend >= 0
-              ? 'tracking-statistic__trend tracking-statistic__trend--up'
-              : 'tracking-statistic__trend tracking-statistic__trend--down'
-          }
-        >
-          {trend >= 0 ? <ArrowUpRight size="16px" weight="bold" /> : <ArrowDownRight size="16px" weight="bold" />}
-        </div>
-        {Math.abs(trend).toFixed(1)}%
-      </div>
-    </div>
-  );
-};
-
-const TrackingHistogram = ({ data }) => {
-  const max = Math.max(...data);
-
-  return (
-    <div className="tracking-histogram">
-      {data.map((value, index) => (
-        <div
-          key={index}
-          className="tracking-histogram__bar"
-          style={{ height: `${(value / max) * 100}%`, width: `${100 / data.length}%` }}
-        />
-      ))}
-    </div>
-  );
-};
-
 export const HoursFocused = () => {
-  return <Tracking title="Hours Focused" unit=" hrs" pastData={[4, 5, 2, 3, 6, 3, 10]} currentData={3} />;
+  return <Tracking title="Hours Focused" unit=" hrs" pastData={[4, 5, 2, 3, 6, 3, 10, 5, 5, 12, 3]} currentData={3} />;
 };
 
 export const TasksCompleted = () => {

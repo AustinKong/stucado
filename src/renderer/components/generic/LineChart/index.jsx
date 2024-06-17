@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './styles.css';
+import styles from './styles.module.css';
 
 const LineChart = ({ data, height = 400, xKey, yKey }) => {
   const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, value: null });
@@ -68,11 +68,11 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
   };
 
   return (
-    <div className="line-chart" ref={containerRef}>
+    <div className={styles.lineChart} ref={containerRef}>
       <svg
         width={width}
         height={height}
-        className="line-chart__chart"
+        className={styles.lineChart__chart}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -86,7 +86,13 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
           {/* X Axis */}
           {/* <line x1={0} y1={innerHeight} x2={innerWidth} y2={innerHeight} stroke="black" /> */}
           {getXAxisLabels().map((value, index) => (
-            <text key={index} x={xScale(value)} y={innerHeight + 20} textAnchor="middle" className="line-chart__x-key">
+            <text
+              key={index}
+              x={xScale(value)}
+              y={innerHeight + 20}
+              textAnchor="middle"
+              className={styles.lineChart__xKey}
+            >
               {value}
             </text>
           ))}
@@ -95,7 +101,7 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
           {/*
             <line x1={0} y1={0} x2={0} y2={innerHeight} stroke="black" />
             {[yMin, yMax].map((value, index) => (
-              <text key={index} x={-10} y={yScale(value)} dy=".35em" textAnchor="end" className="line-chart__y-key">
+              <text key={index} x={-10} y={yScale(value)} dy=".35em" textAnchor="end" className={lineChart__y-key">
                 {value}
               </text>
             ))}
@@ -105,13 +111,13 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
           <path d={areaPath} fill="url(#gradient)" />
 
           {/* Line Path */}
-          <path d={linePath} className="line-chart__path" />
+          <path d={linePath} className={styles.lineChart__path} />
 
           {/* Tooltip */}
           {tooltip.display && (
             <>
               <line x1={tooltip.x} y1={0} x2={tooltip.x} y2={innerHeight} stroke="black" strokeDasharray="5, 5" />
-              <circle cx={tooltip.x} cy={tooltip.y} r={5} className="line-chart__tooltip-circle" />
+              <circle cx={tooltip.x} cy={tooltip.y} r={5} className={styles.lineChart__tooltipCircle} />
             </>
           )}
         </g>
@@ -119,7 +125,7 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
 
       {tooltip.display && (
         <div
-          className="line-chart__tooltip"
+          className={styles.lineChart__tooltip}
           style={{
             left: `${tooltip.x + margin.left}px`,
             top: `${tooltip.y + margin.top - 48}px`,

@@ -3,49 +3,53 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  width: var(--ds-space-800);
+  width: var(--space-800);
   align-items: center;
-  padding: var(--ds-space-600) 0;
-  border-right: 1px solid var(--ds-border);
+  border-right: 1px solid var(--border);
 }
 
-.sidebar__appIcon {
-  width: 50%;
+.sidebar__divider {
+  width: 60%;
+  height: 0.5px;
+  background-color: var(--border);
 }
 
-.sidebar__navLinks {
-  margin-top: var(--ds-space-600);
+/* Group */
+.sidebar__group {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-100);
+  align-items: center;
+  gap: var(--space-100);
 }
 
-.sidebar__navLink {
+.sidebar__groupTitle {
+  margin-top: var(--space-200);
+}
+
+/* Icons */
+.sidebar__appIcon {
+  width: var(--space-400);
+  margin: var(--space-200) 0;
+}
+
+.navIcon {
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: var(--ds-space-150);
+  padding: var(--space-150);
   transition: background-color 0.2s, color 0.1s;
 }
 
-.sidebar__navLink:hover {
-  background-color: var(--ds-background-brand-subtlest);
+.navIcon:hover {
+  background-color: var(--background-hovered);
 }
 
-.sidebar__navLink:active {
-  background-color: var(--ds-background-brand-subtlest-pressed);
+.navIconActive {
+  background-color: var(--background-selected);
+  color: var(--icon-selected);
 }
 
-.sidebar__navLinkActive {
-  background-color: var(--ds-background-brand-subtlest);
-  color: var(--ds-icon-selected);
-}
-
-.sidebar__navLinkActive:hover {
-  color: var(--ds-icon-selected);
-}
-
-.sidebar__logout {
-  margin-top: auto;
-  cursor: pointer;
+.navIconActive:hover {
+  background-color: var(--background-selected);
+  color: var(--icon-selected);
 }

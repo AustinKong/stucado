@@ -1,0 +1,31 @@
+.widget {
+  padding: var(--space-300);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.widget__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.widget__content {
+  margin-top: var(--space-200);
+  flex-grow: 1;
+}
+
+.widgetInteraction {
+  display: flex;
+  align-items: center;
+  color: var(--icon);
+  gap: var(--space-100);
+  cursor: pointer;
+}
+
+.widgetInteraction:hover {
+  color: var(--icon-hovered)
+}

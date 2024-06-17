@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-import './styles.css';
+import styles from './styles.module.css';
 
 const BarChart = ({ data, height = 400, xKey, yKey }) => {
   const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, value: null });
@@ -57,8 +57,8 @@ const BarChart = ({ data, height = 400, xKey, yKey }) => {
   };
 
   return (
-    <div className="bar-chart" ref={containerRef}>
-      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="bar-chart__chart">
+    <div className={styles.barChart} ref={containerRef}>
+      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className={styles.barChart__chart}>
         <g transform={`translate(${margin.left},${margin.top})`}>
           {/* X Axis */}
           <line x1={0} y1={innerHeight} x2={innerWidth} y2={innerHeight} stroke="black" />
@@ -93,7 +93,7 @@ const BarChart = ({ data, height = 400, xKey, yKey }) => {
       </svg>
       {tooltip.display && (
         <div
-          className="bar-chart__tooltip"
+          className={styles.barChart__tooltip}
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y - 40}px`,

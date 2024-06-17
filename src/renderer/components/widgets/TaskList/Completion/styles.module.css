@@ -1,0 +1,48 @@
+.completion {
+  padding: var(--space-150);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-100);
+  margin-top: var(--space-200);
+  align-items: center;
+}
+
+/* Header */
+.completion__header {
+  width: 100%;
+}
+
+.completion__legend {
+  display: flex;
+  margin-left: auto;
+}
+
+.completion__legendItem {
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-100);
+  gap: var(--space-050);
+}
+
+.completion__legendColor {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+/* Main body */
+.completion__bars {
+  display: flex;
+  gap: var(--space-050);
+  min-width: 98%;
+}
+
+.completion__bar {
+  height: 8px;
+  border-radius: 2px;
+}
+
+/* Footer */
+.completion__footer {
+  width: 100%;
+}

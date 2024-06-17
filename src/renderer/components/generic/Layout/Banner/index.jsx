@@ -1,6 +1,8 @@
-import { useLocation } from 'react-router-dom';
 import blankAvatar from '@assets/images/blankAvatar.webp';
 import styles from './styles.module.css';
+import { useLocation } from 'react-router-dom';
+import { MagnifyingGlass } from '@phosphor-icons/react';
+import Input from '@components/generic/Input';
 
 const Banner = () => {
   // Gets location name based on React Router path
@@ -10,7 +12,10 @@ const Banner = () => {
 
   return (
     <div className={styles.banner}>
-      <h1 className={styles.banner__title}>{locationName}</h1>
+      <h3 className={styles.banner__title}>{locationName}</h3>
+      <div style={{ width: '240px' }}>
+        <Input icon={<MagnifyingGlass />} placeholder="Search or type a command" />
+      </div>
       <UserProfile />
     </div>
   );

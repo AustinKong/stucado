@@ -1,18 +1,5 @@
 .page {
-  margin-left: var(--ds-space-800);
-  padding: var(--ds-space-400);
-}
-
-@media (max-width: 1200px) {
-  .sidebar {
-    display: none;
-  }
-
-  .page-banner {
-    margin-left: 0;
-  }
-
-  .page {
-    margin-left: 0;
-  }
+  margin-left: var(--space-800);
+  height: calc(100vh - var(--space-800) - 1px);
+  z-index: 100;
 }

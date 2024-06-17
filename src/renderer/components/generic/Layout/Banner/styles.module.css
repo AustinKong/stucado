@@ -1,19 +1,22 @@
 .banner {
-  margin-left: var(--ds-space-800);
-  padding: var(--ds-space-400);
+  margin-left: var(--space-800);
+  padding: var(--space-400);
   display: flex;
   align-items: center;
+  border-bottom: 1px solid var(--border);
+  height: var(--space-800);
+  gap: var(--space-400);
 }
 
 .banner__title {
-  margin-right: auto;
   text-transform: capitalize;
+  margin-right: auto;
 }
 
 .profile {
   display: flex;
   align-items: center;
-  gap: var(--ds-space-200);
+  gap: var(--space-200);
 }
 
 .profile__details {

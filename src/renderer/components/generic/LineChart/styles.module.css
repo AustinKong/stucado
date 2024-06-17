@@ -1,0 +1,30 @@
+.lineChart {
+  position: relative;
+}
+
+.lineChart__xKey {
+  font-size: var(--font-size-075);
+  fill: var(--text-secondary);
+}
+
+.lineChart__path {
+  stroke: var(--background-brand);
+  stroke-width: 1px;
+  fill: none;
+}
+
+.lineChart__tooltip {
+  position: absolute;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border);
+  padding: var(--space-050);
+  pointer-events: none;
+  box-shadow: var(--shadow-raised);
+  transform: translate(-50%, -100%);
+}
+
+.lineChart__tooltipCircle {
+  fill: var(--background-brand);
+  stroke: var(--border);
+  stroke-width: 2px;
+}

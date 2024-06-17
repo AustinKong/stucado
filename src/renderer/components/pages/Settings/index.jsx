@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { IconContext, User, Book, House, Pencil } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { setTheme, setReceiveNotifications } from '@services/settings';
-import './styles.css';
+import DropdownPicker from '@components/generic/DropdownPicker';
+import styles from './styles.module.css';
 
 const NAVLINKS = [
   {
@@ -35,8 +36,8 @@ const Settings = () => {
   const [subpage, setSubpage] = useState('general');
 
   return (
-    <div className="settings">
-      <div className="settings__navbar">
+    <div className={styles.settings}>
+      <div className={styles.settings__navbar}>
         <IconContext.Provider
           value={{
             size: 24,
@@ -46,7 +47,7 @@ const Settings = () => {
             return (
               <div
                 key={id}
-                className={subpage === id ? 'settings__navlink settings__navlink--active' : 'settings__navlink'}
+                className={`${styles.settings__navlink} ${subpage === id ? styles.settings__navlinkActive : ''}`}
                 onClick={() => setSubpage(id)}
               >
                 {icon}
@@ -56,8 +57,8 @@ const Settings = () => {
           })}
         </IconContext.Provider>
       </div>
-      <div className="settings__subpage">
-        <div className="settings__subpage-title">{NAVLINKS.find((navlink) => navlink.id === subpage).long}</div>
+      <div className={styles.settings__subpage}>
+        <div className={styles.settings__subpageTitle}>{NAVLINKS.find((navlink) => navlink.id === subpage).long}</div>
         {subpage === 'general' && <GeneralSettings />}
         {subpage === 'profile' && <ProfileSettings />}
         {subpage === 'data' && <DataSettings />}
@@ -108,14 +109,14 @@ const AppearanceSettings = () => {
 
 const SettingsToggle = ({ title, description, value, onChange }) => {
   return (
-    <div title={title} className="settings-toggle">
-      <div className="settings-toggle__text">
-        <h3 className="setttings-toggle__title">{title}</h3>
-        <p className="settings-toggle__description">{description}</p>
+    <div title={title} className={styles.settingsToggle}>
+      <div className={styles.settingsToggle__text}>
+        <h3 className={styles.setttingsToggle__title}>{title}</h3>
+        <p className={styles.settingsToggle__description}>{description}</p>
       </div>
-      <label className="settings-toggle__label">
-        <input type="checkbox" className="settings-toggle__input" checked={value} onChange={onChange} />
-        <span className="settings-toggle__slider" />
+      <label className={styles.settingsToggle__label}>
+        <input type="checkbox" className={styles.settingsToggle__input} checked={value} onChange={onChange} />
+        <span className={styles.settingsToggle__slider} />
       </label>
     </div>
   );
@@ -123,18 +124,14 @@ const SettingsToggle = ({ title, description, value, onChange }) => {
 
 const SettingsDropdown = ({ title, description, value, options, onChange }) => {
   return (
-    <div title={title} className="settings-dropdown">
-      <div className="settings-dropdown__text">
-        <h3 className="setttings-dropdown__title">{title}</h3>
-        <p className="settings-dropdown__description">{description}</p>
+    <div title={title} className={styles.settingsDropdown}>
+      <div className={styles.settingsDropdown__text}>
+        <h3 className={styles.setttingsDropdown__title}>{title}</h3>
+        <p className={styles.settingsDropdown__description}>{description}</p>
       </div>
-      <select className="settings-dropdown__select" value={value} onChange={onChange}>
-        {options.map((option) => (
-          <option className="settings-dropdown__option" key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className={styles.settingsDropdown__picker}>
+        <DropdownPicker options={options} onSelect={onChange} value={value} />
+      </div>
     </div>
   );
 };

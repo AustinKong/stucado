@@ -1,0 +1,36 @@
+.insights {
+  grid-area: insights;
+}
+
+.insights__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: var(--space-200);
+  padding: var(--space-100)
+}
+
+.insights__illustration {
+  width: 80%;
+}
+
+.insights__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.insights__mainText {
+  width: 80%;
+  text-align: center;
+}
+
+.insights__subText {
+  width: 80%;
+  text-align: center;
+  color: var(--text-secondary)
+}

@@ -1,3 +1,115 @@
+/* Font faces */
+@font-face {
+  font-family: inter;
+  src: url('../assets/fonts/Inter-VariableFont.ttf');
+}
+
+@font-face {
+  font-family: roboto;
+  src: url('../assets/fonts/Roboto-VariableFont.ttf');
+}
+
+:root {
+  --space-0: 0px;
+  --space-025: 2px;
+  --space-050: 4px;
+  --space-100: 8px;
+  --space-150: 12px;
+  --space-200: 16px;
+  --space-250: 20px;
+  --space-300: 24px;
+  --space-400: 32px;
+  --space-500: 40px;
+  --space-600: 48px;
+  --space-800: 64px;
+  --space-1000: 80px;
+
+  --font-size-050: 0.6875rem;
+  --font-size-075: 0.75rem;
+  --font-size-100: 0.875rem;
+  --font-size-200: 1rem;
+  --font-size-300: 1.25rem;
+  --font-size-400: 1.5rem;
+  --font-size-500: 1.8125rem;
+  --font-size-600: 2.1875rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-line-height-075: 0.75rem;
+  --font-line-height-100: 1rem;
+  --font-line-height-200: 1.25rem;
+  --font-line-height-300: 1.5rem;
+  --font-line-height-400: 1.75rem;
+  --font-line-height-500: 2rem;
+  --font-line-height-600: 2.5rem;
+
+  --font-family-heading: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
+  --font-family-body: roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
+
+  /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
+  --shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
+  --shadow-raised: 0px 1px 1px rgba(9, 30, 66, 0.25),0px 0px 1px rgba(9, 30, 66, 0.31);
+}
+
+:root {
+  --text: #172B4D;
+  --text-secondary: #6b7b95; /* Use for secondary text, such as navigation, subtle button links, input field labels, and all caps subheadings. */
+  --text-tertiary: #8992a3; /* Use for tertiary text, such as meta-data, breadcrumbs, input field placeholder and helper text. */
+  --text-inverse: #FFFFFF;
+
+  --text-danger: #AE2E24; /* Use for text and icons */
+  --background-danger: #C9372C; /* Use for buttons */
+  --background-danger-hovered: #AE2E24;
+  --background-danger-pressed: #5D1F1A;
+
+  --text-warning: #A54800;
+  --text-warning-inverse: #172B4D;
+  --background-warning: #F5CD47;
+  --background-warning-hovered: #E2B203;
+  --background-warning-pressed: #CF9F02;
+
+  --text-success: #216E4E;
+  --background-success: #2D9C6E;
+
+  --icon: #44546F; /* Use for icon only buttons */
+  --icon-hovered: #091E42;
+  --icon-pressed: #091E424F;
+  --icon-selected: #2898BD;
+
+  --border: #091E4224;
+
+  --background-brand:#0C66E4; /* Use for primary buttons, links, and other primary actions */
+  --background-brand-hovered: #0055CC;
+  --background-brand-pressed: #09326C;
+
+  --background: #FFFFFF;
+  --background-hovered: #F1F2F4;
+  --background-pressed: #DCDFE4;
+  --background-selected: #ddf6ff;
+  --surface-overlay: #FFFFFF;
+  --sunken: #F7F8F9;
+
+  --surface: #FFFFFF;
+  --surface-hovered: #F1F2F4;
+  --surface-pressed: #DCDFE4;
+
+  --surface-raised: #FFFFFF;
+  --surface-raised-hovered: #f9fafb;
+  --surface-raised-pressed: #DCDFE4;
+
+  --background-input: #FFFFFF;
+  --background-input-hovered: #F7F8F9;
+  --background-input-pressed: #FFFFFF;
+  --border-input: #8590A2;
+
+  --blanket: #091E427D;
+}
+
+
+
 /* Spacing */
 :root {
   --ds-space-0: 0px;
@@ -72,6 +184,7 @@
 /* Icon colors (for non-text icons) */
 :root {
   --ds-icon: #44546F;
+  --ds-icon-hovered: #091E42;
   --ds-icon-disabled: #091E424F;
   --ds-icon-inverse: #FFFFFF;
   --ds-icon-selected: #2898BD; /* TODO: Change to relevant brand color */
@@ -114,15 +227,5 @@
 /* Shadows */
 :root {
   --ds-shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
-}
-
-/* Font faces */
-@font-face {
-  font-family: Inter;
-  src: url('../assets/fonts/Inter-VariableFont.ttf');
-}
-
-@font-face {
-  font-family: Roboto;
-  src: url('../assets/fonts/Roboto-VariableFont.ttf');
+  --ds-shadow-overflow: 0px 0px 8px rgba(9, 30, 66, 0.16),0px 0px 1px rgba(9, 30, 66, 0.12);
 }
