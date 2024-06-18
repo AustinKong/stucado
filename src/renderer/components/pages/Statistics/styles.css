@@ -4,5 +4,6 @@
   grid-gap: 2rem;
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-areas: 'summary summary summary hours-focused-heatmap';
+  grid-template-areas: 'past-productivity-line-chart past-productivity-line-chart past-productivity-line-chart hours-focused-heatmap' 
+    'tasks-completed-line-chart tasks-completed-line-chart hours-focused-line-chart hours-focused-line-chart';
 }

@@ -29,7 +29,7 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
         }}
       >
         {normalizedData.map((level, index) => (
-          <HeatMapTile key={index} level={level} tooltip={`${tooltip} ${data[index]}`} />
+          <HeatMapTile key={index} level={level} tooltip={`${tooltip} ${Math.round(data[index])}`} />
         ))}
       </div>
       <div className={styles.heatmap__legend}>
