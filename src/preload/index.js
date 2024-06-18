@@ -36,3 +36,7 @@ contextBridge.exposeInMainWorld('statisticsAPI', {
   getTasksCompleted: (range) => ipcRenderer.invoke('get-tasks-completed', range),
   getAverageProductivity: (range) => ipcRenderer.invoke('get-average-productivity', range),
 });
+
+contextBridge.exposeInMainWorld('experimentalAPI', {
+  generateTestData: () => ipcRenderer.send('generate-test-data'),
+});

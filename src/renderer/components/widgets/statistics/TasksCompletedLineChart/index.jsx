@@ -4,10 +4,10 @@ import Widget, { InteractionButton } from '@components/widgets/Widget';
 import LineChart from '@components/generic/LineChart';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
-import { getAverageProductivity } from '@services/statistics';
+import { getTasksCompleted } from '@services/statistics';
 
-const PastProductivityLineChart = () => {
-  const [pastProductivity, setPastProductivity] = useState(null);
+const TasksCompletedLineChart = () => {
+  const [tasksCompleted, setTasksCompleted] = useState(null);
   const [range, setRange] = useState(14);
 
   const cycleRange = () => {
@@ -21,12 +21,12 @@ const PastProductivityLineChart = () => {
   };
 
   useEffect(() => {
-    getAverageProductivity(range).then((result) => {
-      setPastProductivity(
+    getTasksCompleted(range).then((result) => {
+      setTasksCompleted(
         result.map((stat) => {
           return {
             Date: stat.date.toLocaleDateString('en-US'),
-            Productivity: Math.round(stat.averageProductivity),
+            'Tasks completed': Math.round(stat.completedTasks),
           };
         })
       );
@@ -35,13 +35,13 @@ const PastProductivityLineChart = () => {
 
   return (
     <Widget
-      className={styles.pastProductivityLineChart}
-      title={'Past Productivity'}
+      className={styles.tasksCompletedLineChart}
+      title={'Tasks Completed'}
       interaction={<InteractionButton icon={<ArrowsClockwise />} text={`Last ${range} days`} onClick={cycleRange} />}
     >
-      {pastProductivity && <LineChart data={pastProductivity} xKey="Date" yKey="Productivity" yUnits="%" />}
+      {tasksCompleted && <LineChart data={tasksCompleted} xKey="Date" yKey="Tasks completed" />}
     </Widget>
   );
 };
 
-export default PastProductivityLineChart;
+export default TasksCompletedLineChart;

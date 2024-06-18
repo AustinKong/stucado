@@ -100,12 +100,13 @@ export async function updateProductivityStats(prod) {
 export async function readAvgProductivity() {
   const db = await createStatsDatabase();
   try {
-    await db.all(`
+    const result = await db.all(`
         SELECT 
           date,
           avg_productivity
         FROM avg_productivity
     `);
+    return result;
   } catch (err) {
     console.error('Error retrieving average productivity: ', err);
   }
@@ -129,12 +130,13 @@ export async function updateAvgProductivity(prod) {
 export async function readHoursFocused() {
   const db = await createStatsDatabase();
   try {
-    await db.all(`
+    const result = await db.all(`
       SELECT
         date,
         hours_focused
       FROM hours_focused
     `);
+    return result;
   } catch (err) {
     console.error('Error retrieving hours focused stats: ', err);
   }
@@ -158,12 +160,13 @@ export async function updateHoursFocused(hours) {
 export async function readCompletedTasks() {
   const db = await createStatsDatabase();
   try {
-    await db.all(`
+    const result = await db.all(`
       SELECT
         date,
         tasks
       FROM completed_tasks
     `);
+    return result;
   } catch (err) {
     console.error('Error retrieving number of tasks completed stats: ', err);
   }

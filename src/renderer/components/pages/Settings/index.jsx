@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { IconContext, User, Book, House, Pencil } from '@phosphor-icons/react';
+import { IconContext, User, Book, House, Pencil, TestTube } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { setTheme, setReceiveNotifications } from '@services/settings';
+import { generateTestData } from '@services/experimental';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
+import Button from '@components/generic/Button';
 
 const NAVLINKS = [
   {
@@ -29,6 +31,12 @@ const NAVLINKS = [
     text: 'Appearance',
     long: 'Appearance & Personalization',
     icon: <Pencil />,
+  },
+  {
+    id: 'experimental',
+    text: 'Experimental',
+    long: 'Experimental Settings (for testing purposes only)',
+    icon: <TestTube />,
   },
 ];
 
@@ -58,11 +66,12 @@ const Settings = () => {
         </IconContext.Provider>
       </div>
       <div className={styles.settings__subpage}>
-        <div className={styles.settings__subpageTitle}>{NAVLINKS.find((navlink) => navlink.id === subpage).long}</div>
+        <h2 className={styles.settings__subpageTitle}>{NAVLINKS.find((navlink) => navlink.id === subpage).long}</h2>
         {subpage === 'general' && <GeneralSettings />}
         {subpage === 'profile' && <ProfileSettings />}
         {subpage === 'data' && <DataSettings />}
         {subpage === 'appearance' && <AppearanceSettings />}
+        {subpage === 'experimental' && <ExperimentalSettings />}
       </div>
     </div>
   );
@@ -83,7 +92,19 @@ const GeneralSettings = () => {
   );
 };
 
-const DataSettings = () => {};
+const DataSettings = () => {
+  return (
+    <div>
+      <SettingsButton
+        title="Clear Data"
+        description="Clear all data stored in the app. This action is irreversible."
+        onClick={() => console.log('Clear data')}
+        buttonText="Clear"
+        buttonAppearance="danger"
+      />
+    </div>
+  );
+};
 
 const ProfileSettings = () => {};
 
@@ -103,6 +124,35 @@ const AppearanceSettings = () => {
         ]}
         onChange={(e) => setTheme(e.target.value)}
       />
+    </div>
+  );
+};
+
+const ExperimentalSettings = () => {
+  return (
+    <div>
+      <SettingsButton
+        title="Generate Test Data"
+        description="Populate the database with 14 days worth of randomly generated test data. Used for testing the functionality of the app."
+        onClick={() => generateTestData()}
+        buttonText="Generate"
+      />
+    </div>
+  );
+};
+
+const SettingsButton = ({ title, description, onClick, buttonText, buttonAppearance }) => {
+  return (
+    <div className={styles.settingsButton} onClick={onClick}>
+      <div className={styles.settingsButton__text}>
+        <h3 className={styles.settingsButton__title}>{title}</h3>
+        <p className={styles.settingsButton__description}>{description}</p>
+      </div>
+      <div className={styles.settingsButton__button}>
+        <Button onClick={onClick} appearance={buttonAppearance}>
+          {buttonText}
+        </Button>
+      </div>
     </div>
   );
 };

@@ -2,14 +2,17 @@ import Widget from '@components/widgets/Widget';
 import LineChart from '@components/generic/LineChart';
 import styles from './styles.module.css';
 import Card from '@components/widgets/statistics/Summary/Card';
+import { useState } from 'react';
 
 const Summary = () => {
+  const [selected, setSelected] = useState('hours Focused');
+
   return (
     <Widget title="Summary" className={styles.summary}>
       <div className={styles.summaryCards}>
-        <Card title="Weight gained" value={1300} unit="kg" trend={5.2} />
-        <Card title="Calories gained" value={1300} unit="kcal" trend={-2.3} />
-        <Card title="Steps taken" value={500} unit="steps" trend={8.1} />
+        <Card title="Hours Focused" value={1300} unit=" hours" trend={5.2} />
+        <Card title="Tasks Completed" value={1300} unit=" tasks" trend={-2.3} />
+        <Card title="Average Productivity" value={500} unit="%" trend={8.1} />
         <Card title="Water consumed" value={2000} unit="ml" trend={-1.2} />
       </div>
 

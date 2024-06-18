@@ -5,7 +5,7 @@ const Card = ({ title, value, unit, trend }) => {
   return (
     <div className={styles.card}>
       <h3>
-        {value} &nbsp;
+        {value}
         {unit}
         <div>{title}</div>
       </h3>

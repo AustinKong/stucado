@@ -1,6 +1,8 @@
 import Widget from '@components/widgets/Widget';
 import Histogram from '@components/widgets/Tracking/Histogram';
 import Statistic from '@components/widgets/Tracking/Statistic';
+import { getAverageProductivity, getHoursFocused, getTasksCompleted } from '@services/statistics';
+import { useState, useEffect } from 'react';
 
 import styles from './styles.module.css';
 
@@ -19,13 +21,36 @@ const Tracking = ({ title, unit, pastData, currentData }) => {
 };
 
 export const HoursFocused = () => {
-  return <Tracking title="Hours Focused" unit=" hrs" pastData={[4, 5, 2, 3, 6, 3, 10, 5, 5, 12, 3]} currentData={3} />;
+  const [hoursFocused, setHoursFocused] = useState([]);
+
+  useEffect(() => {
+    getHoursFocused(7).then((result) => {
+      setHoursFocused(result.map((stat) => stat.hoursFocused));
+    });
+  }, []);
+
+  return <Tracking title="Hours Focused" unit=" hrs" pastData={hoursFocused} currentData={3} />;
 };
 
 export const TasksCompleted = () => {
-  return <Tracking title="Tasks Completed" pastData={[3, 32, 93, 12, 11, 94, 83]} currentData={88} />;
+  const [tasksCompleted, setTasksCompleted] = useState([]);
+
+  useEffect(() => {
+    getTasksCompleted(7).then((result) => {
+      setTasksCompleted(result.map((stat) => stat.completedTasks));
+    });
+  }, []);
+  return <Tracking title="Tasks Completed" pastData={tasksCompleted} currentData={12} />;
 };
 
 export const AverageProductivity = () => {
-  return <Tracking title="Average Productivity" unit="%" pastData={[3, 32, 93, 12, 11, 94, 83]} currentData={55} />;
+  const [averageProductivity, setAverageProductivity] = useState([]);
+
+  useEffect(() => {
+    getAverageProductivity(7).then((result) => {
+      setAverageProductivity(result.map((stat) => stat.averageProductivity));
+    });
+  }, []);
+
+  return <Tracking title="Average Productivity" unit="%" pastData={averageProductivity} currentData={55} />;
 };

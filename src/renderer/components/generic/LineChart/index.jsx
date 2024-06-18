@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
-const LineChart = ({ data, height = 400, xKey, yKey }) => {
+const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
   const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, value: null });
   const [width, setWidth] = useState(0);
   const containerRef = useRef(null);
@@ -62,7 +62,7 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
   };
 
   const getXAxisLabels = () => {
-    const labelCount = 20; // Maximum number of labels to display
+    const labelCount = width / 70; // Maximum number of labels to display
     const step = Math.ceil(xValues.length / labelCount);
     return xValues.filter((_, index) => index % step === 0);
   };
@@ -89,7 +89,7 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
             <text
               key={index}
               x={xScale(value)}
-              y={innerHeight + 20}
+              y={innerHeight + 25}
               textAnchor="middle"
               className={styles.lineChart__xKey}
             >
@@ -135,7 +135,7 @@ const LineChart = ({ data, height = 400, xKey, yKey }) => {
             <strong>{xKey}:</strong> {tooltip.value[xKey]}
           </div>
           <div>
-            <strong>{yKey}:</strong> {tooltip.value[yKey]}
+            <strong>{yKey}:</strong> {tooltip.value[yKey]}{yUnits}
           </div>
         </div>
       )}
