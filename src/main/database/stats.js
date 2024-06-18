@@ -121,7 +121,7 @@ export async function updateAvgProductivity(prod) {
     INSERT INTO avg_productivity (date, avg_productivity)
     VALUES (?, ?)
     ON CONFLICT(date) DO UPDATE SET
-      avg_productivity = avg_productivity + EXCLUDED.avg_productivity
+      avg_productivity = EXCLUDED.avg_productivity
   `,
     [date, avgProductivity]
   );
@@ -151,7 +151,7 @@ export async function updateHoursFocused(hours) {
     INSERT INTO hours_focused (date, hours_focused)
     VALUES (?, ?)
     ON CONFLICT(date) DO UPDATE SET
-      hours_focused = hours_focused + EXCLUDED.hours_focused
+      hours_focused = EXCLUDED.hours_focused
   `,
     [date, hoursFocused]
   );
@@ -181,7 +181,7 @@ export async function updateCompletedTasks(data) {
     INSERT INTO completed_tasks (date, tasks)
     VALUES (?, ?)
     ON CONFLICT(date) DO UPDATE SET
-      tasks = tasks + EXCLUDED.tasks
+      tasks = EXCLUDED.tasks
   `,
     [date, tasks]
   );
