@@ -57,20 +57,7 @@ export function mergeInterval(tasks, pomodoro) {
   for (let i = 1; i < intervals.length; i++) {
     const lastInterval = result[result.length - 1];
     const currInterval = intervals[i];
-    // To separate the intervals of today and tmr
-    if (new Date(currInterval.startTime).getDay() != new Date(currInterval.endTime).getDay()) {
-      result.push(
-        {
-          startTime: currInterval.startTime,
-          endTime: new Date(currInterval.startTime).setHours(23, 59, 59, 999),
-        },
-        {
-          startTime: new Date(currInterval.startTime).setHours(24, 0, 0, 0),
-          endTime: currInterval.endTime,
-        }
-      );
-      continue;
-    }
+
     if (currInterval.startTime > lastInterval.endTime) {
       result.push(currInterval);
     } else {
@@ -86,7 +73,7 @@ export async function generateHourlyProductivity() {
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
   const productivityData = {};
 
-  completedTasks.forEach((task) => {
+  for await (const task of completedTasks) {
     const productivity = getProductivity(task);
     const intervals = getTimeIntervals(task.beginTime, task.endTime);
 
@@ -109,7 +96,7 @@ export async function generateHourlyProductivity() {
 
       productivityData[key].push({ productivity, durationInMinutes });
     });
-  });
+  }
 
   Object.keys(productivityData).forEach((key) => {
     const [hour, date] = key.split('-');
@@ -136,18 +123,24 @@ export async function generateHourlyProductivity() {
 export async function generateAvgProductivity() {
   const tasks = await readTasks();
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
+
   let totalDuration = 0;
   let totalProductivity = 0;
+  let date = new Date();
+
   for await (const task of completedTasks) {
+    date = new Date(task.beginTime).toDateString();
     const duration = (task.endTime - task.beginTime) / 60 / 1000;
     totalProductivity += getProductivity(task) * duration;
     totalDuration += duration;
-    const prod = {
-      date: new Date(task.beginTime).toDateString(),
-      avgProductivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
-    };
-    await updateAvgProductivity(prod);
   }
+
+  const prod = {
+    date,
+    avgProductivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
+  };
+
+  await updateAvgProductivity(prod);
 }
 
 /* Hours focused per day */
@@ -157,25 +150,20 @@ export async function generateHoursFocused() {
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
 
   const mergedIntervals = mergeInterval(completedTasks, pomodoro);
+  let date = new Date();
+  let totalFocusedHours = 0;
 
-  const hoursFocusedByDay = {};
-
-  mergedIntervals.forEach((interval) => {
-    const date = new Date(interval.startTime).toDateString();
-    const duration = (interval.endTime - interval.startTime) / 1000 / 60 / 60;
-
-    if (!hoursFocusedByDay[date]) {
-      hoursFocusedByDay[date] = 0;
-    }
-    hoursFocusedByDay[date] += duration;
-  });
-
-  for (const date in hoursFocusedByDay) {
-    await updateHoursFocused({
-      date: date,
-      hoursFocused: Math.round(hoursFocusedByDay[date] * 100) / 100,
+  if (mergedIntervals.length > 0) {
+    date = new Date(mergedIntervals[0].startTime).toDateString();
+    mergedIntervals.forEach((interval) => {
+      totalFocusedHours += (interval.endTime - interval.startTime) / 1000 / 60 / 60;
     });
   }
+
+  await updateHoursFocused({
+    date,
+    hoursFocused: Math.round(totalFocusedHours * 100) / 100,
+  });
 }
 
 /* Find completed tasks per day */
@@ -183,6 +171,7 @@ export async function countCompletedTasks() {
   const tasks = await readTasks();
   // Find tasks that are completed
   const completedTasks = tasks.filter((task) => task.status == 'Completed');
+
   if (completedTasks.length > 0) {
     const data = {
       date: new Date(tasks[0].beginTime).toDateString(),
@@ -201,8 +190,10 @@ export async function deleteOldProdStats() {
   const today = new Date();
   const twoWeeksAgo = new Date(today);
   twoWeeksAgo.setDate(today.getDate() - 14);
+
   for await (const prod of productivityStats) {
     const date = new Date(prod.date);
+
     if (date < twoWeeksAgo) {
       await deleteProductivityStats(prod.id);
     }
