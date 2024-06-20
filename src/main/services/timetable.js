@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-import { readTimetable, updateTimetable } from '@database/cache';
+import { readTimetable, updateTimetable, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
+import { allocateTasks } from '@models/timetableOptimization';
 
 /**
  * Retrieves the timetable from cache.
@@ -9,7 +10,9 @@ import { readTimetable, updateTimetable } from '@database/cache';
  */
 export async function getTimetable() {
   const timetable = await readTimetable();
-  return timetable;
+  const optimizedTasks = await readTaskSlots();
+  const combined = timetable.concat(optimizedTasks);
+  return combined;
 }
 
 /**
@@ -90,6 +93,18 @@ async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
   }
 
   return timetable;
+}
+
+export async function optimizeTimetable() {
+  const timetable = await readTimetable();
+  const tasks = await readTasks();
+
+  const startTime = new Date().getHours() * 60 + new Date().getMinutes();
+  const endTime = startTime + 23 * 60 + 59;
+  const optimizedTasks = await allocateTasks(timetable, tasks, startTime, endTime);
+  await updateTaskSlots(optimizedTasks);
+
+  return getTimetable();
 }
 
 // Utility function to convert lesson type to abbreviation

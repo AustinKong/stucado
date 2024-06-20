@@ -43,7 +43,7 @@ export async function createCache() {
 
   await db.exec(`
 		CREATE TABLE IF NOT EXISTS task_slots (
-			id INTEGER PRIMARY KEY,
+			id TEXT PRIMARY KEY,
 			title TEXT,
       description TEXT,
 			start_time INTEGER,
@@ -252,6 +252,7 @@ export async function deleteTaskSlots() {
   await db.exec('DELETE FROM task_slots');
 }
 
+// Second timetable
 export async function updateTaskSlots(allocatedTasks) {
   await deleteTaskSlots();
   const db = await createCache();

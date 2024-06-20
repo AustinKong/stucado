@@ -25,6 +25,11 @@ export const uploadTimetable = async (url) => {
   return true;
 };
 
+export const optimizeTimetable = async () => {
+  const timetable = await window.timetableAPI.optimizeTimetable();
+  store.dispatch(setTimetable(timetable));
+};
+
 const urlValidation = (url) => {
   const regex = /^https:\/\/nusmods\.com\/timetable\/sem-([1-4])\/share\?[^ ]+$/;
   return regex.test(url);

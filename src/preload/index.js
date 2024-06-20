@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('tasksAPI', {
 contextBridge.exposeInMainWorld('timetableAPI', {
   getTimetable: () => ipcRenderer.invoke('get-timetable'),
   uploadTimetable: (url) => ipcRenderer.invoke('upload-timetable', url),
+  optimizeTimetable: () => ipcRenderer.invoke('optimize-timetable'),
 });
 
 contextBridge.exposeInMainWorld('insightsAPI', {
