@@ -38,6 +38,7 @@
   align-items: center;
   padding: var(--space-150);
   transition: background-color 0.2s, color 0.1s;
+  cursor: pointer;
 }
 
 .navIcon:hover {

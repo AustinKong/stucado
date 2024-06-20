@@ -5,15 +5,15 @@ export const generateMessage = async () => {
 
   // TODO: Add more variations based on factors such as tasks completed, etc.
   let mainText = "Welcome back, it's time to get to work!";
-  let subText = `Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day!`;
+  let subText = `Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
 
   if (6 < timeOfDay && timeOfDay < 12) {
     mainText = 'Good morning! A productive day starts with a productive morning!';
-    subText = `Grab a cup of coffee and get started! Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day!`;
+    subText = `Grab a cup of coffee and get started! Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
   }
   if (18 < timeOfDay && timeOfDay < 24) {
-    mainText = 'Evenings can be tough. How about wrapping up with some light work or planning for tomorrow?';
-    subText = `It's late now, and your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day!`;
+    mainText = 'Evenings can be tough. Wrap up with light work or plan for tomorrow.';
+    subText = `It's late now, and your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
   }
 
   return { mainText, subText };

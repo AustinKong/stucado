@@ -8,6 +8,7 @@ import Settings from '@components/pages/Settings';
 import Schedule from '@components/pages/Schedule';
 import Statistics from '@components/pages/Statistics';
 import Layout from '@components/generic/Layout';
+import Pomodoro from '@components/pages/Pomodoro';
 import Onboarding from '@components/pages/Onboarding';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/pomodoro" element={<Pomodoro />} />
         </Route>
       </Routes>
     </HashRouter>

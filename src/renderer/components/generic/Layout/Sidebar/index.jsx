@@ -1,5 +1,6 @@
-import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut } from '@phosphor-icons/react';
+import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut, Timer } from '@phosphor-icons/react';
 import { NavLink } from 'react-router-dom';
+import { logout } from '@services/general';
 import appIcon from '@assets/images/appIcon.png';
 import styles from './styles.module.css';
 
@@ -7,11 +8,11 @@ const MAIN = [
   { icon: <SquaresFour />, to: '/' },
   { icon: <CalendarBlank />, to: '/schedule' },
   { icon: <ChartLine />, to: '/statistics' },
+  { icon: <Timer />, to: '/pomodoro'}
 ];
 
 const OTHER = [
   { icon: <Faders />, to: '/settings' },
-  { icon: <SignOut />, to: '/logout' },
 ];
 
 const Group = ({ title, children }) => {
@@ -54,6 +55,9 @@ const Sidebar = () => {
         {OTHER.map(({ icon, to }) => (
           <NavIcon key={to} icon={icon} to={to} />
         ))}
+        <div className={styles.navIcon} onClick={() => logout()}>
+          <SignOut size={24} />
+        </div>
       </Group>
     </aside>
   );
