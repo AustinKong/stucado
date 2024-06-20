@@ -18,7 +18,7 @@
 }
 
 .calendar__dayName, .calendar__day, .calendar__emptyDay {
-  padding: var(--space-100);
+  padding: var(--space-050);
   aspect-ratio: 1;
   align-items: center;
   justify-content: center;

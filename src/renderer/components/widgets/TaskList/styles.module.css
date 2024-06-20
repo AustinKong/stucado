@@ -12,3 +12,12 @@
   list-style: none;
   flex-grow: 1;
 }
+
+.taskList__empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-secondary);
+}

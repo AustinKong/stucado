@@ -2,6 +2,7 @@ import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
 import { readTimetable, readTasks, deleteCompletedTasks } from '../database/cache.js';
 import { updateDataPoint } from '../database/database.js';
 import { generateHourlyProductivity } from './stats.js';
+import { app } from 'electron';
 
 export function getTimeOfDay(hour) {
   const index = Math.floor(hour / 3);
@@ -100,12 +101,11 @@ export async function createDataPoints() {
   }
 }
 
-export async function handleLogOut() {
+export async function logout() {
   await createDataPoints();
   await generateHourlyProductivity();
   await deleteCompletedTasks();
-  //TODO: delete pomodoro data
-  return new Date().getTime();
+  app.exit(0);
 }
 
 //to test run

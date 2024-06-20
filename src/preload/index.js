@@ -40,3 +40,8 @@ contextBridge.exposeInMainWorld('statisticsAPI', {
 contextBridge.exposeInMainWorld('experimentalAPI', {
   generateTestData: () => ipcRenderer.send('generate-test-data'),
 });
+
+contextBridge.exposeInMainWorld('generalAPI', {
+  openExternal: (url) => ipcRenderer.send('open-external', url),
+  logout: () => ipcRenderer.send('logout'),
+});

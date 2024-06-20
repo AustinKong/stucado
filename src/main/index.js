@@ -10,6 +10,7 @@ import { triggerNotification } from '@services/pomodoro';
 import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
 import { getHoursFocused, getTasksCompleted, getAverageProductivity } from '@services/statistics';
 import { generateTestData } from '@services/experimental';
+import { logout } from '@services/general';
 
 function createWindow() {
   // Create the browser window.
@@ -104,4 +105,6 @@ app.whenReady().then(() => {
   ipcMain.handle('get-average-productivity', getAverageProductivity);
 
   ipcMain.on('generate-test-data', generateTestData);
+
+  ipcMain.on('logout', logout);
 });

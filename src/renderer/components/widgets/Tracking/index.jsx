@@ -3,6 +3,7 @@ import Histogram from '@components/widgets/Tracking/Histogram';
 import Statistic from '@components/widgets/Tracking/Statistic';
 import { getAverageProductivity, getHoursFocused, getTasksCompleted } from '@services/statistics';
 import { useState, useEffect } from 'react';
+import { MagnifyingGlass } from '@phosphor-icons/react';
 
 import styles from './styles.module.css';
 
@@ -13,8 +14,18 @@ const Tracking = ({ title, unit, pastData, currentData }) => {
   return (
     <Widget className={styles.tracking} title={title}>
       <div className={styles.tracking__content}>
-        <Histogram data={pastData.concat(currentData)} />
-        <Statistic value={currentData} unit={unit} trend={changePercentage} />
+        {pastData.length + 1 >= 7 && (
+          <>
+            <Histogram data={pastData.concat(currentData)} />
+            <Statistic value={currentData} unit={unit} trend={changePercentage} />
+          </>
+        )}
+        {pastData.length + 1 < 7 && (
+          <div className={styles.tracking__loading}>
+            <MagnifyingGlass size={24} />
+            &nbsp; Trying to get more data...
+          </div>
+        )}
       </div>
     </Widget>
   );
