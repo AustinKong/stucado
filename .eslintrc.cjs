@@ -4,9 +4,12 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     '@electron-toolkit',
-    '@electron-toolkit/eslint-config-prettier'
+    '@electron-toolkit/eslint-config-prettier',
   ],
-  "rules": {
-    "react/prop-types": "off"
-  }
-}
+  rules: {
+    'react/prop-types': 'off',
+  },
+  env: {
+    jest: true,
+  },
+};
