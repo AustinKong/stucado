@@ -7,3 +7,12 @@
   grid-template-areas: 'past-productivity-line-chart past-productivity-line-chart past-productivity-line-chart hours-focused-heatmap' 
     'tasks-completed-line-chart tasks-completed-line-chart hours-focused-line-chart hours-focused-line-chart';
 }
+
+@media (max-width: 1200px) {
+  .statistics-page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 'past-productivity-line-chart hours-focused-heatmap' 
+      'tasks-completed-line-chart hours-focused-line-chart';
+  }
+  
+}

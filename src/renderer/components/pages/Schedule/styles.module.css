@@ -71,6 +71,7 @@
   justify-content: center;
   align-items: center;
   height: var(--space-400);
+  overflow: hidden;
 }
 
 .scheduleTimetable__content {
@@ -142,4 +143,10 @@
   border-radius: 50%;
   transform: translate(-50%, calc(-50% - 1px));
   background-color: var(--text-danger);
+}
+
+@media (max-width: 900px) {
+  .schedule__sidebar {
+    display: none;
+  }
 }
