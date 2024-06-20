@@ -6,6 +6,7 @@ import { generateTestData } from '@services/experimental';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
 import Button from '@components/generic/Button';
+import Construction from '@components/generic/Construction';
 
 const NAVLINKS = [
   {
@@ -106,7 +107,9 @@ const DataSettings = () => {
   );
 };
 
-const ProfileSettings = () => {};
+const ProfileSettings = () => {
+  return <Construction />;
+};
 
 const AppearanceSettings = () => {
   const settings = useSelector((state) => state.settings);

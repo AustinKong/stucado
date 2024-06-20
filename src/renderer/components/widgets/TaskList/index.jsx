@@ -1,4 +1,4 @@
-import { Plus } from '@phosphor-icons/react';
+import { Plus, ClipboardText } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
@@ -33,6 +33,12 @@ const TaskList = () => {
         interaction={<InteractionButton icon={<Plus />} text="New Task" onClick={() => setAddTaskModalIsOpen(true)} />}
       >
         <div className={styles.taskList__container}>
+          {tasks.length === 0 && (
+            <div className={styles.taskList__empty}>
+              <ClipboardText size={24} />
+              &ensp;Create a new task to get started!
+            </div>
+          )}
           <ul className={styles.taskList__list}>
             {tasks.map((task) => (
               <TaskItem key={task.id} task={task} />

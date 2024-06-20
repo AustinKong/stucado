@@ -12,7 +12,7 @@
   display: flex;
   gap: var(--space-050);
   flex-direction: column;
-  width: 180px;
+  min-width: 180px;
 }
 
 .settings__navlink {

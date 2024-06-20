@@ -1,5 +1,5 @@
 import Widget, { InteractionButton } from '@components/widgets/Widget';
-import { ArrowsClockwise } from '@phosphor-icons/react';
+import { ArrowsClockwise, ChatTeardropText } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 import workingImage from '@assets/illustrations/working.png';
@@ -24,7 +24,12 @@ const Insights = () => {
       title="Insights"
       interaction={<InteractionButton icon={<ArrowsClockwise />} text="Refresh" onClick={refresh} />}
     >
-      {!message && <h3 className={styles.insights__loading}>Generating your personalized message...</h3>}
+      {!message && (
+        <div className={styles.insights__loading}>
+          <ChatTeardropText size={24} />
+          &nbsp; Generating your personalized message...
+        </div>
+      )}
       {message && (
         <div className={styles.insights__content}>
           <img src={workingImage} alt="Working" className={styles.insights__illustration} />

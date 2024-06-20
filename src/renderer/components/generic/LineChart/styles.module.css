@@ -28,3 +28,11 @@
   stroke: var(--border);
   stroke-width: 2px;
 }
+
+.error {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
