@@ -29,8 +29,8 @@ export async function createDatabase() {
 }
 
 //adding data point into database
-export async function updateDataPoint(dataPoint) {
-  const { timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity } = dataPoint;
+export async function updateDatapoint(datapoint) {
+  const { timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity } = datapoint;
   const db = await createDatabase();
 
   await db.run(
@@ -43,7 +43,7 @@ export async function updateDataPoint(dataPoint) {
 }
 
 //retrieving data point from database
-export async function readDataPoints() {
+export async function readDatapoints() {
   const db = await createDatabase();
   const rows = await db.all(`
     SELECT 
@@ -62,4 +62,4 @@ export async function deleteData() {
   await db.exec('DELETE from data_points');
 }
 
-readDataPoints();
+//readDatapoints();

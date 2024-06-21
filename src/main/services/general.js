@@ -1,7 +1,7 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readTimetable, readTasks, deleteCompletedTasks } from '../database/cache.js';
+import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro } from '../database/cache.js';
 import { updateDataPoint } from '../database/database.js';
-import { generateHourlyProductivity } from './stats.js';
+import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused } from './stats.js';
 import { app } from 'electron';
 
 export function getTimeOfDay(hour) {
@@ -61,12 +61,12 @@ export function getProductivity(task) {
   return (task.estimatedTime / timeTaken) * 100;
 }
 
-export async function createDataPoints() {
+export async function createDatapoints() {
   const tasks = await readTasks();
   const timetable = await readTimetable();
 
   for (const task of tasks) {
-    if (!task.beginTime || !task.endTime) continue;
+    if (!task.beginTime || !task.endTime) continue; //filter completed tasks
 
     const hoursInClasses = getHoursInClasses(timetable, task.beginTime);
     const hoursFocused = getHoursFocused(tasks, task.beginTime);
@@ -102,14 +102,17 @@ export async function createDataPoints() {
 }
 
 export async function logout() {
-  await createDataPoints();
+  await createDatapoints();
   await generateHourlyProductivity();
+  await generateHoursFocused();
+  await generateAvgProductivity();
   await deleteCompletedTasks();
+  await deletePomodoro();
   app.exit(0);
 }
 
 //to test run
 
 //deleteData();
-//createDataPoints();
-//readDataPoints();
+//createDatapoints();
+//readDatapoints();

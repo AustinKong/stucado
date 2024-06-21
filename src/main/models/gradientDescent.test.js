@@ -1,4 +1,5 @@
 import { predictProductivity } from "./gradientDescent";
+import { processRawData } from "../services/insights.js";
 
 const rawData = `
 lateAfternoon Tuesday 4 10 23.50342
@@ -83,24 +84,6 @@ lateAfternoon Tuesday 2 1 84.33099
 dawn Monday 2 7 23.70229
 lateMorning Thursday 2 7 63.07841
 `;
-
-function processRawData(rawData) {
-  const result = [];
-  const lines = rawData.trim().split('\n');
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    const parts = line.split(' ');
-    const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
-    result.push({
-      timeOfDay,
-      dayOfWeek,
-      hoursInClasses,
-      hoursFocused,
-      productivity,
-    });
-  }
-  return result;
-}
 
 describe('Gradient Descent Prediction', () => {
   test('predictProductivity should return a valid result', async () => {
