@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { DaysOfWeek } from '@shared/constants';
+import { optimizeTimetable } from '@services/timetable';
 
 import Calendar from '@components/generic/Calendar';
 import EventQueue from '@components/pages/Schedule/EventQueue';
@@ -36,6 +37,7 @@ const ScheduleTools = () => {
     <>
       <div className={styles.scheduleTools}>
         <Button onClick={() => setAddModalIsOpen(true)}>Add slot</Button>
+        <Button onClick={() => optimizeTimetable()}>Optimize timetable</Button>
       </div>
       {addModalIsOpen && <AddSlotModal onClose={() => setAddModalIsOpen(false)} />}
     </>

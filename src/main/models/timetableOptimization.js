@@ -1,5 +1,5 @@
-import { DaysOfWeek } from '../../shared/constants.js';
-import { readTimetable, readTasks, updateTaskSlots } from '../database/cache.js';
+import { DaysOfWeek } from '@shared/constants.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   const emptySlots = DaysOfWeek.map((day) => ({
@@ -69,8 +69,7 @@ export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
   return emptySlots;
 }
 
-export function bestFitDecreasing(emptySlots, tasks, timetable) {
-  let nextID = timetable.length;
+export function bestFitDecreasing(emptySlots, tasks) {
   tasks.sort((a, b) => b.estimatedTime - a.estimatedTime);
 
   const allocatedTasks = [];
@@ -84,7 +83,7 @@ export function bestFitDecreasing(emptySlots, tasks, timetable) {
       let taskSlotEndTime = slot.startTime + task.estimatedTime;
       if (task.estimatedTime <= slotDuration && taskSlotEndTime <= 1440) {
         allocatedTasks.push({
-          id: nextID,
+          id: uuidv4(),
           title: task.title,
           description: task.description,
           schedule: {
@@ -93,14 +92,13 @@ export function bestFitDecreasing(emptySlots, tasks, timetable) {
             day: slot.day,
           },
         });
-        nextID += 1;
         slot.startTime += task.estimatedTime;
         placed = true;
         break;
       } else if (task.estimatedTime <= slotDuration && taskSlotEndTime > 1440) {
         allocatedTasks.push(
           {
-            id: nextID,
+            id: uuidv4(),
             title: task.title,
             description: task.description,
             schedule: {
@@ -110,7 +108,7 @@ export function bestFitDecreasing(emptySlots, tasks, timetable) {
             },
           },
           {
-            id: nextID + 1,
+            id: uuidv4(),
             title: task.title,
             description: task.description,
             schedule: {
@@ -120,7 +118,6 @@ export function bestFitDecreasing(emptySlots, tasks, timetable) {
             },
           }
         );
-        nextID += 2;
         slot.startTime += task.estimatedTime - 1440;
         slot.endTime -= 1440;
         slot.day = DaysOfWeek[new Date().getDay() + 1];
@@ -136,9 +133,7 @@ export function bestFitDecreasing(emptySlots, tasks, timetable) {
 }
 
 //startTime & endTime are in the form of minutes since midnight
-export async function allocateTasks(startTime, endTime) {
-  const timetable = await readTimetable();
-  const tasks = await readTasks();
+export async function allocateTasks(timetable, tasks, startTime, endTime) {
   const pendingTasks = tasks.filter((task) => task.status == 'Pending');
   const today = DaysOfWeek[new Date().getDay()];
   let endWorkTime = endTime;
@@ -150,12 +145,8 @@ export async function allocateTasks(startTime, endTime) {
 
   const emptySlots = getEmptySlots(timetable, startTime, endWorkTime);
   let emptySlotsToday = emptySlots.find((e) => e.day === today).slots;
-  console.log(emptySlotsToday);
 
-  const allocatedTasks = bestFitDecreasing(emptySlotsToday, pendingTasks, timetable);
-  //console.log(allocatedTasks);
-  await updateTaskSlots(allocatedTasks);
-  console.log(allocatedTasks);
+  const allocatedTasks = bestFitDecreasing(emptySlotsToday, pendingTasks);
   return allocatedTasks;
 }
 

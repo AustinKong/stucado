@@ -18,12 +18,12 @@
 
 
 /* Schedule tools */
-.schedule-tools__add {
-  padding: 12px;
-  background-color: var(--accent);
-  color: var(--text-inverse);
-  border-radius: var(--space-100);
+.scheduleTools {
+  display: flex;
+  justify-content: center ;
+  gap: var(--space-200);
 }
+
 
 /* Scheudle timetable */
 .scheduleTimetable {
