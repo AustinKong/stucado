@@ -29,6 +29,11 @@ export async function createTimetableSlot(_event, title, description, schedule) 
   return timetableSlot;
 }
 
+export async function updateTimetableSlot(_event, timetableSlot) {
+  void updateTimetable([timetableSlot]);
+  return timetableSlot;
+};
+
 /**
  * Retrieves timetable from URL according to NUS Mods API, then uploads it to cache.
  *

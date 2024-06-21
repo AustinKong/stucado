@@ -7,6 +7,7 @@ import Button from '@components/generic/Button';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import { useState } from 'react';
 import styles from './styles.module.css';
+import { updateTimetableSlot } from '@services/timetable';
 
 const EditSlotModal = ({ slot, onClose }) => {
   const defaultState = {
@@ -36,6 +37,16 @@ const EditSlotModal = ({ slot, onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    void updateTimetableSlot({ 
+      title: formContent.title,
+      description: formContent.description,
+      id: slot.id,
+      schedule: {
+        startTime: formContent.startTime,
+        endTime: formContent.endTime,
+        day: formContent.day,
+      },
+     });
     onClose();
   };
 
