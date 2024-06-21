@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-import { readTimetable, updateTimetable, deleteTimetable, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
+import { readTimetable, updateTimetable, deleteTimetable, deleteTimetableSlot as cacheDeleteTimetableSlot, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
 import { allocateTasks } from '@models/timetableOptimization';
 
 /**
@@ -33,6 +33,11 @@ export async function updateTimetableSlot(_event, timetableSlot) {
   void updateTimetable([timetableSlot]);
   return timetableSlot;
 };
+
+export async function deleteTimetableSlot(_event, id) {
+  void cacheDeleteTimetableSlot(id);
+  return id;
+}
 
 /**
  * Retrieves timetable from URL according to NUS Mods API, then uploads it to cache.

@@ -222,6 +222,11 @@ export async function updateTimetable(allSlots) {
   }
 }
 
+export async function deleteTimetableSlot(id) {
+  const db = await createCache();
+  await db.run('DELETE FROM timetable WHERE id = ?', id);
+}
+
 // Delete timetable
 export async function deleteTimetable() {
   const db = await createCache();

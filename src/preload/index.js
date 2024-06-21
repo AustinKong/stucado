@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld('timetableAPI', {
   uploadTimetable: (url) => ipcRenderer.invoke('upload-timetable', url),
   createTimetableSlot: (title, description, schedule) => ipcRenderer.invoke('create-timetable-slot', title, description, schedule),
   updateTimetableSlot: (timetableSlot) => ipcRenderer.invoke('update-timetable-slot', timetableSlot),
+  deleteTimetableSlot: (id) => ipcRenderer.invoke('delete-timetable-slot', id),
   optimizeTimetable: () => ipcRenderer.invoke('optimize-timetable'),
 });
 
