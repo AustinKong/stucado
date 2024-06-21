@@ -15,7 +15,7 @@ import Input from '@components/generic/Input';
  * @param {function} props.onChange - The callback function to be called when the duration value changes.
  * @returns {JSX.Element} The rendered DurationPicker component.
  */
-const DurationPicker = ({ label, min = 0, max = 1440, name, value = min, onChange }) => {
+const DurationPicker = ({ label, min = 0, max = 1440, name, initialValue = min, onChange }) => {
   const convertToDuration = (minutes) => {
     const hours = String(Math.floor(minutes / 60));
     const remainingMinutes = String(minutes % 60);
@@ -37,8 +37,8 @@ const DurationPicker = ({ label, min = 0, max = 1440, name, value = min, onChang
     return `${hours}:${minutes}`;
   };
 
-  const [duration, setDuration] = useState(formatDuration(convertToDuration(value)));
-  const [sliderValue, setSliderValue] = useState(value);
+  const [duration, setDuration] = useState(formatDuration(convertToDuration(initialValue)));
+  const [sliderValue, setSliderValue] = useState(initialValue);
 
   const handleInputChange = (event) => {
     const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -57,10 +57,14 @@ const DurationPicker = ({ label, min = 0, max = 1440, name, value = min, onChang
           output = value.slice(0, 2) + ':' + value.slice(2, 4);
         }
       }
+
+      if (Number(output.slice(0, 2)) >= Math.floor(max / 60)) {
+        return max / 60 - 1 + ':' + ((max - 1) % 60);
+      }
       return (
-        String(clamp(Number(output.slice(0, 2)), 0, 23)).padStart(2, '0') +
+        String(clamp(Number(output.slice(0, 2)), 0, Math.floor(max / 60) - 1)).padStart(2, '0') +
         ':' +
-        String(clamp(Number(output.slice(3)), 0, 59)).padStart(2, '0')
+        String(clamp(Number(output.slice(3)), 0, (max - 1) % 60)).padStart(2, '0')
       );
     };
 

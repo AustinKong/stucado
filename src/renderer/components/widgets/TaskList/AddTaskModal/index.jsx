@@ -54,7 +54,7 @@ const AddTaskModal = ({ onClose }) => {
           value={formContent.description}
           onChange={handleChange}
         />
-        <DurationPicker label="Estimated time" name="estimatedTime" onChange={handleChange} />
+        <DurationPicker label="Estimated time" name="estimatedTime" onChange={handleChange} max={720} />
       </ModalBody>
       <ModalFooter>
         <Button onClick={handleCancel} appearance="secondary">
