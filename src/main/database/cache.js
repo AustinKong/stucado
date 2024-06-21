@@ -200,7 +200,6 @@ export async function readTimetable() {
 
 // Update timetable
 export async function updateTimetable(allSlots) {
-  await deleteTimetable();
   const db = await createCache();
 
   for (const slot of allSlots) {
