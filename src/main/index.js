@@ -12,9 +12,11 @@ import { getHoursFocused, getTasksCompleted, getAverageProductivity } from '@ser
 import { generateTestData } from '@services/experimental';
 import { logout } from '@services/general';
 
+let mainWindow;
+
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     show: false,
@@ -95,7 +97,7 @@ app.whenReady().then(() => {
   ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
 
-  ipcMain.handle('run-model', runModel);
+  ipcMain.on('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);
@@ -112,3 +114,5 @@ app.whenReady().then(() => {
 
   ipcMain.on('logout', logout);
 });
+
+export { mainWindow };
