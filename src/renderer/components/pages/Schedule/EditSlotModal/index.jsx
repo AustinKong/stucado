@@ -47,8 +47,13 @@ const EditSlotModal = ({ slot, onClose }) => {
       <ModalBody>
         <Input label="Title" name="title" value={formContent.title} onChange={handleChange} required={true} />
         <TextArea label="Description" name="description" value={formContent.description} onChange={handleChange} />
-        <DurationPicker label="Start time" name="startTime" onChange={handleChange} value={formContent.startTime} />
-        <DurationPicker label="End time" name="endTime" onChange={handleChange} value={formContent.endTime} />
+        <DurationPicker
+          label="Start time"
+          name="startTime"
+          onChange={handleChange}
+          initialValue={formContent.startTime}
+        />
+        <DurationPicker label="End time" name="endTime" onChange={handleChange} initialValue={formContent.endTime} />
         <DropdownPicker
           label="Day"
           options={DaysOfWeek.map((day) => ({ label: day, value: day }))}

@@ -65,7 +65,7 @@ export const ModalTitle = ({ appearance, children }) => {
 };
 
 export const ModalSubtitle = ({ children }) => {
-  return <h3 className={styles.modalSubtitle}>{children}</h3>;
+  return <p className={styles.modalSubtitle}>{children}</p>;
 };
 
 export default Modal;
