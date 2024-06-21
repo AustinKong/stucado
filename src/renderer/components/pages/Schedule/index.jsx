@@ -45,7 +45,7 @@ const ScheduleTools = () => {
 };
 
 const TIME = Array.from({ length: 96 + 1 }, (_, i) => i * 15);
-const PX_PER_MINUTE = (48 * 4) / 60;
+const PX_PER_MINUTE = (64 * 4) / 60;
 
 const ScheduleTimetable = ({ timetable }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
