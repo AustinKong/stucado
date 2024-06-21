@@ -21,7 +21,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getRandomArbitary(min, max) {
+function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
 
@@ -45,7 +45,7 @@ export async function generateStats() {
     for (let i = 0; i < numOfTasks; i++) {
       const id = uuidv4();
       const estimatedTime = getRandomInt(15, 180); // 15 minutes to 3hrs
-      const actualTime = estimatedTime * Math.round(getRandomArbitary(0.3, 2) * 60 * 1000); //0.3 - 3 times of estimated time
+      const actualTime = estimatedTime * Math.round(getRandomArbitrary(0.3, 2) * 60 * 1000); //0.3 - 3 times of estimated time
       const breakTime = getRandomInt(0, 60) * 60 * 1000;
 
       const task = {
