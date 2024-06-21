@@ -1,6 +1,6 @@
-import { predictProductivity } from '../models/gradientDescent.js';
 import { TimesOfDay } from '../../shared/constants.js';
 import { readDataPoints } from '../database/database.js';
+import { mainWindow } from '../index.js';
 
 // TODO: Convert this to have morning, afternoon, night raw data
 /*
@@ -32,14 +32,24 @@ lateAfternoon Saturday 0 5 65.0768531
 lateMorning Saturday 0 1 150.04
 `;
 */
+import createWorker from './worker?nodeWorker';
 
-export async function runModel() {
+export async function runModel(event) {
   const datapoints = await readDataPoints();
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
   const hoursInClasses = 0;
   const hoursFocused = 0;
   const dayOfWeek = new Date().getDay();
-  return predictProductivity(datapoints, timeOfDay, dayOfWeek, +hoursInClasses, +hoursFocused);
+
+  createWorker({ workerData: {
+    datapoints,
+    timeOfDay,
+    dayOfWeek,
+    hoursInClasses,
+    hoursFocused
+  }}).on('message', (result) => {
+    mainWindow.webContents.send('model-result', result);
+  });
 }
 
 export async function initializeModel(_event, habit) {

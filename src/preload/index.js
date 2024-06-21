@@ -20,7 +20,8 @@ contextBridge.exposeInMainWorld('timetableAPI', {
 });
 
 contextBridge.exposeInMainWorld('insightsAPI', {
-  runModel: () => ipcRenderer.invoke('run-model'),
+  runModel: () => ipcRenderer.send('run-model'),
+  onResult: (callback) => ipcRenderer.on('model-result', callback),
   initializeModel: (habit) => ipcRenderer.send('initialize-model', habit),
 });
 
