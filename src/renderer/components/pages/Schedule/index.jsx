@@ -12,8 +12,21 @@ import EditSlotModal from '@components/pages/Schedule/EditSlotModal';
 import styles from './styles.module.css';
 
 const Schedule = () => {
+  const filterState = (state) => {
+    switch (filter) {
+      case 'all':
+        return state;
+      case 'tasks':
+        return state.filter((slot) => slot.type === 'task');
+      case 'classes':
+        return state.filter((slot) => slot.type === 'timetable');
+      default:
+        return state;
+    }
+  };
+
   const [filter, setFilter] = useState('all');
-  const timetable = useSelector((state) => state.timetable);
+  const timetable = useSelector((state) => filterState(state.timetable));
 
   return (
     <div className={styles.schedule}>

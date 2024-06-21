@@ -11,7 +11,10 @@ import { allocateTasks } from '@models/timetableOptimization';
 export async function getTimetable() {
   const timetable = await readTimetable();
   const optimizedTasks = await readTaskSlots();
-  const combined = timetable.concat(optimizedTasks);
+  // Inject tags to differentiate between timetable and tasks
+  const combined = timetable
+    .map((lesson) => ({ ...lesson, type: 'timetable' }))
+    .concat(optimizedTasks.map((task) => ({ ...task, type: 'task' })));
   return combined;
 }
 
@@ -100,7 +103,7 @@ export async function optimizeTimetable() {
   const tasks = await readTasks();
 
   const startTime = new Date().getHours() * 60 + new Date().getMinutes();
-  const endTime = startTime + 23 * 60 + 59;
+  const endTime = (startTime + 23 * 60 + 59) % 1440;
   const optimizedTasks = await allocateTasks(timetable, tasks, startTime, endTime);
   await updateTaskSlots(optimizedTasks);
 
@@ -122,6 +125,8 @@ function lessonTypeToAbbreviation(lessonType) {
       return 'LEC';
     case 'Workshop':
       return 'WS';
+    case 'Seminar-Style Module Class':
+      return 'SEM';
     default:
       // Failsafe is to use first three letters of lesson type
       console.error('Unknown lesson type encountered, contact developer!');

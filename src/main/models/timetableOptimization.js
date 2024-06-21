@@ -43,7 +43,7 @@ export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
     //Find the empty slots in between classes
     let prevEndTime = slots.length > 0 ? slots[0].schedule.endTime : startWorkTime;
     slots.forEach((slot) => {
-      if (slot.schedule.startTime > prevEndTime) {
+      if (slot.schedule.startTime > prevEndTime && slot.schedule.startTime >= startWorkTime) {
         emptySlots
           .find((e) => e.day === day)
           .slots.push({
@@ -85,7 +85,7 @@ export function bestFitDecreasing(emptySlots, tasks) {
         allocatedTasks.push({
           id: uuidv4(),
           title: task.title,
-          description: task.description,
+          description: `${task.description} @ ${slot.day} ${minutesToTime(slot.startTime)} - ${minutesToTime(slot.startTime + task.estimatedTime)}`,
           schedule: {
             startTime: slot.startTime,
             endTime: slot.startTime + task.estimatedTime,
@@ -100,7 +100,7 @@ export function bestFitDecreasing(emptySlots, tasks) {
           {
             id: uuidv4(),
             title: task.title,
-            description: task.description,
+            description: `${task.description} @ ${slot.day} ${minutesToTime(slot.startTime)} - ${minutesToTime(1440)}`,
             schedule: {
               startTime: slot.startTime,
               endTime: 1440,
@@ -110,7 +110,7 @@ export function bestFitDecreasing(emptySlots, tasks) {
           {
             id: uuidv4(),
             title: task.title,
-            description: task.description,
+            description: `${task.description} @ ${DaysOfWeek[new Date().getDay() + 1]} ${minutesToTime(0)} - ${minutesToTime(taskSlotEndTime - 1440)}`,
             schedule: {
               startTime: 0,
               endTime: taskSlotEndTime - 1440,
@@ -148,6 +148,13 @@ export async function allocateTasks(timetable, tasks, startTime, endTime) {
 
   const allocatedTasks = bestFitDecreasing(emptySlotsToday, pendingTasks);
   return allocatedTasks;
+}
+
+// Utility function to convert minutes since midnight to HH:MM format
+export function minutesToTime(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours}:${String(mins).padStart(2, '0')}`;
 }
 
 /*
