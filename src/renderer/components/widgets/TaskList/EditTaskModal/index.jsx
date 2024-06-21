@@ -68,6 +68,7 @@ const EditTaskModal = ({ task, onClose }) => {
           name="estimatedTime"
           onChange={handleChange}
           initialValue={formContent.estimatedTime}
+          max={720}
         />
       </ModalBody>
       <ModalFooter>
