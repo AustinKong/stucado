@@ -30,6 +30,24 @@ export const optimizeTimetable = async () => {
   store.dispatch(setTimetable(timetable));
 };
 
+export const createTimetableSlot = async (title, description, schedule) => {
+  console.log(title, description, schedule);
+  const timetableSlot = await window.timetableAPI.createTimetableSlot(title, description, schedule);
+  store.dispatch(setTimetable([...store.getState().timetable, timetableSlot]));
+};
+
+export const updateTimetableSlot = async (timetableSlot) => {
+  const updatedSlot = await window.timetableAPI.updateTimetableSlot(timetableSlot);
+  const timetable = store.getState().timetable.map((slot) => (slot.id === updatedSlot.id ? updatedSlot : slot));
+  store.dispatch(setTimetable(timetable));
+};
+
+export const deleteTimetableSlot = async (id) => {
+  await window.timetableAPI.deleteTimetableSlot(id);
+  const timetable = store.getState().timetable.filter((slot) => slot.id !== id);
+  store.dispatch(setTimetable(timetable));
+};
+
 const urlValidation = (url) => {
   const regex = /^https:\/\/nusmods\.com\/timetable\/sem-([1-4])\/share\?[^ ]+$/;
   return regex.test(url);

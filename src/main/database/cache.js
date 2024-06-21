@@ -200,7 +200,6 @@ export async function readTimetable() {
 
 // Update timetable
 export async function updateTimetable(allSlots) {
-  await deleteTimetable();
   const db = await createCache();
 
   for (const slot of allSlots) {
@@ -211,10 +210,21 @@ export async function updateTimetable(allSlots) {
       `
 			INSERT INTO timetable (id, title, description, start_time, end_time, day)
 			VALUES (?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET 
+        title = EXCLUDED.title,
+        description = EXCLUDED.description,
+        start_time = EXCLUDED.start_time,
+        end_time = EXCLUDED.end_time,
+        day = EXCLUDED.day;
 	`,
       [id, title, description, startTime, endTime, day]
     );
   }
+}
+
+export async function deleteTimetableSlot(id) {
+  const db = await createCache();
+  await db.run('DELETE FROM timetable WHERE id = ?', id);
 }
 
 // Delete timetable
