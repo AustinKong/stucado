@@ -1,10 +1,9 @@
-//import { predictProductivity } from '@models/gradientDescent';
 import { predictProductivity } from '../models/gradientDescent.js';
-//import { TimesOfDay } from '@shared/constants';
 import { TimesOfDay } from '../../shared/constants.js';
-import { deleteData, updateDataPoint } from '../database/database.js';
+import { readDataPoints } from '../database/database.js';
 
-//raw data for testing
+// TODO: Convert this to have morning, afternoon, night raw data
+/*
 const rawData = `
 midnight Sunday 0 5 80.2819977
 dawn Sunday 2 5 45.69
@@ -32,47 +31,16 @@ midnight Saturday 0 12 67.4273954
 lateAfternoon Saturday 0 5 65.0768531
 lateMorning Saturday 0 1 150.04
 `;
+*/
 
-export async function processRawData(rawData) {
-  const lines = rawData.trim().split('\n');
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    const parts = line.split(' ');
-    const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
-    await updateDataPoint({
-      timeOfDay,
-      dayOfWeek,
-      hoursInClasses: parseFloat(hoursInClasses),
-      hoursFocused: parseFloat(hoursFocused),
-      productivity: parseFloat(productivity),
-    });
-  }
-}
-
-//TODO: modify this function after generating all necessary data
 export async function runModel() {
-  await deleteData();
-  await processRawData(rawData);
+  const datapoints = await readDataPoints();
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
   const hoursInClasses = 0;
   const hoursFocused = 0;
   const dayOfWeek = new Date().getDay();
-  return predictProductivity(timeOfDay, dayOfWeek, +hoursInClasses, +hoursFocused);
+  return predictProductivity(datapoints, timeOfDay, dayOfWeek, +hoursInClasses, +hoursFocused);
 }
-
-export async function testModel(givenData, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused) {
-  await deleteData();
-  await processRawData(givenData);
-  const result = await predictProductivity(timeOfDay, dayOfWeek, hoursInClasses, hoursFocused);
-  return result;
-}
-
-/*
-function timeOfDayToCategorical(timeOfDay) {
-  const timeOfDayIndex = Math.floor((((timeOfDay % 1440) / 60) * 8) / 24);
-  return TimesOfDay[timeOfDayIndex];
-}
-*/
 
 export async function initializeModel(_event, habit) {
   console.log('called initialize model from insights service @ main: ' + habit);

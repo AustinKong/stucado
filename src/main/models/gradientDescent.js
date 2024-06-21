@@ -1,12 +1,10 @@
-//import { DaysOfWeek, TimesOfDay, Weathers } from '@shared/constants';
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readDataPoints, updateDataPoint } from '../database/database.js';
 
 // Learning rate and iterations
 const learningRate = 0.005;
 const iterations = 100000;
 
-//convert categorical data into dummy variables
+// convert categorical data into dummy variables
 function categoricalToDummy(data) {
   const result = [];
   result.push(...TimesOfDay.map((time) => (data.timeOfDay === time ? 1 : 0)));
@@ -17,8 +15,7 @@ function categoricalToDummy(data) {
   return result;
 }
 
-async function runGradientDescent(datapoint) {
-  const dataPoints = await readDataPoints();
+async function runGradientDescent(dataPoints, datapoint) {
   //convert dataset into X and Y(target) variable
   const preparedDataset = dataPoints.map((data) => ({
     variables: categoricalToDummy(data),
@@ -58,19 +55,10 @@ async function runGradientDescent(datapoint) {
   const dummyDatapoint = categoricalToDummy(datapoint);
   const result = Math.round(predict(dummyDatapoint) * 1000) / 1000;
 
-  let newDataPoint = {
-    timeOfDay: datapoint.timeOfDay,
-    dayOfWeek: datapoint.dayOfWeek,
-    hoursInClasses: datapoint.hoursInClasses,
-    hoursFocused: datapoint.hoursFocused,
-    productivity: result,
-  };
-
-  await updateDataPoint(newDataPoint);
   return result;
 }
 
-export async function predictProductivity(time, day, hoursInClasses, hoursFocused) {
+export async function predictProductivity(datapoints, time, day, hoursInClasses, hoursFocused) {
   let datapoint = {
     timeOfDay: time,
     dayOfWeek: day,
@@ -78,8 +66,5 @@ export async function predictProductivity(time, day, hoursInClasses, hoursFocuse
     hoursFocused,
     productivity: 0,
   };
-  return runGradientDescent(datapoint);
+  return runGradientDescent(datapoints, datapoint);
 }
-
-//testing
-//predictProductivity('evening', 'Friday', 3, 7);
