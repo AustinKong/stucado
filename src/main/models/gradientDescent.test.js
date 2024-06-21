@@ -1,4 +1,4 @@
-import { testModel } from './insights.js';
+import { predictProductivity } from "./gradientDescent";
 
 const rawData = `
 lateAfternoon Tuesday 4 10 23.50342
@@ -84,23 +84,37 @@ dawn Monday 2 7 23.70229
 lateMorning Thursday 2 7 63.07841
 `;
 
+function processRawData(rawData) {
+  const result = [];
+  const lines = rawData.trim().split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    const parts = line.split(' ');
+    const [timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity] = parts;
+    result.push({
+      timeOfDay,
+      dayOfWeek,
+      hoursInClasses,
+      hoursFocused,
+      productivity,
+    });
+  }
+  return result;
+}
+
 describe('Gradient Descent Prediction', () => {
   test('predictProductivity should return a valid result', async () => {
-    const result = await testModel(rawData, 'evening', 'Friday', 3, 7);
+    const result = await predictProductivity(processRawData(rawData), 'evening', 'Friday', 3, 7);
     expect(result).toBeCloseTo(48.97736, 3);
   });
-});
 
-describe('Gradient Descent Prediction', () => {
   test('predictProductivity should return a valid result', async () => {
-    const result = await testModel(rawData2, 'earlyMorning', 'Wednesday', 0, 4);
+    const result = await predictProductivity(processRawData(rawData2), 'earlyMorning', 'Wednesday', 0, 4);
     expect(result).toBeCloseTo(144.418, 3);
   });
-});
 
-describe('Gradient Descent Prediction', () => {
   test('predictProductivity should return a valid result', async () => {
-    const result = await testModel(rawData3,'midnight', 'Monday', 5, 7);
+    const result = await predictProductivity(processRawData(rawData3), 'midnight', 'Monday', 5, 7);
     expect(result).toBeCloseTo(65.15323, 3);
   });
 });
