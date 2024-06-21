@@ -43,7 +43,7 @@ export function getEmptySlots(timetable, startWorkTime, endWorkTime) {
     //Find the empty slots in between classes
     let prevEndTime = slots.length > 0 ? slots[0].schedule.endTime : startWorkTime;
     slots.forEach((slot) => {
-      if (slot.schedule.startTime > prevEndTime) {
+      if (slot.schedule.startTime > prevEndTime && slot.schedule.startTime >= startWorkTime) {
         emptySlots
           .find((e) => e.day === day)
           .slots.push({
