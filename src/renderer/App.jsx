@@ -1,5 +1,6 @@
 import { Routes, Route, HashRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import useRetrieveData from '@data/hooks/useRetrieveData';
 
@@ -10,10 +11,25 @@ import Statistics from '@components/pages/Statistics';
 import Layout from '@components/generic/Layout';
 import Pomodoro from '@components/pages/Pomodoro';
 import Onboarding from '@components/pages/Onboarding';
+import Loading from '@components/pages/Loading';
 
 function App() {
-  const hasOnboarded = useSelector((state) => state.settings.hasOnboarded);
   useRetrieveData();
+  const hasOnboarded = useSelector((state) => state.settings.hasOnboarded);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // IM not sure how to do a proper page load, so we just wait 1 seconds
+    const fetchData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a 2-second load time
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (!hasOnboarded) {
     return <Onboarding />;

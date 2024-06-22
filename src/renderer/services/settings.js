@@ -13,7 +13,6 @@ export const setReceiveNotifications = (receiveNotifications) => {
 };
 
 export const completeOnboarding = () => {
-  console.log('user has completed onboarding')
   window.settingsAPI.completeOnboarding();
   store.dispatch(setSettings({ hasOnboarded: true }));
 };
