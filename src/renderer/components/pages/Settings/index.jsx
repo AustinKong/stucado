@@ -125,7 +125,7 @@ const AppearanceSettings = () => {
           { value: 'light', label: 'Light Theme' },
           { value: 'dark', label: 'Dark Theme' },
         ]}
-        onChange={(e) => setTheme(e.target.value)}
+        onChange={(e) => setTheme(e.value)}
       />
     </div>
   );

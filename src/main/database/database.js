@@ -29,7 +29,7 @@ export async function createDatabase() {
 }
 
 //adding data point into database
-export async function updateDataPoint(dataPoint) {
+export async function updateDatapoint(dataPoint) {
   const { timeOfDay, dayOfWeek, hoursInClasses, hoursFocused, productivity } = dataPoint;
   const db = await createDatabase();
 
