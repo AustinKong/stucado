@@ -4,13 +4,27 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
-import { uploadTimetable, getTimetable, createTimetableSlot, updateTimetableSlot, deleteTimetableSlot, optimizeTimetable } from '@services/timetable';
+import {
+  uploadTimetable,
+  getTimetable,
+  createTimetableSlot,
+  updateTimetableSlot,
+  deleteTimetableSlot,
+  optimizeTimetable,
+} from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification } from '@services/pomodoro';
 import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
-import { getHoursFocused, getTasksCompleted, getAverageProductivity } from '@services/statistics';
+import {
+  getHoursFocused,
+  getTasksCompleted,
+  getAverageProductivity,
+  getCurrentHoursFocused,
+  getCurrentTasksCompleted,
+  getCurrentAverageProductivity,
+} from '@services/statistics';
 import { generateTestData } from '@services/experimental';
-import { logout } from '@services/general';
+import { logout, clearData } from '@services/general';
 
 let mainWindow;
 
@@ -109,10 +123,14 @@ app.whenReady().then(() => {
   ipcMain.handle('get-hours-focused', getHoursFocused);
   ipcMain.handle('get-tasks-completed', getTasksCompleted);
   ipcMain.handle('get-average-productivity', getAverageProductivity);
+  ipcMain.handle('get-current-hours-focused', getCurrentHoursFocused);
+  ipcMain.handle('get-current-tasks-completed', getCurrentTasksCompleted);
+  ipcMain.handle('get-current-average-productivity', getCurrentAverageProductivity);
 
   ipcMain.on('generate-test-data', generateTestData);
 
   ipcMain.on('logout', logout);
+  ipcMain.on('clear-data', clearData);
 });
 
 export { mainWindow };

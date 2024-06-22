@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-import { readTimetable, updateTimetable, deleteTimetable, deleteTimetableSlot as cacheDeleteTimetableSlot, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
+import {
+  readTimetable,
+  updateTimetable,
+  deleteTimetable,
+  deleteTimetableSlot as cacheDeleteTimetableSlot,
+  readTasks,
+  updateTaskSlots,
+  readTaskSlots,
+} from '@database/cache';
 import { allocateTasks } from '@models/timetableOptimization';
 
 /**
@@ -32,7 +40,7 @@ export async function createTimetableSlot(_event, title, description, schedule) 
 export async function updateTimetableSlot(_event, timetableSlot) {
   void updateTimetable([timetableSlot]);
   return timetableSlot;
-};
+}
 
 export async function deleteTimetableSlot(_event, id) {
   void cacheDeleteTimetableSlot(id);

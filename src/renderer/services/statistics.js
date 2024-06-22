@@ -10,3 +10,15 @@ export const getTasksCompleted = async (range) => {
 export const getAverageProductivity = async (range) => {
   return window.statisticsAPI.getAverageProductivity(range);
 };
+
+export const getCurrentTasksCompleted = async () => {
+  return window.statisticsAPI.getCurrentTasksCompleted();
+};
+
+export const getCurrentAverageProductivity = async () => {
+  return window.statisticsAPI.getCurrentAverageProductivity();
+};
+
+export const getCurrentHoursFocused = async () => {
+  return window.statisticsAPI.getCurrentHoursFocused();
+};

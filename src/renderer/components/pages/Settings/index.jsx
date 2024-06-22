@@ -7,6 +7,7 @@ import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
 import Button from '@components/generic/Button';
 import Construction from '@components/generic/Construction';
+import { clearData } from '@services/general';
 
 const NAVLINKS = [
   {
@@ -99,7 +100,7 @@ const DataSettings = () => {
       <SettingsButton
         title="Clear Data"
         description="Clear all data stored in the app. This action is irreversible."
-        onClick={() => console.log('Clear data')}
+        onClick={() => clearData()}
         buttonText="Clear"
         buttonAppearance="danger"
       />

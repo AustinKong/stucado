@@ -1,8 +1,9 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
 import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro } from '../database/cache.js';
-import { updateDataPoint } from '../database/database.js';
+import { updateDatapoint, deleteData } from '../database/database.js';
 import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused } from './stats.js';
 import { app } from 'electron';
+import { deleteStats } from '../database/stats.js';
 
 export function getTimeOfDay(hour) {
   const index = Math.floor(hour / 3);
@@ -111,8 +112,7 @@ export async function logout() {
   app.exit(0);
 }
 
-//to test run
-
-//deleteData();
-//createDatapoints();
-//readDatapoints();
+export async function clearData() {
+  await deleteStats();
+  await deleteData();
+}

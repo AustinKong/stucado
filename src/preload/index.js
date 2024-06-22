@@ -40,6 +40,9 @@ contextBridge.exposeInMainWorld('statisticsAPI', {
   getHoursFocused: (range) => ipcRenderer.invoke('get-hours-focused', range),
   getTasksCompleted: (range) => ipcRenderer.invoke('get-tasks-completed', range),
   getAverageProductivity: (range) => ipcRenderer.invoke('get-average-productivity', range),
+  getCurrentTasksCompleted: () => ipcRenderer.invoke('get-current-tasks-completed'),
+  getCurrentAverageProductivity: () => ipcRenderer.invoke('get-current-average-productivity'),
+  getCurrentHoursFocused: () => ipcRenderer.invoke('get-current-hours-focused'),
 });
 
 contextBridge.exposeInMainWorld('experimentalAPI', {
@@ -49,4 +52,5 @@ contextBridge.exposeInMainWorld('experimentalAPI', {
 contextBridge.exposeInMainWorld('generalAPI', {
   openExternal: (url) => ipcRenderer.send('open-external', url),
   logout: () => ipcRenderer.send('logout'),
+  clearData: () => ipcRenderer.send('clear-data'),
 });

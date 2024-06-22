@@ -2,7 +2,6 @@ import { TimesOfDay } from '../../shared/constants.js';
 import { deleteData, readDatapoints, updateDatapoint } from '../database/database.js';
 import { mainWindow } from '../index.js';
 
-// TODO: Convert this to have morning, afternoon, night raw data
 const morningData = `
 midnight	Monday	2	10	52.976
 midnight	Thursday	2	7	29.737
@@ -107,20 +106,22 @@ export function processRawData(rawData) {
 
 import createWorker from './worker?nodeWorker';
 
-export async function runModel(event) {
-  const datapoints = await readDataPoints();
+export async function runModel() {
+  const datapoints = await readDatapoints();
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
   const hoursInClasses = 0;
   const hoursFocused = 0;
   const dayOfWeek = new Date().getDay();
 
-  createWorker({ workerData: {
-    datapoints,
-    timeOfDay,
-    dayOfWeek,
-    hoursInClasses,
-    hoursFocused
-  }}).on('message', (result) => {
+  createWorker({
+    workerData: {
+      datapoints,
+      timeOfDay,
+      dayOfWeek,
+      hoursInClasses,
+      hoursFocused,
+    },
+  }).on('message', (result) => {
     mainWindow.webContents.send('model-result', result);
   });
 }
@@ -134,15 +135,20 @@ export async function initializeModel(_event, habit) {
       for await (const data of datapoints) {
         updateDatapoint(data);
       }
+      break;
     case 'afternoon':
       datapoints = processRawData(afternoonData);
       for await (const data of datapoints) {
         updateDatapoint(data);
       }
+      break;
     case 'nightOwl':
       datapoints = processRawData(nightData);
       for await (const data of datapoints) {
         updateDatapoint(data);
       }
+      break;
+    default:
+      break;
   }
 }
