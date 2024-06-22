@@ -1,6 +1,6 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
 import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro } from '../database/cache.js';
-import { updateDataPoint } from '../database/database.js';
+import { updateDatapoint } from '../database/database.js';
 import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused } from './stats.js';
 import { app } from 'electron';
 

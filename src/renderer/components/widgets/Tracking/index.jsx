@@ -1,7 +1,14 @@
 import Widget from '@components/widgets/Widget';
 import Histogram from '@components/widgets/Tracking/Histogram';
 import Statistic from '@components/widgets/Tracking/Statistic';
-import { getAverageProductivity, getHoursFocused, getTasksCompleted } from '@services/statistics';
+import {
+  getAverageProductivity,
+  getHoursFocused,
+  getTasksCompleted,
+  getCurrentAverageProductivity,
+  getCurrentHoursFocused,
+  getCurrentTasksCompleted,
+} from '@services/statistics';
 import { useState, useEffect } from 'react';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
@@ -14,13 +21,13 @@ const Tracking = ({ title, unit, pastData, currentData }) => {
   return (
     <Widget className={styles.tracking} title={title}>
       <div className={styles.tracking__content}>
-        {pastData.length + 1 >= 7 && (
+        {pastData.length + 1 >= 7 && currentData && (
           <>
             <Histogram data={pastData.concat(currentData)} />
             <Statistic value={currentData} unit={unit} trend={changePercentage} />
           </>
         )}
-        {pastData.length + 1 < 7 && (
+        {(pastData.length + 1 < 7 || !currentData) && (
           <div className={styles.tracking__loading}>
             <MagnifyingGlass size={24} />
             &nbsp; Trying to get more data...
@@ -33,35 +40,54 @@ const Tracking = ({ title, unit, pastData, currentData }) => {
 
 export const HoursFocused = () => {
   const [hoursFocused, setHoursFocused] = useState([]);
+  const [currentHoursFocused, setCurrentHoursFocused] = useState(null);
 
   useEffect(() => {
     getHoursFocused(7).then((result) => {
       setHoursFocused(result.map((stat) => stat.hoursFocused));
     });
+    getCurrentHoursFocused().then((result) => {
+      setCurrentHoursFocused(result);
+    });
   }, []);
 
-  return <Tracking title="Hours Focused" unit=" hrs" pastData={hoursFocused} currentData={0} />;
+  return <Tracking title="Hours Focused" unit=" hrs" pastData={hoursFocused} currentData={currentHoursFocused} />;
 };
 
 export const TasksCompleted = () => {
   const [tasksCompleted, setTasksCompleted] = useState([]);
+  const [currentTasksCompleted, setCurrentTasksCompleted] = useState(null);
 
   useEffect(() => {
     getTasksCompleted(7).then((result) => {
       setTasksCompleted(result.map((stat) => stat.completedTasks));
     });
+    getCurrentTasksCompleted().then((result) => {
+      setCurrentTasksCompleted((prev) => [...prev, result]);
+    });
   }, []);
-  return <Tracking title="Tasks Completed" pastData={tasksCompleted} currentData={0} />;
+  return <Tracking title="Tasks Completed" pastData={tasksCompleted} currentData={currentTasksCompleted} />;
 };
 
 export const AverageProductivity = () => {
   const [averageProductivity, setAverageProductivity] = useState([]);
+  const [currentAverageProductivity, setCurrentAverageProductivity] = useState(null);
 
   useEffect(() => {
     getAverageProductivity(7).then((result) => {
       setAverageProductivity(result.map((stat) => stat.averageProductivity));
     });
+    getCurrentAverageProductivity().then((result) => {
+      setCurrentAverageProductivity(result);
+    });
   }, []);
 
-  return <Tracking title="Average Productivity" unit="%" pastData={averageProductivity} currentData={0} />;
+  return (
+    <Tracking
+      title="Average Productivity"
+      unit="%"
+      pastData={averageProductivity}
+      currentData={currentAverageProductivity}
+    />
+  );
 };
