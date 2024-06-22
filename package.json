@@ -58,7 +58,9 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+      "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "^@components(.*)$": "<rootDir>/src/renderer/components$1",
+      "^@services(.*)$": "<rootDir>/src/renderer/services$1"
     },
     "testEnvironment": "jsdom"
   }
