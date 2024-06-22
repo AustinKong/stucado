@@ -15,9 +15,9 @@ function categoricalToDummy(data) {
   return result;
 }
 
-async function runGradientDescent(dataPoints, datapoint) {
+async function runGradientDescent(datapoints, datapoint) {
   //convert dataset into X and Y(target) variable
-  const preparedDataset = dataPoints.map((data) => ({
+  const preparedDataset = datapoints.map((data) => ({
     variables: categoricalToDummy(data),
     target: data.productivity,
   }));
