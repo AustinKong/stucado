@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-import { readTimetable, updateTimetable, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
+import { readTimetable, updateTimetable, deleteTimetable, deleteTimetableSlot as cacheDeleteTimetableSlot, readTasks, updateTaskSlots, readTaskSlots } from '@database/cache';
 import { allocateTasks } from '@models/timetableOptimization';
 
 /**
@@ -18,6 +18,27 @@ export async function getTimetable() {
   return combined;
 }
 
+export async function createTimetableSlot(_event, title, description, schedule) {
+  const timetableSlot = {
+    title,
+    description,
+    id: uuidv4(),
+    schedule,
+  };
+  void updateTimetable([timetableSlot]);
+  return timetableSlot;
+}
+
+export async function updateTimetableSlot(_event, timetableSlot) {
+  void updateTimetable([timetableSlot]);
+  return timetableSlot;
+};
+
+export async function deleteTimetableSlot(_event, id) {
+  void cacheDeleteTimetableSlot(id);
+  return id;
+}
+
 /**
  * Retrieves timetable from URL according to NUS Mods API, then uploads it to cache.
  *
@@ -28,6 +49,7 @@ export async function getTimetable() {
 export async function uploadTimetable(_event, url) {
   const { enrolledLessons, academicYear, semester } = extractURL(url);
   const timetable = await getLessonsToTimetable(enrolledLessons, academicYear, semester);
+  await deleteTimetable();
   void updateTimetable(timetable);
   return timetable;
 }

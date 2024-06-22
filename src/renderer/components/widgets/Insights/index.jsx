@@ -1,19 +1,17 @@
 import Widget, { InteractionButton } from '@components/widgets/Widget';
 import { ArrowsClockwise, ChatTeardropText } from '@phosphor-icons/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import workingImage from '@assets/illustrations/working.png';
-import { generateMessage } from '@services/insights';
+import { runModel } from '@services/insights';
 import styles from './styles.module.css';
+import { useSelector } from 'react-redux';
 
 const Insights = () => {
-  const [message, setMessage] = useState(null);
+  const message = useSelector((state) => state.insights.message);
 
   const refresh = () => {
-    setMessage(null);
-    generateMessage().then((response) => {
-      setMessage(response);
-    });
+    void runModel();
   };
 
   useEffect(refresh, []);

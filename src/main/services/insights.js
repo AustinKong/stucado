@@ -1,6 +1,6 @@
-import { predictProductivity } from '../models/gradientDescent.js';
 import { TimesOfDay } from '../../shared/constants.js';
 import { deleteData, readDatapoints, updateDatapoint } from '../database/database.js';
+import { mainWindow } from '../index.js';
 
 // TODO: Convert this to have morning, afternoon, night raw data
 const morningData = `
@@ -105,13 +105,24 @@ export function processRawData(rawData) {
   return result;
 }
 
-export async function runModel() {
-  const datapoints = await readDatapoints();
+import createWorker from './worker?nodeWorker';
+
+export async function runModel(event) {
+  const datapoints = await readDataPoints();
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
   const hoursInClasses = 0;
   const hoursFocused = 0;
   const dayOfWeek = new Date().getDay();
-  return predictProductivity(datapoints, timeOfDay, dayOfWeek, +hoursInClasses, +hoursFocused);
+
+  createWorker({ workerData: {
+    datapoints,
+    timeOfDay,
+    dayOfWeek,
+    hoursInClasses,
+    hoursFocused
+  }}).on('message', (result) => {
+    mainWindow.webContents.send('model-result', result);
+  });
 }
 
 export async function initializeModel(_event, habit) {
@@ -123,13 +134,11 @@ export async function initializeModel(_event, habit) {
       for await (const data of datapoints) {
         updateDatapoint(data);
       }
-
     case 'afternoon':
       datapoints = processRawData(afternoonData);
       for await (const data of datapoints) {
         updateDatapoint(data);
       }
-
     case 'nightOwl':
       datapoints = processRawData(nightData);
       for await (const data of datapoints) {

@@ -64,7 +64,7 @@ const DurationPicker = ({ label, min = 0, max = 1440, name, initialValue = min, 
       return (
         String(clamp(Number(output.slice(0, 2)), 0, Math.floor(max / 60) - 1)).padStart(2, '0') +
         ':' +
-        String(clamp(Number(output.slice(3)), 0, (max - 1) % 60)).padStart(2, '0')
+        String(output.slice(3)).padStart(2, '0')
       );
     };
 

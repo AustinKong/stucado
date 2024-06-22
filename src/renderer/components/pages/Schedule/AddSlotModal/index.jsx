@@ -6,6 +6,7 @@ import DurationPicker from '@components/generic/DurationPicker';
 import Button from '@components/generic/Button';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import { useState } from 'react';
+import { createTimetableSlot } from '@services/timetable';
 
 const AddSlotModal = ({ onClose }) => {
   const defaultState = {
@@ -30,7 +31,15 @@ const AddSlotModal = ({ onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formContent);
+    void createTimetableSlot(
+      formContent.title,
+      formContent.description,
+      {
+        startTime: formContent.startTime,
+        endTime: formContent.endTime,
+        day: formContent.day,
+      },
+    );
     onClose();
   };
 

@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 
 import { getTasks, createTask, updateTask, deleteTask } from '@services/tasks';
-import { uploadTimetable, getTimetable, optimizeTimetable } from '@services/timetable';
+import { uploadTimetable, getTimetable, createTimetableSlot, updateTimetableSlot, deleteTimetableSlot, optimizeTimetable } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification } from '@services/pomodoro';
 import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
@@ -12,9 +12,11 @@ import { getHoursFocused, getTasksCompleted, getAverageProductivity } from '@ser
 import { generateTestData } from '@services/experimental';
 import { logout } from '@services/general';
 
+let mainWindow;
+
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     show: false,
@@ -90,9 +92,12 @@ app.whenReady().then(() => {
 
   ipcMain.handle('upload-timetable', uploadTimetable);
   ipcMain.handle('get-timetable', getTimetable);
+  ipcMain.handle('create-timetable-slot', createTimetableSlot);
+  ipcMain.handle('update-timetable-slot', updateTimetableSlot);
+  ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
 
-  ipcMain.handle('run-model', runModel);
+  ipcMain.on('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);
@@ -109,3 +114,5 @@ app.whenReady().then(() => {
 
   ipcMain.on('logout', logout);
 });
+
+export { mainWindow };
