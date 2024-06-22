@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IconContext, User, Book, House, Pencil, TestTube } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 import { setTheme, setReceiveNotifications } from '@services/settings';
-import { generateTestData } from '@services/experimental';
+import { generateTestData, resetOnboarding } from '@services/experimental';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
 import Button from '@components/generic/Button';
@@ -140,6 +140,13 @@ const ExperimentalSettings = () => {
         description="Populate the database with 14 days worth of randomly generated test data. Used for testing the functionality of the app."
         onClick={() => generateTestData()}
         buttonText="Generate"
+      />
+      <SettingsButton
+        title="Reset Onboarding"
+        description="Reset the onboarding process. This will allow you to do the onboarding process again on next startup."
+        onClick={() => resetOnboarding()}
+        buttonText="Reset"
+        buttonAppearance="warn"
       />
     </div>
   );
