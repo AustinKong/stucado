@@ -24,7 +24,7 @@ import {
   getCurrentAverageProductivity,
 } from '@services/statistics';
 import { generateTestData } from '@services/experimental';
-import { logout } from '@services/general';
+import { logout, clearData } from '@services/general';
 
 let mainWindow;
 
@@ -130,6 +130,7 @@ app.whenReady().then(() => {
   ipcMain.on('generate-test-data', generateTestData);
 
   ipcMain.on('logout', logout);
+  ipcMain.on('clear-data', clearData);
 });
 
 export { mainWindow };

@@ -52,4 +52,5 @@ contextBridge.exposeInMainWorld('experimentalAPI', {
 contextBridge.exposeInMainWorld('generalAPI', {
   openExternal: (url) => ipcRenderer.send('open-external', url),
   logout: () => ipcRenderer.send('logout'),
+  clearData: () => ipcRenderer.send('clear-data'),
 });

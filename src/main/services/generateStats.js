@@ -1,12 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { deleteCache, deleteCompletedTasks, deletePomodoro, updatePomodoro, updateTask } from '../database/cache.js';
+import { deleteCompletedTasks, deletePomodoro, updatePomodoro, updateTask } from '../database/cache.js';
 import {
   countCompletedTasks,
   generateAvgProductivity,
   generateHourlyProductivity,
   generateHoursFocused,
 } from './stats.js';
-import { deleteStats } from '../database/stats.js';
 /* 
 1. Generate tasks
 2. Generate pomodoro timer
@@ -103,11 +102,3 @@ export async function generateStats() {
     console.log(new Date(taskDate).toDateString());
   }
 }
-
-async function test() {
-  await deleteCache();
-  await deleteStats();
-  await generateStats();
-}
-
-//test();

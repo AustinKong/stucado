@@ -29,7 +29,7 @@ export const runModel = async () => {
 
 window.insightsAPI.onResult((event, result) => {
   generateMessage(result);
-})
+});
 
 // Initialize the model on onboarding process, where habits: 'earlyBird', 'afternoon', 'nightOwl'
 export const initializeModel = async (habit) => {
