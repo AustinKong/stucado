@@ -10,6 +10,7 @@ const Histogram = ({ data }) => {
           key={index}
           className={styles.histogram__bar}
           style={{ height: `${(value / max) * 100}%`, width: `${100 / data.length}%` }}
+          data-testid="histogram-bar"
         />
       ))}
     </div>

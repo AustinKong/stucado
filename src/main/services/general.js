@@ -94,7 +94,7 @@ export async function createDatapoints() {
         productivity,
       };
 
-      updateDataPoint(datapoint);
+      updateDatapoint(datapoint);
 
       currTime.setTime(nextTimeOfDay.getTime());
     }

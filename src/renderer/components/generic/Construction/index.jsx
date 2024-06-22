@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const Construction = () => {
   return (
     <div className={styles.construction}>
-      <div className={styles.construction__icon}>
+      <div className={styles.construction__icon} data-testid="barricade-icon">
         <Barricade size={48} />
       </div>
       <h3 className={styles.construction__text}>

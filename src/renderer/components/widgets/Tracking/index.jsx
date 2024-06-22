@@ -40,7 +40,7 @@ export const HoursFocused = () => {
     });
   }, []);
 
-  return <Tracking title="Hours Focused" unit=" hrs" pastData={hoursFocused} currentData={3} />;
+  return <Tracking title="Hours Focused" unit=" hrs" pastData={hoursFocused} currentData={0} />;
 };
 
 export const TasksCompleted = () => {
@@ -51,7 +51,7 @@ export const TasksCompleted = () => {
       setTasksCompleted(result.map((stat) => stat.completedTasks));
     });
   }, []);
-  return <Tracking title="Tasks Completed" pastData={tasksCompleted} currentData={12} />;
+  return <Tracking title="Tasks Completed" pastData={tasksCompleted} currentData={0} />;
 };
 
 export const AverageProductivity = () => {
@@ -63,5 +63,5 @@ export const AverageProductivity = () => {
     });
   }, []);
 
-  return <Tracking title="Average Productivity" unit="%" pastData={averageProductivity} currentData={55} />;
+  return <Tracking title="Average Productivity" unit="%" pastData={averageProductivity} currentData={0} />;
 };

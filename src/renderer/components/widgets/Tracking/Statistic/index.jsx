@@ -12,7 +12,7 @@ const Statistic = ({ value, unit, trend }) => {
         <div
           className={`${styles.statistic__trend} ${trend >= 0 ? styles.statistic__trendUp : styles.statistic__trendDown}`}
         >
-          {trend >= 0 ? <ArrowUpRight size="16px" weight="bold" /> : <ArrowDownRight size="16px" weight="bold" />}
+          {trend >= 0 ? <ArrowUpRight size="16px" weight="bold" data-testid="up-arrow" /> : <ArrowDownRight size="16px" weight="bold" data-testid="down-arrow" />}
         </div>
         {Math.abs(trend).toFixed(1)}%
       </div>
