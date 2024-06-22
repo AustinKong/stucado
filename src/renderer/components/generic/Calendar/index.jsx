@@ -15,7 +15,7 @@ const Calendar = () => {
 
   const days = [];
   for (let i = 0; i < firstDayOfMonth; i++) {
-    days.push(<div key={`empty-${i}`} className={styles.calendar__emptyDay}></div>);
+    days.push(<div key={`empty-${i}`} className={styles.calendar__emptyDay} data-testid="empty-day"></div>);
   }
 
   for (let day = 1; day <= daysInMonth; day++) {

@@ -87,6 +87,7 @@ const BarChart = ({ data, height = 400, xKey, yKey }) => {
               fill="blue"
               onMouseMove={(event) => handleMouseMove(event, index)}
               onMouseLeave={handleMouseLeave}
+              data-testid="barchart-bar"
             />
           ))}
         </g>

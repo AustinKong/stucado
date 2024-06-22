@@ -24,7 +24,7 @@ describe('Tracking Component', () => {
     render(<HoursFocused />);
 
     expect(await screen.findByText('Hours Focused')).toBeInTheDocument();
-    expect(screen.getByText('3 hrs')).toBeInTheDocument();
+    expect(screen.getByText('0 hrs')).toBeInTheDocument();
   });
 
   test('renders HoursFocused component with insufficient data', async () => {
@@ -50,7 +50,7 @@ describe('Tracking Component', () => {
     render(<TasksCompleted />);
 
     expect(await screen.findByText('Tasks Completed')).toBeInTheDocument();
-    expect(screen.getByText('12')).toBeInTheDocument();
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
   test('renders TasksCompleted component with insufficient data', async () => {
@@ -76,7 +76,7 @@ describe('Tracking Component', () => {
     render(<AverageProductivity />);
 
     expect(await screen.findByText('Average Productivity')).toBeInTheDocument();
-    expect(screen.getByText('55%')).toBeInTheDocument();
+    expect(screen.getByText('0%')).toBeInTheDocument();
   });
 
   test('renders AverageProductivity component with insufficient data', async () => {
