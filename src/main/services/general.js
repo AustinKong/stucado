@@ -1,6 +1,6 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro } from '../database/cache.js';
-import { updateDatapoint, deleteData } from '../database/database.js';
+import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro, deleteCache } from '../database/cache.js';
+import { updateDatapoint } from '../database/database.js';
 import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused } from './stats.js';
 import { app } from 'electron';
 import { deleteStats } from '../database/stats.js';
@@ -114,5 +114,6 @@ export async function logout() {
 
 export async function clearData() {
   await deleteStats();
-  await deleteData();
+  await deleteCache();
+  //await deleteData();
 }

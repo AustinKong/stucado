@@ -1,5 +1,5 @@
-import { predictProductivity } from "./gradientDescent";
-import { processRawData } from "../services/insights.js";
+import { predictProductivity } from './gradientDescent';
+import { processRawData } from '../services/insights.js';
 
 const rawData = `
 lateAfternoon Tuesday 4 10 23.50342
