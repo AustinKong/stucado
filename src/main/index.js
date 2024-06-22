@@ -111,7 +111,7 @@ app.whenReady().then(() => {
   ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
 
-  ipcMain.on('run-model', runModel);
+  ipcMain.handle('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);

@@ -1,6 +1,6 @@
 import { TimesOfDay } from '../../shared/constants.js';
 import { deleteData, readDatapoints, updateDatapoint } from '../database/database.js';
-import { mainWindow } from '../index.js';
+import { predictProductivity } from '../models/gradientDescent.js';
 
 const morningData = `
 midnight	Monday	2	10	52.976
@@ -104,8 +104,6 @@ export function processRawData(rawData) {
   return result;
 }
 
-import createWorker from './worker?nodeWorker';
-
 export async function runModel() {
   const datapoints = await readDatapoints();
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
@@ -113,17 +111,8 @@ export async function runModel() {
   const hoursFocused = 0;
   const dayOfWeek = new Date().getDay();
 
-  createWorker({
-    workerData: {
-      datapoints,
-      timeOfDay,
-      dayOfWeek,
-      hoursInClasses,
-      hoursFocused,
-    },
-  }).on('message', (result) => {
-    mainWindow.webContents.send('model-result', result);
-  });
+  const result = await predictProductivity(datapoints, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused);
+  return result;
 }
 
 export async function initializeModel(_event, habit) {
