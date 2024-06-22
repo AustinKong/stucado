@@ -24,12 +24,9 @@ export const generateMessage = (productivity) => {
 // Only calls the model, reply will be received via onResult event
 export const runModel = async () => {
   store.dispatch(setMessage(null));
-  await window.insightsAPI.runModel();
-};
-
-window.insightsAPI.onResult((event, result) => {
+  const result = await window.insightsAPI.runModel();
   generateMessage(result);
-});
+};
 
 // Initialize the model on onboarding process, where habits: 'earlyBird', 'afternoon', 'nightOwl'
 export const initializeModel = async (habit) => {

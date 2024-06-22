@@ -1,7 +1,7 @@
 import { nativeTheme } from 'electron';
 import { readSettings, updateSettings } from '../database/settings';
 
-let settings;
+export let settings;
 
 export async function getSettings() {
   settings = await readSettings();
@@ -21,4 +21,9 @@ export async function updateTheme(event, theme) {
 export async function completeOnboarding() {
   updateSettings({ ...settings, hasOnboarded: true });
   settings = { ...settings, hasOnboarded: true };
+}
+
+export async function resetOnboarding() {
+  updateSettings({ ...settings, hasOnboarded: false });
+  settings = { ...settings, hasOnboarded: false };
 }

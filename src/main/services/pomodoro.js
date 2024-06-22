@@ -1,4 +1,4 @@
-const { Notification } = require('electron');
+import { Notification } from 'electron';
 import notificationIcon from '../../../resources/notificationIcon.png?asset';
 
 export async function getPomodoroSettings() {

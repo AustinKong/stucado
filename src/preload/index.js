@@ -13,15 +13,15 @@ contextBridge.exposeInMainWorld('tasksAPI', {
 contextBridge.exposeInMainWorld('timetableAPI', {
   getTimetable: () => ipcRenderer.invoke('get-timetable'),
   uploadTimetable: (url) => ipcRenderer.invoke('upload-timetable', url),
-  createTimetableSlot: (title, description, schedule) => ipcRenderer.invoke('create-timetable-slot', title, description, schedule),
+  createTimetableSlot: (title, description, schedule) =>
+    ipcRenderer.invoke('create-timetable-slot', title, description, schedule),
   updateTimetableSlot: (timetableSlot) => ipcRenderer.invoke('update-timetable-slot', timetableSlot),
   deleteTimetableSlot: (id) => ipcRenderer.invoke('delete-timetable-slot', id),
   optimizeTimetable: () => ipcRenderer.invoke('optimize-timetable'),
 });
 
 contextBridge.exposeInMainWorld('insightsAPI', {
-  runModel: () => ipcRenderer.send('run-model'),
-  onResult: (callback) => ipcRenderer.on('model-result', callback),
+  runModel: () => ipcRenderer.invoke('run-model'),
   initializeModel: (habit) => ipcRenderer.send('initialize-model', habit),
 });
 
@@ -47,6 +47,7 @@ contextBridge.exposeInMainWorld('statisticsAPI', {
 
 contextBridge.exposeInMainWorld('experimentalAPI', {
   generateTestData: () => ipcRenderer.send('generate-test-data'),
+  resetOnboarding: () => ipcRenderer.send('reset-onboarding'),
 });
 
 contextBridge.exposeInMainWorld('generalAPI', {

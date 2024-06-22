@@ -14,7 +14,7 @@ import {
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification } from '@services/pomodoro';
-import { getSettings, updateTheme, completeOnboarding } from '@services/settings';
+import { getSettings, updateTheme, completeOnboarding, resetOnboarding } from '@services/settings';
 import {
   getHoursFocused,
   getTasksCompleted,
@@ -111,7 +111,7 @@ app.whenReady().then(() => {
   ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
 
-  ipcMain.on('run-model', runModel);
+  ipcMain.handle('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);
@@ -128,6 +128,7 @@ app.whenReady().then(() => {
   ipcMain.handle('get-current-average-productivity', getCurrentAverageProductivity);
 
   ipcMain.on('generate-test-data', generateTestData);
+  ipcMain.on('reset-onboarding', resetOnboarding);
 
   ipcMain.on('logout', logout);
   ipcMain.on('clear-data', clearData);
