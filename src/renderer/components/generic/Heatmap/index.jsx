@@ -47,16 +47,15 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
 
 const HeatMapTile = ({ level, tooltip }) => {
   const LEVEL_COLORS = [
-    '#f0f0f0',
-    '#d9ed92',
-    '#b5e48c',
-    '#99d98c',
-    '#76c893',
-    '#52b69a',
-    '#34a0a4',
-    '#168aad',
-    '#1a759f',
-    '#1e6091',
+    '#EFFFD6',
+    '#D3F1A7',
+    '#B3DF72',
+    '#94C748',
+    '#82B536',
+    '#6A9A23',
+    '#5B7F24',
+    '#4C6B1F',
+    '#37471F',
   ];
 
   return (

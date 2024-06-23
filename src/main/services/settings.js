@@ -5,6 +5,7 @@ export let settings;
 
 export async function getSettings() {
   settings = await readSettings();
+  nativeTheme.themeSource = settings.theme;
   return settings;
 }
 

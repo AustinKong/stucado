@@ -11,9 +11,7 @@ const MAIN = [
   { icon: <Timer />, to: '/pomodoro'}
 ];
 
-const OTHER = [
-  { icon: <Faders />, to: '/settings' },
-];
+const OTHER = [{ icon: <Faders />, to: '/settings' }];
 
 const Group = ({ title, children }) => {
   return (

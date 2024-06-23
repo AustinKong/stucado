@@ -49,184 +49,126 @@
   --font-family-heading: inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
   --font-family-body: roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
 
-  /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
-  --shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
-  --shadow-raised: 0px 1px 1px rgba(9, 30, 66, 0.25),0px 0px 1px rgba(9, 30, 66, 0.31);
 }
 
-:root {
-  --text: #172B4D;
-  --text-secondary: #6b7b95; /* Use for secondary text, such as navigation, subtle button links, input field labels, and all caps subheadings. */
-  --text-tertiary: #8992a3; /* Use for tertiary text, such as meta-data, breadcrumbs, input field placeholder and helper text. */
-  --text-inverse: #FFFFFF;
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: #172B4D;
+    --text-secondary: #6b7b95; /* Use for secondary text, such as navigation, subtle button links, input field labels, and all caps subheadings. */
+    --text-tertiary: #8992a3; /* Use for tertiary text, such as meta-data, breadcrumbs, input field placeholder and helper text. */
+    --text-inverse: #FFFFFF;
 
-  --text-danger: #AE2E24; /* Use for text and icons */
-  --background-danger: #C9372C; /* Use for buttons */
-  --background-danger-hovered: #AE2E24;
-  --background-danger-pressed: #5D1F1A;
+    --text-danger: #AE2E24; /* Use for text and icons */
+    --background-danger: #C9372C; /* Use for buttons */
+    --background-danger-hovered: #AE2E24;
+    --background-danger-pressed: #5D1F1A;
 
-  --text-warning: #A54800;
-  --text-warning-inverse: #172B4D;
+    --text-warning: #A54800;
+    --text-warning-inverse: #172B4D;
+    --background-warning: #F5CD47;
+    --background-warning-hovered: #E2B203;
+    --background-warning-pressed: #CF9F02;
+
+    --text-success: #216E4E;
+    --background-success: #2D9C6E;
+
+    --icon: #44546F; /* Use for icon only buttons */
+    --icon-hovered: #091E42;
+    --icon-pressed: #091E424F;
+    --icon-selected: #2898BD;
+
+    --border: #091E4224;
+
+    --background-brand:#0C66E4; /* Use for primary buttons, links, and other primary actions */
+    --background-brand-hovered: #0055CC;
+    --background-brand-pressed: #09326C;
+
+    --background: #FFFFFF;
+    --background-hovered: #F1F2F4;
+    --background-pressed: #DCDFE4;
+    --background-selected: #ddf6ff;
+    --surface-overlay: #FFFFFF;
+    --sunken: #F7F8F9;
+
+    --surface: #FFFFFF;
+    --surface-hovered: #F1F2F4;
+    --surface-pressed: #DCDFE4;
+
+    --surface-raised: #FFFFFF;
+    --surface-raised-hovered: #f9fafb;
+    --surface-raised-pressed: #DCDFE4;
+    --surface-raised-selected: #eaebee;
+
+    --background-input: #FFFFFF;
+    --background-input-hovered: #F7F8F9;
+    --background-input-pressed: #FFFFFF;
+    --border-input: #8590A2;
+
+    --blanket: #091E427D;
+
+    /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
+    --shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
+    --shadow-raised: 0px 1px 1px rgba(9, 30, 66, 0.25),0px 0px 1px rgba(9, 30, 66, 0.31);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root{
+  --text: #B6C2CF;
+  --text-secondary: #9FADBC; /* Use for secondary text, such as navigation, subtle button links, input field labels, and all caps subheadings. */
+  --text-tertiary: #8C9BAB; /* Use for tertiary text, such as meta-data, breadcrumbs, input field placeholder and helper text. */
+  --text-inverse: #101214;
+
+  --text-danger: #FD9891; /* Use for text and icons */
+  --background-danger: #F87168; /* Use for buttons */
+  --background-danger-hovered: #FD9891;
+  --background-danger-pressed: #FFD5D2;
+
+  --text-warning: #F5CD47;
+  --text-warning-inverse: #1D2125;
   --background-warning: #F5CD47;
   --background-warning-hovered: #E2B203;
   --background-warning-pressed: #CF9F02;
 
-  --text-success: #216E4E;
-  --background-success: #2D9C6E;
+  --text-success: #7EE2B8;
+  --background-success: #2ABB7F;
 
-  --icon: #44546F; /* Use for icon only buttons */
-  --icon-hovered: #091E42;
-  --icon-pressed: #091E424F;
+  --icon: #C7D1DB; /* Use for icon only buttons */
+  --icon-hovered: #B6C2CF;
+  --icon-pressed: #9FADBC;
   --icon-selected: #2898BD;
 
-  --border: #091E4224;
+  --border: #A6C5E229;
 
-  --background-brand:#0C66E4; /* Use for primary buttons, links, and other primary actions */
-  --background-brand-hovered: #0055CC;
-  --background-brand-pressed: #09326C;
+  --background-brand:#579DFF; /* Use for primary buttons, links, and other primary actions */
+  --background-brand-hovered: #85B8FF;
+  --background-brand-pressed: #CCE0FF;
 
-  --background: #FFFFFF;
-  --background-hovered: #F1F2F4;
-  --background-pressed: #DCDFE4;
-  --background-selected: #ddf6ff;
-  --surface-overlay: #FFFFFF;
-  --sunken: #F7F8F9;
+  --background: #161A1D;
+  --background-hovered: #22272B;
+  --background-pressed: #282E33;
+  --background-selected: #2C333A;
+  --surface-overlay: #161A1D;
+  --sunken: #161A1D;
 
-  --surface: #FFFFFF;
-  --surface-hovered: #F1F2F4;
-  --surface-pressed: #DCDFE4;
+  --surface: #1D2125;
+  --surface-hovered: #22272B;
+  --surface-pressed: #282E33;
 
-  --surface-raised: #FFFFFF;
-  --surface-raised-hovered: #f9fafb;
-  --surface-raised-pressed: #DCDFE4;
-  --surface-raised-selected: #eaebee;
+  --surface-raised: #22272B;
+  --surface-raised-hovered: #282E33;
+  --surface-raised-pressed: #2C333A;
+  --surface-raised-selected: #38414A;
 
-  --background-input: #FFFFFF;
-  --background-input-hovered: #F7F8F9;
-  --background-input-pressed: #FFFFFF;
-  --border-input: #8590A2;
+  --background-input: #22272B;
+  --background-input-hovered: #282E33;
+  --background-input-pressed: #22272B;
+  --border-input: #738496;
 
-  --blanket: #091E427D;
-}
+  --blanket: #10121499;
 
-
-
-/* Spacing */
-:root {
-  --ds-space-0: 0px;
-  --ds-space-025: 2px;
-  --ds-space-050: 4px;
-  --ds-space-075: 6px;
-  --ds-space-100: 8px;
-  --ds-space-150: 12px;
-  --ds-space-200: 16px;
-  --ds-space-250: 20px;
-  --ds-space-300: 24px;
-  --ds-space-400: 32px;
-  --ds-space-500: 40px;
-  --ds-space-600: 48px;
-  --ds-space-800: 64px;
-  --ds-space-1000: 80px;
-}
-
-/* Font Family */
-:root {
-  --ds-font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  --ds-font-family-heading: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
-  --ds-font-family-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
-  --ds-font-family-code: ui-monospace, Menlo, "Segoe UI Mono", "Ubuntu Mono", monospace;
-  --ds-font-family-monospace: ui-monospace, Menlo, "Segoe UI Mono", "Ubuntu Mono", monospace;
-  --ds-font-family-brand-heading: "Charlie Display", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
-  --ds-font-family-brand-body: "Charlie Text", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, system-ui, "Helvetica Neue", sans-serif;
-}
-
-/* Font Size */
-:root {
-  --ds-font-size-050: 0.6875rem;
-  --ds-font-size-075: 0.75rem;
-  --ds-font-size-100: 0.875rem;
-  --ds-font-size-200: 1rem;
-  --ds-font-size-300: 1.25rem;
-  --ds-font-size-400: 1.5rem;
-  --ds-font-size-500: 1.8125rem;
-  --ds-font-size-600: 2.1875rem;
-}
-
-/* Font Weight */
-:root {
-  --ds-font-weight-regular: 400;
-  --ds-font-weight-medium: 500;
-  --ds-font-weight-semibold: 600;
-  --ds-font-weight-bold: 700;
-}
-
-/* Line Height */
-:root {
-  --ds-font-line-height-1: 1;
-  --ds-font-line-height-075: 0.75rem;
-  --ds-font-line-height-100: 1rem;
-  --ds-font-line-height-200: 1.25rem;
-  --ds-font-line-height-300: 1.5rem;
-  --ds-font-line-height-400: 1.75rem;
-  --ds-font-line-height-500: 2rem;
-  --ds-font-line-height-600: 2.5rem;
-}
-
-/* Text colors */
-:root {
-  --ds-text: #172B4D;
-  --ds-text-disabled: #091E424F;
-  --ds-text-inverse: #FFFFFF;
-  --ds-text-danger: #AE2E24;
-  --ds-text-warning: #A54800;
-  --ds-text-success: #216E4E;
-}
-
-/* Icon colors (for non-text icons) */
-:root {
-  --ds-icon: #44546F;
-  --ds-icon-hovered: #091E42;
-  --ds-icon-disabled: #091E424F;
-  --ds-icon-inverse: #FFFFFF;
-  --ds-icon-selected: #2898BD; /* TODO: Change to relevant brand color */
-}
-
-/* Background colors, white gray tones */
-:root {
-  --ds-surface: #FFFFFF;
-  --ds-surface-hovered: #F1F2F4;
-  --ds-surface-pressed: #DCDFE4;
-
-  --ds-surface-overlay: #FFFFFF;
-  --ds-surface-overlay-hovered: #F1F2F4;
-  --ds-surface-overlay-pressed: #DCDFE4;
-
-  --ds-surface-sunken: #F7F8F9;
-}
-
-/* Border colors */
-:root {
-  --ds-border: #091E4224;
-}
-
-/* Accent & brand colors */
-:root {
-  /* Copied from --ds-background-accent-teal-subtle in Atlassians color tokens */
-  --ds-background-brand-subtle: #6CC3E0;
-  --ds-background-brand-subtle-hovered: #9DD9EE;
-  --ds-background-brand-subtle-pressed: #C6EDFB;
-
-  --ds-background-brand-subtler: #C6EDFB;
-  --ds-background-brand-subtler-hovered: #9DD9EE;
-  --ds-background-brand-subtler-pressed: #6CC3E0;
-
-  --ds-background-brand-subtlest: #E7F9FF;
-  --ds-background-brand-subtlest-hovered: #C6EDFB;
-  --ds-background-brand-subtlest-pressed: #9DD9EE;
-}
-
-/* Shadows */
-:root {
-  --ds-shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
-  --ds-shadow-overflow: 0px 0px 8px rgba(9, 30, 66, 0.16),0px 0px 1px rgba(9, 30, 66, 0.12);
+  /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
+  --shadow-overlay: 0px 0px 0px rgba(57, 66, 74, 1),0px 8px 12px rgba(3, 4, 4, 0.36),0px 0px 1px rgba(3, 4, 4, 0.5);
+  --shadow-raised: 0px 0px 0px rgba(0, 0, 0, 0),0px 1px 1px rgba(3, 4, 4, 0.5),0px 0px 1px rgba(3, 4, 4, 0.5);
+  }
 }

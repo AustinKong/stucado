@@ -83,7 +83,7 @@ const GeneralSettings = () => {
   const settings = useSelector((state) => state.settings);
 
   return (
-    <div>
+    <div className={styles.settings__subpageContent}>
       <SettingsToggle
         title="Notifications"
         description="Receive notifications for important events and pomodoro reminders"
@@ -96,7 +96,7 @@ const GeneralSettings = () => {
 
 const DataSettings = () => {
   return (
-    <div>
+    <div className={styles.settings__subpageContent}>
       <SettingsButton
         title="Clear Data"
         description="Clear all data stored in the app. This action is irreversible."
@@ -116,7 +116,7 @@ const AppearanceSettings = () => {
   const settings = useSelector((state) => state.settings);
 
   return (
-    <div>
+    <div className={styles.settings__subpageContent}>
       <SettingsDropdown
         title="Theme"
         description="Choose your preferred theme"
@@ -134,7 +134,7 @@ const AppearanceSettings = () => {
 
 const ExperimentalSettings = () => {
   return (
-    <div>
+    <div className={styles.settings__subpageContent}>
       <SettingsButton
         title="Generate Test Data"
         description="Populate the database with 14 days worth of randomly generated test data. Used for testing the functionality of the app."

@@ -133,7 +133,7 @@
   position: absolute;
   top: -2px;
   width: calc(100% / 7);
-  border-top: 3px solid var(--text-danger);
+  border-top: 3px solid var(--background-danger);
 }
 
 .scheduleTimetable__nowCircle {
@@ -141,7 +141,7 @@
   height: var(--space-100);
   border-radius: 50%;
   transform: translate(-50%, calc(-50% - 1px));
-  background-color: var(--text-danger);
+  background-color: var(--background-danger);
 }
 
 @media (max-width: 900px) {

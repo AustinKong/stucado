@@ -54,9 +54,7 @@ const Completion = ({ tasks }) => {
             />
           ) : null;
         })}
-        {!statusInfo.some((info) => info.percentage > 0) && (
-          <div className={styles.completion__bar} style={{ minWidth: '100%', backgroundColor: 'var(--sunken)' }} />
-        )}
+        {!statusInfo.some((info) => info.percentage > 0) && <div className={styles.completion__bar} />}
       </div>
       <div className={styles.completion__footer}>
         <div className={styles.completion__legend}>
