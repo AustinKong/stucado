@@ -1,88 +1,10 @@
-/*
-:root {
-  /* Light mode colors
-  --light-bg-primary: #f3f3f3;
-  --light-bg-secondary: #ffffff;
-  --light-bg-tertiary: #e6e6e684;
-
-  --light-text-primary: #1c1c1c;
-  --light-text-secondary: #a4a4a4;
-  --light-text-inverted: #ffffff;
-
-  --light-border-primary: #969696;
-
-  --light-accent: #2e2659;
-  --light-secondary: #E2F4C5;
-  --light-primary: #A8CD9F;
-
-  /* Dark mode colors
-  --dark-bg-primary: #1c1c1c;
-  --dark-bg-secondary: #2c2c2c;
-  --dark-bg-tertiary: #3c3c3c;
-
-  --dark-text-primary: #ffffff;
-  --dark-text-secondary: #a4a4a4;
-  --dark-text-inverted: #1c1c1c;
-
-  --dark-border-primary: #969696;
-
-  --dark-accent: #ffffff;
-  --dark-secondary: #E2F4C5;
-  --dark-primary: #A8CD9F;
-
-  /* Some default colors
-  --traffic-light-red: #ff5f58;
-  --traffic-light-yellow: #ffbd2e;
-  --traffic-light-green: #28c76f;
-
-  --shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px;
-}
-*/
-
-/*
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-primary: var(--light-bg-primary);
-    --bg-secondary: var(--light-bg-secondary);
-    --bg-tertiary: var(--light-bg-tertiary);
-
-    --text-primary: var(--light-text-primary);
-    --text-secondary: var(--light-text-secondary);
-    --text-inverted: var(--light-text-inverted);
-
-    --border-primary: var(--light-border-primary);
-
-    --accent: var(--light-accent);
-    --secondary: var(--light-secondary);
-    --primary: var(--light-primary);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: var(--dark-bg-primary);
-    --bg-secondary: var(--dark-bg-secondary);
-    --bg-tertiary: var(--dark-bg-tertiary);
-
-    --text-primary: var(--dark-text-primary);
-    --text-secondary: var(--dark-text-secondary);
-    --text-inverted: var(--dark-text-inverted);
-
-    --border-primary: var(--dark-border-primary);
-
-    --accent: var(--dark-accent);
-    --secondary: var(--dark-secondary);
-    --primary: var(--dark-primary);
-  }
-}
-*/
-
 /* Body Text */
 body {
   font-family: var(--font-family-body);
   font-size: var(--font-size-200);
   line-height: var(--font-line-height-200);
   font-weight: var(--font-weight-regular);
+  color: var(--text);
 }
 
 /* Heading Large */
@@ -160,12 +82,6 @@ a:active {
 
 input {
   all: unset;
-}
-
-input::placeholder {
-}
-
-input:hover {
 }
 
 ::-webkit-scrollbar {

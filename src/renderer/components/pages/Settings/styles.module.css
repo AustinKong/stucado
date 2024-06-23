@@ -43,6 +43,12 @@
   margin-bottom: var(--space-200);
 }
 
+.settings__subpageContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
 /* Toggle (switch) */
 .settingsToggle {
   display: flex;

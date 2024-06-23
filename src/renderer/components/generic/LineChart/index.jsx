@@ -80,8 +80,8 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
         >
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="blue" stopOpacity={0.3} />
-              <stop offset="90%" stopColor="blue" stopOpacity={0} />
+              <stop offset="0%" stopColor="var(--background-brand)" stopOpacity={0.3} />
+              <stop offset="90%" stopColor="var(--background-brand)" stopOpacity={0} />
             </linearGradient>
           </defs>
           <g transform={`translate(${margin.left},${margin.top})`}>
@@ -118,7 +118,14 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
             {/* Tooltip */}
             {tooltip.display && (
               <>
-                <line x1={tooltip.x} y1={0} x2={tooltip.x} y2={innerHeight} stroke="black" strokeDasharray="5, 5" />
+                <line
+                  x1={tooltip.x}
+                  y1={0}
+                  x2={tooltip.x}
+                  y2={innerHeight}
+                  stroke="var(--border-input)"
+                  strokeDasharray="5, 5"
+                />
                 <circle cx={tooltip.x} cy={tooltip.y} r={5} className={styles.lineChart__tooltipCircle} />
               </>
             )}

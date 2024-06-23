@@ -39,10 +39,12 @@
   padding: var(--space-150);
   transition: background-color 0.2s, color 0.1s;
   cursor: pointer;
+  color: var(--icon);
 }
 
 .navIcon:hover {
   background-color: var(--background-hovered);
+  color: var(--icon-hovered);
 }
 
 .navIconActive {
