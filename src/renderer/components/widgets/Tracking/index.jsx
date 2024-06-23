@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 
 import styles from './styles.module.css';
 
-const Tracking = ({ title, unit, pastData, currentData }) => {
+export const Tracking = ({ title, unit, pastData, currentData }) => {
   // Choose to display upwards trend or downwards trend UI based on this
   const changePercentage = ((currentData - pastData[pastData.length - 1]) / pastData[pastData.length - 1]) * 100;
 

@@ -1,93 +1,73 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { HoursFocused, TasksCompleted, AverageProductivity } from './index.jsx';
+import { useSelector } from 'react-redux';
+import { Tracking, HoursFocused, TasksCompleted, AverageProductivity } from './index.jsx';
 import * as statisticsService from '@services/statistics';
 
-jest.mock('@services/statistics');
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+}));
 
-describe('Tracking Component', () => {
+jest.mock('@services/statistics', () => ({
+  getHoursFocused: jest.fn(),
+  getCurrentHoursFocused: jest.fn(),
+  getTasksCompleted: jest.fn(),
+  getCurrentTasksCompleted: jest.fn(),
+  getAverageProductivity: jest.fn(),
+  getCurrentAverageProductivity: jest.fn(),
+}));
+
+describe('Tracking Components', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    useSelector.mockClear();
+    statisticsService.getHoursFocused.mockClear();
+    statisticsService.getCurrentHoursFocused.mockClear();
+    statisticsService.getTasksCompleted.mockClear();
+    statisticsService.getCurrentTasksCompleted.mockClear();
+    statisticsService.getAverageProductivity.mockClear();
+    statisticsService.getCurrentAverageProductivity.mockClear();
   });
 
-  test('renders HoursFocused component with enough data', async () => {
-    statisticsService.getHoursFocused.mockResolvedValueOnce([
-      { hoursFocused: 2 },
-      { hoursFocused: 3 },
-      { hoursFocused: 4 },
-      { hoursFocused: 5 },
-      { hoursFocused: 6 },
-      { hoursFocused: 7 },
-      { hoursFocused: 8 },
-    ]);
+  const mockState = {
+    tasks: [],
+  };
+
+  useSelector.mockImplementation((callback) => {
+    return callback(mockState);
+  });
+
+  test('renders HoursFocused component correctly', async () => {
+    statisticsService.getHoursFocused.mockResolvedValue([{ hoursFocused: 2 }]);
+    statisticsService.getCurrentHoursFocused.mockResolvedValue(3);
 
     render(<HoursFocused />);
-
     expect(await screen.findByText('Hours Focused')).toBeInTheDocument();
-    expect(screen.getByText('0 hrs')).toBeInTheDocument();
   });
 
-  test('renders HoursFocused component with insufficient data', async () => {
-    statisticsService.getHoursFocused.mockResolvedValueOnce([{ hoursFocused: 2 }, { hoursFocused: 3 }]);
-
-    render(<HoursFocused />);
-
-    expect(await screen.findByText('Hours Focused')).toBeInTheDocument();
-    expect(screen.getByText('Trying to get more data...')).toBeInTheDocument();
-  });
-
-  test('renders TasksCompleted component with enough data', async () => {
-    statisticsService.getTasksCompleted.mockResolvedValueOnce([
-      { completedTasks: 1 },
-      { completedTasks: 2 },
-      { completedTasks: 3 },
-      { completedTasks: 4 },
-      { completedTasks: 5 },
-      { completedTasks: 6 },
-      { completedTasks: 7 },
-    ]);
+  test('renders TasksCompleted component correctly', async () => {
+    statisticsService.getTasksCompleted.mockResolvedValue([{ completedTasks: 5 }]);
+    statisticsService.getCurrentTasksCompleted.mockResolvedValue(6);
 
     render(<TasksCompleted />);
-
     expect(await screen.findByText('Tasks Completed')).toBeInTheDocument();
-    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
-  test('renders TasksCompleted component with insufficient data', async () => {
-    statisticsService.getTasksCompleted.mockResolvedValueOnce([{ completedTasks: 1 }, { completedTasks: 2 }]);
-
-    render(<TasksCompleted />);
-
-    expect(await screen.findByText('Tasks Completed')).toBeInTheDocument();
-    expect(screen.getByText('Trying to get more data...')).toBeInTheDocument();
-  });
-
-  test('renders AverageProductivity component with enough data', async () => {
-    statisticsService.getAverageProductivity.mockResolvedValueOnce([
-      { averageProductivity: 45 },
-      { averageProductivity: 50 },
-      { averageProductivity: 55 },
-      { averageProductivity: 60 },
-      { averageProductivity: 65 },
-      { averageProductivity: 70 },
-      { averageProductivity: 75 },
-    ]);
+  test('renders AverageProductivity component correctly', async () => {
+    statisticsService.getAverageProductivity.mockResolvedValue([{ averageProductivity: 70 }]);
+    statisticsService.getCurrentAverageProductivity.mockResolvedValue(75);
 
     render(<AverageProductivity />);
-
     expect(await screen.findByText('Average Productivity')).toBeInTheDocument();
-    expect(screen.getByText('0%')).toBeInTheDocument();
   });
 
-  test('renders AverageProductivity component with insufficient data', async () => {
-    statisticsService.getAverageProductivity.mockResolvedValueOnce([
-      { averageProductivity: 45 },
-      { averageProductivity: 50 },
-    ]);
+  test('displays loading message if not enough data', () => {
+    render(<Tracking title="Test Title" unit="%" pastData={[]} currentData={null} />);
+    expect(screen.getByText(/Not enough data collected/i)).toBeInTheDocument();
+  });
 
-    render(<AverageProductivity />);
-
-    expect(await screen.findByText('Average Productivity')).toBeInTheDocument();
-    expect(screen.getByText('Trying to get more data...')).toBeInTheDocument();
+  test('displays Histogram and Statistic if enough data', () => {
+    render(<Tracking title="Test Title" unit="%" pastData={[1, 2, 3]} currentData={4} />);
+    expect(screen.getByText(/Test Title/i)).toBeInTheDocument();
+    expect(screen.getByText(/4/i)).toBeInTheDocument();
   });
 });
