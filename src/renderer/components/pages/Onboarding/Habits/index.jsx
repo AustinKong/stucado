@@ -1,6 +1,8 @@
 import { Sun, Moon, SunHorizon } from '@phosphor-icons/react';
 import { initializeModel } from '@services/insights';
-import LightThemeImage from '@assets/images/lightTheme.png';
+import early from '@assets/illustrations/earlyBird.svg';
+import afternoon from '@assets/illustrations/afternoon.svg';
+import night from '@assets/illustrations/nightOwl.svg';
 import { useState } from 'react';
 import styles from './styles.module.css';
 import Section from '@components/pages/Onboarding/Section';
@@ -12,19 +14,19 @@ const Habits = ({ handleStep }) => {
       id: 'earlyBird',
       name: 'Early Bird',
       description: 'You are most productive in the morning',
-      image: LightThemeImage,
+      image: early,
     },
     {
       id: 'afternoon',
       name: 'Afternoon',
       description: 'You are most productive in the afternoon',
-      image: LightThemeImage,
+      image: afternoon,
     },
     {
       id: 'nightOwl',
       name: 'Night Owl',
       description: 'You are most productive at night',
-      image: LightThemeImage,
+      image: night,
     },
   ];
 

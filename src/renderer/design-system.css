@@ -83,7 +83,7 @@
     --background-brand-hovered: #0055CC;
     --background-brand-pressed: #09326C;
 
-    --background: #FFFFFF;
+    --background: #F7F8F9;
     --background-hovered: #F1F2F4;
     --background-pressed: #DCDFE4;
     --background-selected: #ddf6ff;
@@ -92,12 +92,11 @@
 
     --surface: #FFFFFF;
     --surface-hovered: #F1F2F4;
-    --surface-pressed: #DCDFE4;
+    --surface-pressed: #e7e9ee;
 
     --surface-raised: #FFFFFF;
     --surface-raised-hovered: #f9fafb;
-    --surface-raised-pressed: #DCDFE4;
-    --surface-raised-selected: #eaebee;
+    --surface-raised-pressed: #eceff4;
 
     --background-input: #FFFFFF;
     --background-input-hovered: #F7F8F9;

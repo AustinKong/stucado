@@ -3,7 +3,7 @@
   margin: 0 auto;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background-color: var(--sunken);
+  background-color: var(--surface);
   color: var(--text);
 }
 
@@ -15,6 +15,10 @@
 .calendar__days, .calendar__dates {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar__dates {
+  background-color: var(--sunken);
 }
 
 .calendar__dayName, .calendar__day, .calendar__emptyDay {

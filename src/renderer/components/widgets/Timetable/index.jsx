@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { Upload, CalendarBlank, BookmarkSimple } from '@phosphor-icons/react';
+import { UploadSimple, CalendarBlank, BookmarkSimple } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 
 import { DaysOfWeek } from '@shared/constants';
@@ -37,7 +37,9 @@ const Timetable = () => {
       <Widget
         className={styles.timetable}
         title={`Schedule (${new Date().toLocaleDateString('en-US', { weekday: 'long' })})`}
-        interaction={<InteractionButton icon={<Upload />} text="Upload" onClick={() => setUploadModalIsOpen(true)} />}
+        interaction={
+          <InteractionButton icon={<UploadSimple />} text="Upload" onClick={() => setUploadModalIsOpen(true)} />
+        }
       >
         <div className={styles.timetable__container}>
           <div className={styles.timetable__days}>

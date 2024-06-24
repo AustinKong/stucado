@@ -6,6 +6,7 @@
   border-bottom: 1px solid var(--border);
   height: var(--space-800);
   gap: var(--space-400);
+  background-color: var(--surface);
 }
 
 .banner__title {

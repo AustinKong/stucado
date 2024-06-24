@@ -63,7 +63,7 @@ code {
 }
 
 html, body {
-  background-color: var(--surface);
+  background-color: var(--background);
 }
 
 /* Some default styles */
