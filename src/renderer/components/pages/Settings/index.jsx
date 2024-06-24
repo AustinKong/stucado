@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { IconContext, User, Book, House, Pencil, TestTube } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
-import { setTheme, setReceiveNotifications } from '@services/settings';
-import { generateTestData, resetOnboarding } from '@services/experimental';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
 import Button from '@components/generic/Button';
-import Construction from '@components/generic/Construction';
-import { clearData } from '@services/general';
+import General from './General';
+import Profile from './Profile';
+import Data from './Data';
+import Appearance from './Appearance';
+import Experimental from './Experimental';
 
 const NAVLINKS = [
   {
@@ -69,90 +69,19 @@ const Settings = () => {
       </div>
       <div className={styles.settings__subpage}>
         <h2 className={styles.settings__subpageTitle}>{NAVLINKS.find((navlink) => navlink.id === subpage).long}</h2>
-        {subpage === 'general' && <GeneralSettings />}
-        {subpage === 'profile' && <ProfileSettings />}
-        {subpage === 'data' && <DataSettings />}
-        {subpage === 'appearance' && <AppearanceSettings />}
-        {subpage === 'experimental' && <ExperimentalSettings />}
+        <div className={styles.settings__subpageContent}>
+          {subpage === 'general' && <General />}
+          {subpage === 'profile' && <Profile />}
+          {subpage === 'data' && <Data />}
+          {subpage === 'appearance' && <Appearance />}
+          {subpage === 'experimental' && <Experimental />}
+        </div>
       </div>
     </div>
   );
 };
 
-const GeneralSettings = () => {
-  const settings = useSelector((state) => state.settings);
-
-  return (
-    <div className={styles.settings__subpageContent}>
-      <SettingsToggle
-        title="Notifications"
-        description="Receive notifications for important events and pomodoro reminders"
-        value={settings.receiveNotifications}
-        onChange={() => setReceiveNotifications(!settings.receiveNotifications)}
-      />
-    </div>
-  );
-};
-
-const DataSettings = () => {
-  return (
-    <div className={styles.settings__subpageContent}>
-      <SettingsButton
-        title="Clear Data"
-        description="Clear all data stored in the app. This action is irreversible."
-        onClick={() => clearData()}
-        buttonText="Clear"
-        buttonAppearance="danger"
-      />
-    </div>
-  );
-};
-
-const ProfileSettings = () => {
-  return <Construction />;
-};
-
-const AppearanceSettings = () => {
-  const settings = useSelector((state) => state.settings);
-
-  return (
-    <div className={styles.settings__subpageContent}>
-      <SettingsDropdown
-        title="Theme"
-        description="Choose your preferred theme"
-        value={settings.theme}
-        options={[
-          { value: 'system', label: 'System Default' },
-          { value: 'light', label: 'Light Theme' },
-          { value: 'dark', label: 'Dark Theme' },
-        ]}
-        onChange={(e) => setTheme(e.value)}
-      />
-    </div>
-  );
-};
-
-const ExperimentalSettings = () => {
-  return (
-    <div className={styles.settings__subpageContent}>
-      <SettingsButton
-        title="Generate Test Data"
-        description="Populate the database with 14 days worth of randomly generated test data. Used for testing the functionality of the app."
-        onClick={() => generateTestData()}
-        buttonText="Generate"
-      />
-      <SettingsButton
-        title="Reset Onboarding"
-        description="Reset the onboarding process. This will allow you to do the onboarding process again on next startup."
-        onClick={() => resetOnboarding()}
-        buttonText="Reset"
-        buttonAppearance="warn"
-      />
-    </div>
-  );
-};
-
-const SettingsButton = ({ title, description, onClick, buttonText, buttonAppearance }) => {
+export const SettingsButton = ({ title, description, onClick, buttonText, buttonAppearance }) => {
   return (
     <div className={styles.settingsButton} onClick={onClick}>
       <div className={styles.settingsButton__text}>
@@ -168,7 +97,7 @@ const SettingsButton = ({ title, description, onClick, buttonText, buttonAppeara
   );
 };
 
-const SettingsToggle = ({ title, description, value, onChange }) => {
+export const SettingsToggle = ({ title, description, value, onChange }) => {
   return (
     <div title={title} className={styles.settingsToggle}>
       <div className={styles.settingsToggle__text}>
@@ -183,7 +112,7 @@ const SettingsToggle = ({ title, description, value, onChange }) => {
   );
 };
 
-const SettingsDropdown = ({ title, description, value, options, onChange }) => {
+export const SettingsDropdown = ({ title, description, value, options, onChange }) => {
   return (
     <div title={title} className={styles.settingsDropdown}>
       <div className={styles.settingsDropdown__text}>
