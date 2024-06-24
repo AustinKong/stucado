@@ -57,6 +57,8 @@
 
 .habits__habitImage {
   max-height: 100%;
+  width: 40%;
+  padding: var(--space-200);
 }
 
 .habits__footer {
