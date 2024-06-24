@@ -1,3 +1,27 @@
 .pomodoro {
+  position: relative;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pomodoro__settings {
+  position: absolute;
+  top: var(--space-200);
+  right: var(--space-200);
+  cursor: pointer;
+  color: var(--icon);
+}
+
+.pomodoro__settings:hover {
+  color: var(--icon-hovered);
+}
+
+.pomodoro__settings:active {
+  color: var(--icon-pressed)
+}
+
+* {
 }

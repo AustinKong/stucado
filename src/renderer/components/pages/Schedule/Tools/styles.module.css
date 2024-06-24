@@ -1,0 +1,22 @@
+.scheduleTools {
+  display: flex;
+  justify-content: center ;
+  gap: var(--space-100);
+  flex-wrap: wrap;
+  padding: 0 var(--space-100);
+}
+
+.scheduleTools__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-100);
+  min-width: fit-content;
+  flex: 1;
+}
+
+.scheduleTools__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

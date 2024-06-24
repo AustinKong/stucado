@@ -47,6 +47,11 @@ export async function deleteTimetableSlot(_event, id) {
   return id;
 }
 
+export async function clearTimetable() {
+  console.log("here")
+  await deleteTimetable();
+}
+
 /**
  * Retrieves timetable from URL according to NUS Mods API, then uploads it to cache.
  *

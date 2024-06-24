@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { Upload, CalendarBlank } from '@phosphor-icons/react';
+import { Upload, CalendarBlank, BookmarkSimple } from '@phosphor-icons/react';
 import { useSelector } from 'react-redux';
 
 import { DaysOfWeek } from '@shared/constants';
@@ -116,7 +116,8 @@ const TimetableDay = ({ day }) => {
 const TimetableSlot = ({ slot, width, marginLeft }) => {
   return (
     <div className={styles.timetableSlot} style={{ width, marginLeft }}>
-      <CalendarBlank className={styles.timetableSlot__icon} size="16px" />
+      {slot.type === 'timetable' && <CalendarBlank className={styles.timetableSlot__icon} size="16px" />}
+      {slot.type !== 'timetable' && <BookmarkSimple className={styles.timetableSlot__icon} size="16px" />}
       <span className={styles.timetableSlot__title}>{slot.title}</span>
     </div>
   );
