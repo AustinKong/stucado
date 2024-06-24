@@ -2,6 +2,7 @@
   display: flex;
   gap: var(--space-800);
   padding: var(--space-400);
+  height: calc(100%);
 }
 
 .schedule__main {
@@ -16,135 +17,7 @@
   gap: var(--space-400)
 }
 
-
-/* Schedule tools */
-.scheduleTools {
-  display: flex;
-  justify-content: center ;
-  gap: var(--space-200);
-}
-
-
-/* Scheudle timetable */
-.scheduleTimetable {
-  margin-top: var(--space-400);
-}
-
-.scheduleTimetable__hours {
-  display: flex;
-  flex-direction: column;
-  min-width: 96px;
-  align-items: center;
-}
-
-.scheduleTimetable__hour {
-  height: var(--space-800);
-  position: relative;
-}
-
-.scheduleTimetable__time {
-  transform: translate(-50%, -50%);
-  position: absolute;
-  color: var(--text-secondary);
-}
-
-.scheduleTimetable__days {
-  flex-grow: 1;
-  display: flex;
-}
-
-.scheduleTimetable__header {
-  display: flex;
-}
-
-.scheduleTimetable__timeLabel {
-  min-width: 96px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.scheduleTimetable__day {
-  width: calc((100% - var(--space-100)) / 7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--space-400);
-  overflow: hidden;
-}
-
-.scheduleTimetable__content {
-  display: flex;
-  margin-top: var(--space-200);
-}
-
-.scheduleTimetable__slots {
-  display: flex;
-  flex-grow: 1;
-  position: relative;
-}
-
-.scheduleTimetable__slotsDay {
-  width: calc(100% / 7);
-  height: 100%;
-  border-left: 1px solid var(--border);
-  background-image: linear-gradient(0, var(--sunken) 50%, transparent 0);
-  background-repeat: repeat;
-  background-size: 100% calc(48px * 8);
-}
-
-.scheduleTimetableSlot {
-  background-color: var(--background-brand);
-  padding: var(--space-300);
-  border-radius: var(--space-200);
-  cursor: pointer;
-  color: var(--text-inverse);
-}
-
-.scheduleTimetableSlot:hover {
-  background-color: var(--background-brand-hovered);
-}
-
-.scheduleTimetableSlot:active {
-  background-color: var(--background-brand-pressed);
-}
-
-.scheduleTimetable__scrollable {
-  height: calc(100vh - 256px);
-  overflow-y: scroll;
-}
-
-.scheduleTimetable__now {
-  width: 100%;
-  position: absolute;
-  border-top: 2px solid var(--border);
-}
-
-.scheduleTimetable__nowTime {
-  position: absolute;
-  top: 0;
-  left: -8px;
-  transform: translate(-100%, -50%);
-  background-color: var(--surface);
-  padding: var(--space-050) 0;
-}
-
-.scheduleTimetable__nowLine {
-  position: absolute;
-  top: -2px;
-  width: calc(100% / 7);
-  border-top: 3px solid var(--background-danger);
-}
-
-.scheduleTimetable__nowCircle {
-  width: var(--space-100);
-  height: var(--space-100);
-  border-radius: 50%;
-  transform: translate(-50%, calc(-50% - 1px));
-  background-color: var(--background-danger);
-}
-
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .schedule__sidebar {
     display: none;
   }

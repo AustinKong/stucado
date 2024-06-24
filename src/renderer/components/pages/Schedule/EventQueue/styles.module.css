@@ -3,6 +3,8 @@
   padding: var(--space-200);
   border: 1px solid var(--border);
   border-radius: 8px;
+  overflow-y: hidden;
+  flex-grow: 1;
 }
 
 .eventQueue__list {
@@ -11,6 +13,8 @@
   overflow-x: auto;
   flex-direction: column;
   gap: var(--space-200);
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .event {
