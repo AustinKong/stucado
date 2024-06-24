@@ -1,6 +1,6 @@
 import { clearData } from '@services/general';
 import { SettingsButton } from '..';
-import Modal, { ModalHeader, ModalTitle, ModalBody, ModalFooter } from '@components/generic/Modal';
+import Modal, { ModalHeader, ModalTitle, ModalSubtitle, ModalBody, ModalFooter } from '@components/generic/Modal';
 import Button from '@components/generic/Button';
 import { useState } from 'react';
 
@@ -26,10 +26,11 @@ const ClearDataModal = ({ onClose }) => {
     <Modal onClose={onClose}>
       <ModalHeader>
         <ModalTitle>Clear Data</ModalTitle>
+        <ModalSubtitle>Are you sure you want to clear all data stored in the app?</ModalSubtitle>
       </ModalHeader>
       <ModalBody>
-        <p>Are you sure you want to clear all data stored in the app. This action is irreversible.</p>
         <p>All data is stored locally in your device, no data is sent to our servers or the cloud.</p>
+        <p style={{ color: 'var(--text-danger)' }}>This action is irreversible.</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={onClose} appearance="secondary">
