@@ -1,5 +1,5 @@
 .eventQueue {
-  background-color: var(--sunken);
+  background-color: var(--surface);
   padding: var(--space-200);
   border: 1px solid var(--border);
   border-radius: 8px;

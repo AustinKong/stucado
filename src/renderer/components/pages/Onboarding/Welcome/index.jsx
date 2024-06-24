@@ -1,6 +1,8 @@
 import { setTheme } from '@services/settings';
 import { Sun, Moon, Monitor } from '@phosphor-icons/react';
 import LightThemeImage from '@assets/images/lightTheme.png';
+import DarkThemeImage from '@assets/images/darkTheme.png';
+import SystemThemeImage from '@assets/images/systemTheme.png';
 import { useState } from 'react';
 import Section from '@components/pages/Onboarding/Section';
 import styles from './styles.module.css';
@@ -18,13 +20,13 @@ const Welcome = ({ handleStep }) => {
       id: 'dark',
       name: 'Dark Theme',
       description: 'Eye-friendly design for low light environments',
-      image: LightThemeImage,
+      image: DarkThemeImage,
     },
     {
       id: 'system',
       name: 'System Theme',
       description: 'Theme based on your system settings',
-      image: LightThemeImage,
+      image: SystemThemeImage,
     },
   ];
 

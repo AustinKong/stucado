@@ -21,7 +21,7 @@
 }
 
 .habits__habitActive {
-  background-color: var(--surface-raised-selected);
+  background-color: var(--surface-raised-pressed);
 }
 
 .habits__habit:hover {
@@ -29,6 +29,10 @@
 }
 
 .habits__habit:active {
+  background-color: var(--surface-raised-pressed);
+}
+
+.habits__habitActive:hover {
   background-color: var(--surface-raised-pressed);
 }
 

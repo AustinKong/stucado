@@ -1,5 +1,6 @@
 .scheduleTimetable {
   margin-top: var(--space-400);
+  border: 1px solid var(--border);
 }
 
 .scheduleTimetable__hours {
@@ -7,6 +8,7 @@
   flex-direction: column;
   min-width: 96px;
   align-items: center;
+  background-color: var(--surface);
 }
 
 .scheduleTimetable__hour {
@@ -27,6 +29,9 @@
 
 .scheduleTimetable__header {
   display: flex;
+  padding: var(--space-100) 0;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
 }
 
 .scheduleTimetable__timeLabel {
@@ -60,7 +65,7 @@
   width: calc(100% / 7);
   height: 100%;
   border-left: 1px solid var(--border);
-  background-image: linear-gradient(0, var(--sunken) 50%, transparent 0);
+  background-image: linear-gradient(0, var(--surface) 50%, transparent 0);
   background-repeat: repeat;
   background-size: 100% calc(48px * 8);
 }

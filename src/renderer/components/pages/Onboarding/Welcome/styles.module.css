@@ -28,7 +28,11 @@
 }
 
 .welcome__themeActive {
-  background-color: var(--surface-raised-selected);
+  background-color: var(--surface-raised-pressed);
+}
+
+.welcome__themeActive:hover {
+  background-color: var(--surface-raised-pressed);
 }
 
 .welcome__themeLeft {

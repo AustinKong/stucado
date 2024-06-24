@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <div className={styles.loading}>
       <Avocado size={48}/>
-      <h1>Loading...</h1>
+      <h1>Loading</h1>
     </div>
   );
 };
