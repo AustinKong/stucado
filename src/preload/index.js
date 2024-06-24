@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('tasksAPI', {
 
 contextBridge.exposeInMainWorld('timetableAPI', {
   getTimetable: () => ipcRenderer.invoke('get-timetable'),
+  clearTimetable: () => ipcRenderer.send('clear-timetable'),
   uploadTimetable: (url) => ipcRenderer.invoke('upload-timetable', url),
   createTimetableSlot: (title, description, schedule) =>
     ipcRenderer.invoke('create-timetable-slot', title, description, schedule),

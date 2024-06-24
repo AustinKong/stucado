@@ -11,6 +11,7 @@ import {
   updateTimetableSlot,
   deleteTimetableSlot,
   optimizeTimetable,
+  clearTimetable
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification, endSession } from '@services/pomodoro';
@@ -110,6 +111,7 @@ app.whenReady().then(() => {
   ipcMain.handle('update-timetable-slot', updateTimetableSlot);
   ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
+  ipcMain.on('clear-timetable', clearTimetable);
 
   ipcMain.handle('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);

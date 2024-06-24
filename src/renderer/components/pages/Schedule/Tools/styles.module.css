@@ -1,7 +1,7 @@
 .scheduleTools {
   display: flex;
   justify-content: center ;
-  gap: var(--space-200);
+  gap: var(--space-100);
   flex-wrap: wrap;
   padding: 0 var(--space-100);
 }

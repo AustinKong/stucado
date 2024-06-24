@@ -10,8 +10,7 @@
 }
 
 .schedule__sidebar {
-  width: fit-content;
-  padding-top: var(--space-400);
+  width: 20vw;
   display: flex;
   flex-direction: column;
   gap: var(--space-400)

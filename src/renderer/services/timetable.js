@@ -25,6 +25,11 @@ export const uploadTimetable = async (url) => {
   return true;
 };
 
+export const clearTimetable = async () => {
+  await window.timetableAPI.clearTimetable();
+  store.dispatch(setTimetable([]));
+};
+
 export const optimizeTimetable = async () => {
   const timetable = await window.timetableAPI.optimizeTimetable();
   store.dispatch(setTimetable(timetable));
