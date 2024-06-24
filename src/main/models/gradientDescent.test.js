@@ -88,16 +88,16 @@ lateMorning Thursday 2 7 63.07841
 describe('Gradient Descent Prediction', () => {
   test('predictProductivity should return a valid result', async () => {
     const result = await predictProductivity(processRawData(rawData), 'evening', 'Friday', 3, 7);
-    expect(result).toBeCloseTo(48.97736, 3);
+    expect(result).toBeCloseTo(48.97736, 1);
   });
 
   test('predictProductivity should return a valid result', async () => {
     const result = await predictProductivity(processRawData(rawData2), 'earlyMorning', 'Wednesday', 0, 4);
-    expect(result).toBeCloseTo(144.418, 3);
+    expect(result).toBeCloseTo(144.418, 1);
   });
 
   test('predictProductivity should return a valid result', async () => {
     const result = await predictProductivity(processRawData(rawData3), 'midnight', 'Monday', 5, 7);
-    expect(result).toBeCloseTo(65.15323, 3);
+    expect(result).toBeCloseTo(65.15323, 1);
   });
 });

@@ -2,7 +2,7 @@ import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
 
 // Learning rate and iterations
 const learningRate = 0.005;
-const iterations = 100000;
+const iterations = 50000;
 
 // convert categorical data into dummy variables
 function categoricalToDummy(data) {

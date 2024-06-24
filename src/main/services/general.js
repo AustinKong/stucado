@@ -1,7 +1,14 @@
 import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
-import { readTimetable, readTasks, deleteCompletedTasks, deletePomodoro, deleteCache } from '../database/cache.js';
+import {
+  readTimetable,
+  readTasks,
+  deleteCompletedTasks,
+  deletePomodoro,
+  deleteCache,
+  readPomodoro,
+} from '../database/cache.js';
 import { updateDatapoint } from '../database/database.js';
-import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused } from './stats.js';
+import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused, mergeInterval } from './stats.js';
 import { app } from 'electron';
 import { deleteStats } from '../database/stats.js';
 
@@ -44,17 +51,17 @@ export function getHoursInClasses(timetable, taskStartTime) {
   return hours;
 }
 
-export function getHoursFocused(tasks, taskStartTime) {
-  //const tasks = await readTasks();
-  let hours = 0;
-  for (const task of tasks) {
-    if (task.endTime <= taskStartTime) {
-      hours += (task.endTime - task.beginTime) / 3600 / 1000; //return in hours
-      hours = Math.round(hours * 1000) / 1000; //round to 3 decimal places
-    }
+export function getHoursFocused(tasks, pomodoro, taskStartTime) {
+  const previousTasks = tasks.filter((task) => task.status === 'Completed' && task.endTime <= taskStartTime);
+  const mergedIntervals = mergeInterval(previousTasks, pomodoro);
+  let totalFocusedHours = 0;
+
+  if (mergedIntervals.length > 0) {
+    mergedIntervals.forEach((interval) => {
+      totalFocusedHours += (interval.endTime - interval.startTime) / 1000 / 60 / 60;
+    });
   }
-  //console.log(hours);
-  return hours;
+  return Math.round(totalFocusedHours * 100) / 100;
 }
 
 export function getProductivity(task) {
@@ -65,12 +72,13 @@ export function getProductivity(task) {
 export async function createDatapoints() {
   const tasks = await readTasks();
   const timetable = await readTimetable();
+  const pomodoro = await readPomodoro();
 
   for (const task of tasks) {
     if (!task.beginTime || !task.endTime) continue; //filter completed tasks
 
     const hoursInClasses = getHoursInClasses(timetable, task.beginTime);
-    const hoursFocused = getHoursFocused(tasks, task.beginTime);
+    const hoursFocused = getHoursFocused(tasks, pomodoro, task.beginTime);
     const productivity = getProductivity(task);
 
     let currTime = new Date(task.beginTime);
