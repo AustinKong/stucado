@@ -7,9 +7,9 @@
 }
 
 .histogram__bar {
-  background-color: #9BB0C1;
+  background-color: var(--background-brand);
 }
 
 .histogram__bar:last-child {
-  background-color: #51829B;
+  background-color: var(--background-brand-hovered);
 }

@@ -1,4 +1,4 @@
-import { setPomodoroSettings, setPomodoroTimer /*, setPomodoroTracker*/ } from '@data/slices/pomodoroSlice';
+import { setPomodoroSettings, setPomodoroTimer, setPomodoroTracker } from '@data/slices/pomodoroSlice';
 import { store } from '@data/store';
 
 let interval;
@@ -30,6 +30,9 @@ export const startPomodoro = async () => {
     store.dispatch(
       setPomodoroTimer({ timeLeft: getStateDuration(store.getState().pomodoro.timer.state), percentageLeft: 100 })
     );
+    store.dispatch(
+      setPomodoroTracker({ startTime: new Date().getTime(), state: store.getState().pomodoro.timer.state })
+    );
   }
   interval = setInterval(updateTimer, 1000);
 };
@@ -40,6 +43,11 @@ export const startPomodoro = async () => {
  * @returns {Promise<void>}
  */
 export const stopPomodoro = async () => {
+  void window.pomodoroAPI.endSession({
+    startTime: store.getState().pomodoro.tracker.startTime,
+    endTime: new Date().getTime(),
+    state: store.getState().pomodoro.tracker.state,
+  });
   store.dispatch(setPomodoroTimer({ isRunning: false, timeLeft: 0, percentageLeft: 100, state: 'work', sessions: 0 }));
   clearInterval(interval);
 };
@@ -59,6 +67,11 @@ export const skipPomodoro = async () => {
       percentageLeft: 0,
     })
   );
+  void window.pomodoroAPI.endSession({
+    startTime: store.getState().pomodoro.tracker.startTime,
+    endTime: new Date().getTime(),
+    state: store.getState().pomodoro.tracker.state,
+  });
   void startPomodoro();
 };
 
@@ -70,6 +83,11 @@ const updateTimer = () => {
     store.dispatch(
       setPomodoroTimer({ sessions: timer.sessions + 1, state: getNextState(timer.state, timer.sessions) })
     );
+    void window.pomodoroAPI.endSession({
+      startTime: store.getState().pomodoro.tracker.startTime,
+      endTime: new Date().getTime(),
+      state: store.getState().pomodoro.tracker.state,
+    });
     void startPomodoro();
     return;
   }

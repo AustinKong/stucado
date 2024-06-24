@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld('insightsAPI', {
 contextBridge.exposeInMainWorld('pomodoroAPI', {
   // getPomodoroSettings: () => ipcRenderer.invoke('get-pomodoro-settings'),
   triggerNotification: (state) => ipcRenderer.send('trigger-notification', state),
+  endSession: (session) => ipcRenderer.send('end-session', session),
 });
 
 contextBridge.exposeInMainWorld('settingsAPI', {
