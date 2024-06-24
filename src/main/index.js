@@ -11,9 +11,10 @@ import {
   updateTimetableSlot,
   deleteTimetableSlot,
   optimizeTimetable,
+  clearTimetable
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
-import { triggerNotification } from '@services/pomodoro';
+import { triggerNotification, endSession } from '@services/pomodoro';
 import { getSettings, updateTheme, completeOnboarding, resetOnboarding } from '@services/settings';
 import {
   getHoursFocused,
@@ -110,11 +111,13 @@ app.whenReady().then(() => {
   ipcMain.handle('update-timetable-slot', updateTimetableSlot);
   ipcMain.handle('delete-timetable-slot', deleteTimetableSlot);
   ipcMain.handle('optimize-timetable', optimizeTimetable);
+  ipcMain.on('clear-timetable', clearTimetable);
 
   ipcMain.handle('run-model', runModel);
   ipcMain.on('initialize-model', initializeModel);
 
   ipcMain.on('trigger-notification', triggerNotification);
+  ipcMain.on('end-session', endSession);
 
   ipcMain.on('update-theme', updateTheme);
   ipcMain.handle('get-settings', getSettings);

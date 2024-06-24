@@ -1,0 +1,38 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-200);
+  margin-top: var(--space-400);
+}
+
+.controls__main {
+  cursor: pointer;
+  background-color: var(--background-brand);
+  padding: var(--space-300);
+  border-radius: 50%;
+  color: var(--text-inverse)
+}
+
+.controls__main:hover {
+  background-color: var(--background-brand-hovered);
+}
+
+.controls__main:active {
+  background-color: var(--background-brand-pressed);
+}
+
+.controls__secondary {
+  cursor: pointer;
+  color: var(--icon);
+  padding: var(--space-150);
+  border-radius: 50%;
+}
+
+.controls__secondary:hover {
+  background-color: var(--background-hovered);
+}
+
+.controls__secondary:active {
+  background-color: var(--background-pressed);
+}

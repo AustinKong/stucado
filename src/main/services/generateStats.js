@@ -1,11 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { deleteCompletedTasks, deletePomodoro, updatePomodoro, updateTask } from '../database/cache.js';
-import {
-  countCompletedTasks,
-  generateAvgProductivity,
-  generateHourlyProductivity,
-  generateHoursFocused,
-} from './stats.js';
+import { countCompletedTasks, generateAvgProductivity, generateHoursFocused } from './stats.js';
 /* 
 1. Generate tasks
 2. Generate pomodoro timer
@@ -27,9 +22,9 @@ function getRandomArbitrary(min, max) {
 export async function generateStats() {
   const today = new Date();
   let taskDate = new Date(today);
-  taskDate.setDate(today.getDate() - 14); // Set to two weeks ago
+  taskDate.setDate(today.getDate() - 30); // Set to two weeks ago
 
-  // Loop through each day for the past 14 days
+  // Loop through each day for the past 30 days
   while (taskDate < today) {
     let taskBeginTime = new Date(taskDate);
     taskBeginTime.setHours(getRandomInt(8, 12), 0, 0, 0); // 8am to 12pm
@@ -91,7 +86,7 @@ export async function generateStats() {
       pomodoroBeginTime = new Date(pomodoroBeginTime).getTime() + workDuration + shortBreakTime + longBreakTime;
     }
 
-    await generateHourlyProductivity();
+    //await generateHourlyProductivity();
     await generateAvgProductivity();
     await generateHoursFocused();
     await countCompletedTasks();

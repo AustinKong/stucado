@@ -3,10 +3,10 @@
 }
 
 .input__label {
-
 }
 
 .input__wrapper {
+  margin-top: var(--space-050);
   display: flex;
   align-items: center;
   flex-direction: row;

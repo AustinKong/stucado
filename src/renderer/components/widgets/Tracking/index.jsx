@@ -17,7 +17,10 @@ import styles from './styles.module.css';
 
 export const Tracking = ({ title, unit, pastData, currentData }) => {
   // Choose to display upwards trend or downwards trend UI based on this
-  const changePercentage = ((currentData - pastData[pastData.length - 1]) / pastData[pastData.length - 1]) * 100;
+  const changePercentage = Math.min(
+    ((currentData - pastData[pastData.length - 1]) / pastData[pastData.length - 1]) * 100,
+    999
+  );
 
   if (pastData.length + 1 < 7 && !currentData) {
     return (

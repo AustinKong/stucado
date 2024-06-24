@@ -8,7 +8,13 @@ import {
   readPomodoro,
 } from '../database/cache.js';
 import { updateDatapoint } from '../database/database.js';
-import { generateAvgProductivity, generateHourlyProductivity, generateHoursFocused, mergeInterval } from './stats.js';
+import {
+  countCompletedTasks,
+  generateAvgProductivity,
+  generateHourlyProductivity,
+  generateHoursFocused,
+  mergeInterval
+} from './stats.js';
 import { app } from 'electron';
 import { deleteStats } from '../database/stats.js';
 
@@ -115,6 +121,7 @@ export async function logout() {
   await generateHourlyProductivity();
   await generateHoursFocused();
   await generateAvgProductivity();
+  await countCompletedTasks();
   await deleteCompletedTasks();
   await deletePomodoro();
   app.exit(0);
