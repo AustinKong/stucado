@@ -26,7 +26,7 @@ const Upload = ({ handleStep }) => {
       description="Upload your timetable to get started with Stucado. This enables access to features such as timetable widget, timetable optimization and productiviy analysis."
     >
       <h2>Upload your timetable</h2>
-      <h3>Upload your NUS Mods timetable by pasting the URL from the website.</h3>
+      <h4>Upload your NUS Mods timetable by pasting the URL from the website</h4>
 
       <div className={styles.upload__instructions}>
         <div className={styles.upload__step}>

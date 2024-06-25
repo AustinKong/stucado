@@ -25,7 +25,6 @@
 }
 
 .onboarding__description {
-  font-family: inter;
   font-size: var(--font-size-300);
   margin-top: var(--space-300);
   color: var(--text-secondary);
