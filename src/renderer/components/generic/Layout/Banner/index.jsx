@@ -27,7 +27,7 @@ const UserProfile = () => {
       <img src={blankAvatar} alt="User avatar" className={styles.profile__avatar} />
       <span className={styles.profile__details}>
         <p>Orbitee</p>
-        <small>Team April, made with 💖</small>
+        <small>Made with 💖 by Team April</small>
       </span>
     </div>
   );
