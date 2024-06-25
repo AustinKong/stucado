@@ -2,7 +2,7 @@ import { store } from '@data/store';
 import { setMessage } from '@data/slices/insightsSlice';
 
 export const generateMessage = (productivity) => {
-  const delta = Math.round(productivity - 100);
+  const delta = Math.max(Math.min(999, Math.round(productivity - 100)), -999);
   const timeOfDay = new Date().getHours();
 
   // TODO: Add more variations based on factors such as tasks completed, etc.

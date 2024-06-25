@@ -40,7 +40,7 @@ export const Tracking = ({ title, unit, pastData, currentData }) => {
       <div className={styles.tracking__content}>
         <>
           <Histogram data={pastData.concat(currentData)} />
-          <Statistic value={currentData} unit={unit} trend={changePercentage} />
+          <Statistic value={currentData} unit={unit} trend={changePercentage || 0} />
         </>
       </div>
     </Widget>

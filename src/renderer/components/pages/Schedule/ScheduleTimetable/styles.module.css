@@ -78,6 +78,10 @@
   color: var(--text-inverse);
 }
 
+.scheduleTimetableSlot__title {
+  margin-bottom: var(--space-100);
+}
+
 .scheduleTimetableSlot:hover {
   background-color: var(--background-brand-hovered);
 }

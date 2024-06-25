@@ -38,7 +38,7 @@ const EditSlotModal = ({ slot, onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    void updateTimetableSlot({ 
+    void updateTimetableSlot({
       title: formContent.title,
       description: formContent.description,
       id: slot.id,
@@ -47,7 +47,8 @@ const EditSlotModal = ({ slot, onClose }) => {
         endTime: formContent.endTime,
         day: formContent.day,
       },
-     });
+      type: slot.type,
+    });
     onClose();
   };
 

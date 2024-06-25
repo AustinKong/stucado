@@ -6,6 +6,7 @@ import {
   deletePomodoro,
   deleteCache,
   readPomodoro,
+  deleteTaskSlots,
 } from '../database/cache.js';
 import { updateDatapoint } from '../database/database.js';
 import {
@@ -13,7 +14,7 @@ import {
   generateAvgProductivity,
   generateHourlyProductivity,
   generateHoursFocused,
-  mergeInterval
+  mergeInterval,
 } from './stats.js';
 import { app } from 'electron';
 import { deleteStats } from '../database/stats.js';
@@ -124,6 +125,7 @@ export async function logout() {
   await countCompletedTasks();
   await deleteCompletedTasks();
   await deletePomodoro();
+  await deleteTaskSlots();
   app.exit(0);
 }
 

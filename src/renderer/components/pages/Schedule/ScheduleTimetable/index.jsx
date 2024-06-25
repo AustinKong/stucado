@@ -97,11 +97,12 @@ const ScheduleTimetableSlot = ({ slot, height, marginTop }) => {
         style={{ height, marginTop }}
         onClick={() => setEditModalIsOpen(true)}
       >
-        <h4 className={styles.scheduleTimetableSlot__title}>{slot.title}</h4>
-        <div className={styles.scheduleTimetableSlot__time}>
-          {`${Math.floor(slot.schedule.startTime / 60)}:${String(slot.schedule.startTime % 60).padStart(2, '0')}`} -
+        <p className={styles.scheduleTimetableSlot__title}>{slot.title}</p>
+        <p className={styles.scheduleTimetableSlot__time}>
+          {`${Math.floor(slot.schedule.startTime / 60)}:${String(slot.schedule.startTime % 60).padStart(2, '0')}`}
+          &nbsp;-&nbsp;
           {`${Math.floor(slot.schedule.endTime / 60)}:${String(slot.schedule.endTime % 60).padStart(2, '0')}`}
-        </div>
+        </p>
       </div>
       {editModalIsOpen && <EditSlotModal slot={slot} onClose={() => setEditModalIsOpen(false)} />}
     </>

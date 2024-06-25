@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { DaysOfWeek } from '@shared/constants';
 
 import {
   readTimetable,
@@ -38,7 +39,11 @@ export async function createTimetableSlot(_event, title, description, schedule) 
 }
 
 export async function updateTimetableSlot(_event, timetableSlot) {
-  void updateTimetable([timetableSlot]);
+  if (timetableSlot.type === 'timetable') {
+    void updateTimetable([timetableSlot]);
+  } else if (timetableSlot.type === 'task') {
+    void updateTaskSlots([timetableSlot]);
+  }
   return timetableSlot;
 }
 
@@ -48,7 +53,6 @@ export async function deleteTimetableSlot(_event, id) {
 }
 
 export async function clearTimetable() {
-  console.log("here")
   await deleteTimetable();
 }
 
@@ -135,10 +139,13 @@ async function getLessonsToTimetable(enrolledLessons, academicYear, semester) {
 
 export async function optimizeTimetable() {
   const timetable = await readTimetable();
+  const startTimeTomorrow = timetable
+    .filter((lesson) => lesson.schedule.day === DaysOfWeek[(new Date().getDay() + 1) % 7])
+    .sort((a, b) => a.schedule.startTime - b.schedule.startTime)[0];
   const tasks = await readTasks();
 
   const startTime = new Date().getHours() * 60 + new Date().getMinutes();
-  const endTime = (startTime + 23 * 60 + 59) % 1440;
+  const endTime = startTimeTomorrow ? startTimeTomorrow.schedule.startTime : 1440;
   const optimizedTasks = await allocateTasks(timetable, tasks, startTime, endTime);
   await updateTaskSlots(optimizedTasks);
 
