@@ -46,7 +46,7 @@ const Habits = ({ handleStep }) => {
       title="Set up your habits"
       description="Set up your habits to get started with Stucado. This starts the model off with a basic understanding of your study and productivity habits."
     >
-      <h1>Set up your habits</h1>
+      <h2>Set up your habits</h2>
       <h3>Choose a productivity habit that best describes you.</h3>
 
       <div className={styles.habits}>
