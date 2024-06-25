@@ -70,7 +70,7 @@ export function mergeInterval(tasks, pomodoro) {
 /* Get past productivity by hour*/
 export async function generateHourlyProductivity() {
   const tasks = await readTasks();
-  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  const completedTasks = tasks.filter((task) => task.status === 'Completed');
   const productivityData = {};
 
   for await (const task of completedTasks) {
@@ -122,7 +122,7 @@ export async function generateHourlyProductivity() {
 /* Average productivity per day */
 export async function generateAvgProductivity() {
   const tasks = await readTasks();
-  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
   let totalDuration = 0;
   let totalProductivity = 0;
@@ -135,19 +135,17 @@ export async function generateAvgProductivity() {
     totalDuration += duration;
   }
 
-  const prod = {
+  await updateAvgProductivity({
     date,
     avgProductivity: Math.round((totalProductivity / totalDuration) * 100) / 100,
-  };
-
-  await updateAvgProductivity(prod);
+  });
 }
 
 /* Hours focused per day */
 export async function generateHoursFocused() {
   const tasks = await readTasks();
   const pomodoro = await readPomodoro();
-  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
   const mergedIntervals = mergeInterval(completedTasks, pomodoro);
   let date = new Date();
@@ -170,15 +168,13 @@ export async function generateHoursFocused() {
 export async function countCompletedTasks() {
   const tasks = await readTasks();
   // Find tasks that are completed
-  const completedTasks = tasks.filter((task) => task.status == 'Completed');
+  const completedTasks = tasks.filter((task) => task.status === 'Completed');
 
   if (completedTasks.length > 0) {
-    const data = {
-      date: new Date(tasks[0].beginTime).toDateString(),
+    await updateCompletedTasks({
+      date: new Date(completedTasks[0].beginTime).toDateString(),
       tasks: completedTasks.length,
-    };
-
-    await updateCompletedTasks(data);
+    });
   }
 }
 
