@@ -165,6 +165,15 @@ export async function deleteTask(id) {
   }
 }
 
+export async function deleteTasks() {
+  const db = await createCache();
+  try {
+    await db.run('DELETE FROM tasks');
+  } catch (err) {
+    console.log('Error deleting tasks');
+  }
+}
+
 export async function deleteCompletedTasks() {
   const db = await createCache();
   try {

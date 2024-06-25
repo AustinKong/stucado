@@ -39,7 +39,11 @@ export async function createTimetableSlot(_event, title, description, schedule) 
 }
 
 export async function updateTimetableSlot(_event, timetableSlot) {
-  void updateTimetable([timetableSlot]);
+  if (timetableSlot.type === 'timetable') {
+    void updateTimetable([timetableSlot]);
+  } else if (timetableSlot.type === 'task') {
+    void updateTaskSlots([timetableSlot]);
+  }
   return timetableSlot;
 }
 
@@ -49,7 +53,6 @@ export async function deleteTimetableSlot(_event, id) {
 }
 
 export async function clearTimetable() {
-  console.log('here');
   await deleteTimetable();
 }
 
