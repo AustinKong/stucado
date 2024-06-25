@@ -22,7 +22,7 @@ function getRandomArbitrary(min, max) {
 export async function generateStats() {
   const today = new Date();
   let taskDate = new Date(today);
-  taskDate.setDate(today.getDate() - 30); // Set to two weeks ago
+  taskDate.setDate(today.getDate() - 30); // Set to 30days ago
 
   // Loop through each day for the past 30 days
   while (taskDate < today) {
@@ -87,11 +87,11 @@ export async function generateStats() {
     }
 
     //await generateHourlyProductivity();
-    await generateAvgProductivity();
     await generateHoursFocused();
+    await generateAvgProductivity();
     await countCompletedTasks();
-    await deleteCompletedTasks();
     await deletePomodoro();
+    await deleteCompletedTasks();
 
     taskDate = new Date(taskDate).setDate(new Date(taskDate).getDate() + 1);
     console.log(new Date(taskDate).toDateString());
