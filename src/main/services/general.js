@@ -2,7 +2,7 @@ import { DaysOfWeek, TimesOfDay } from '../../shared/constants.js';
 import {
   readTimetable,
   readTasks,
-  deleteTasks,
+  deleteCompletedTasks,
   deletePomodoro,
   deleteCache,
   readPomodoro,
@@ -123,7 +123,7 @@ export async function logout() {
   await generateHoursFocused();
   await generateAvgProductivity();
   await countCompletedTasks();
-  await deleteTasks();
+  await deleteCompletedTasks();
   await deletePomodoro();
   await deleteTaskSlots();
   app.exit(0);
