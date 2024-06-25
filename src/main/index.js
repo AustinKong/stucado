@@ -11,7 +11,7 @@ import {
   updateTimetableSlot,
   deleteTimetableSlot,
   optimizeTimetable,
-  clearTimetable
+  clearTimetable,
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification, endSession } from '@services/pomodoro';
@@ -35,7 +35,7 @@ function createWindow() {
     width: 1200,
     height: 800,
     show: false,
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
     icon: icon,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -45,6 +45,8 @@ function createWindow() {
       nodeIntegrationInWorker: true,
     },
   });
+
+  mainWindow.maximize();
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();

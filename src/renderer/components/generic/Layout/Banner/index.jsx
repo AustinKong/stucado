@@ -26,8 +26,8 @@ const UserProfile = () => {
     <div className={styles.profile}>
       <img src={blankAvatar} alt="User avatar" className={styles.profile__avatar} />
       <span className={styles.profile__details}>
-        <p>John Doe</p>
-        <small>johndoe@gmail.com</small>
+        <p>Orbitee</p>
+        <small>Team April, made with 💖</small>
       </span>
     </div>
   );
