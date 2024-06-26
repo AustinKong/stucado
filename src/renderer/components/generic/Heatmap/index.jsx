@@ -1,5 +1,6 @@
 import styles from './styles.module.css';
 import { DaysOfWeek } from '@shared/constants';
+import { Warning } from '@phosphor-icons/react';
 
 const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, tooltip = 'key:' }) => {
   const max = Math.max(...data);
@@ -9,6 +10,14 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
     rows: Math.ceil(normalizedData.length / columns),
     columns: columns,
   };
+
+  if (normalizedData.length == 0) {
+    return (
+      <div className={styles.error}>
+        <Warning size={24} /> &nbsp;No data to render
+      </div>
+    );
+  }
 
   return (
     <div className={styles.heatmap}>
