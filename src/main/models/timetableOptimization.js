@@ -6,7 +6,7 @@ export function getEmptySlots(timetable, startWorkTime, endWorkTime, today) {
   const filteredTimetable = timetable.filter((slot) => slot.schedule.day === today);
 
   let slots = filteredTimetable.sort((a, b) => a.schedule.startTime - b.schedule.startTime);
-  slots = slots.filter((slot) => slot.schedule.startTime > startWorkTime);
+  slots = slots.filter((slot) => slot.schedule.endTime > startWorkTime);
 
   //Handle case when there are no classes for the entire day
   if (slots.length === 0) {

@@ -16,7 +16,7 @@
 .widget__content {
   margin-top: var(--space-200);
   flex-grow: 1;
-  min-height: 240px;
+  min-height: 10vh;
 }
 
 .widgetInteraction {
