@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { DaysOfWeek } from '@shared/constants';
 import { Warning } from '@phosphor-icons/react';
 
-const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, tooltip = 'key:' }) => {
+const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, tooltip = 'key:', startDay = 0 }) => {
   const max = Math.max(...data);
   const normalizedData = data.map((value) => Math.round((value / max) * levels));
 
@@ -37,6 +37,9 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
           gridTemplateRows: `repeat(${dimensions.rows}, 1fr)`,
         }}
       >
+        {[...Array(startDay)].map((_, index) => (
+          <div key={index} className={styles.heatmapTile} style={{ backgroundColor: 'transparent' }} />
+        ))}
         {normalizedData.map((level, index) => (
           <HeatMapTile key={index} level={level} tooltip={`${tooltip} ${Math.round(data[index])}`} />
         ))}

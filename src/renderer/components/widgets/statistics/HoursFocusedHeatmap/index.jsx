@@ -24,7 +24,7 @@ const HoursFocusedHeatmap = () => {
       setHoursFocused(
         result.map((stat) => {
           return {
-            Date: stat.date.toLocaleDateString('en-US'),
+            Date: stat.date,
             'Hours focused': Math.round(stat.hoursFocused),
           };
         })
@@ -39,7 +39,13 @@ const HoursFocusedHeatmap = () => {
       interaction={<InteractionButton icon={<ArrowsClockwise />} text={`Last ${range} days`} onClick={cycleRange} />}
     >
       <div className={styles.hoursFocusedHeatmap__content}>
-        {hoursFocused && <Heatmap data={hoursFocused.map((stat) => stat['Hours focused'])} tooltip="Hours focused:" />}
+        {hoursFocused && (
+          <Heatmap
+            data={hoursFocused.map((stat) => stat['Hours focused'])}
+            tooltip="Hours focused:"
+            startDay={hoursFocused[0].Date.getDay()}
+          />
+        )}
       </div>
     </Widget>
   );
