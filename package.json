@@ -1,11 +1,14 @@
 {
   "name": "stucado",
-  "version": "1.0.0",
-  "description": "An Electron application with React",
+  "version": "2.0.0",
+  "description": "A data driven productivity app for students",
   "main": "./out/main/index.js",
   "type": "module",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": [
+    "Austin Kong",
+    "Ea Jing Le"
+  ],
+  "homepage": "https://github.com/AustinKong/stucado",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",

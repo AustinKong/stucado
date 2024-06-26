@@ -5,7 +5,6 @@ export let settings;
 
 export async function getSettings() {
   settings = await readSettings();
-  nativeTheme.themeSource = settings.theme;
   return settings;
 }
 
@@ -27,4 +26,9 @@ export async function completeOnboarding() {
 export async function resetOnboarding() {
   updateSettings({ ...settings, hasOnboarded: false });
   settings = { ...settings, hasOnboarded: false };
+}
+
+export async function setThemeOnStart() {
+  await getSettings();
+  nativeTheme.themeSource = settings.theme;
 }

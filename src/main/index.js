@@ -11,11 +11,11 @@ import {
   updateTimetableSlot,
   deleteTimetableSlot,
   optimizeTimetable,
-  clearTimetable
+  clearTimetable,
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification, endSession } from '@services/pomodoro';
-import { getSettings, updateTheme, completeOnboarding, resetOnboarding } from '@services/settings';
+import { getSettings, updateTheme, completeOnboarding, resetOnboarding, setThemeOnStart } from '@services/settings';
 import {
   getHoursFocused,
   getTasksCompleted,
@@ -35,7 +35,8 @@ function createWindow() {
     width: 1200,
     height: 800,
     show: false,
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
+    icon: icon,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
@@ -44,6 +45,8 @@ function createWindow() {
       nodeIntegrationInWorker: true,
     },
   });
+
+  mainWindow.maximize();
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
@@ -69,8 +72,6 @@ function createWindow() {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron');
-
-  updateTheme(null, 'light');
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -136,5 +137,7 @@ app.whenReady().then(() => {
   ipcMain.on('logout', logout);
   ipcMain.on('clear-data', clearData);
 });
+
+app.whenReady().then(setThemeOnStart);
 
 export { mainWindow };

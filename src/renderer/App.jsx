@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // IM not sure how to do a proper page load, so we just wait 1 seconds
     const fetchData = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a 1-second load time
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a 1-second load time
       setIsLoading(false);
     };
     fetchData();

@@ -43,7 +43,7 @@ const Welcome = ({ handleStep }) => {
       description="Stucado is a producitivity app targeted towards university students."
     >
       <h2>Get started</h2>
-      <h3>Let&apos;s get you started by choosing your theme</h3>
+      <h4>Let&apos;s get you started by choosing your theme</h4>
 
       <div className={styles.welcome__themes}>
         {THEMES.map((theme) => (
