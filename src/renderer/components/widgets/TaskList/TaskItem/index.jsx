@@ -33,7 +33,7 @@ const TaskItem = ({ task }) => {
           <p className={styles.taskItem__description}>{task.description}</p>
         </div>
         <DotsThreeVertical
-          className="task-item__edit"
+          className={styles.taskItem__edit}
           size="24"
           onClick={(event) => {
             event.stopPropagation();
