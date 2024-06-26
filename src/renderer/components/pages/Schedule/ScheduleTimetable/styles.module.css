@@ -1,6 +1,8 @@
 .scheduleTimetable {
   margin-top: var(--space-400);
   border: 1px solid var(--border);
+  border-radius: var(--space-100);
+  overflow: hidden;
 }
 
 .scheduleTimetable__hours {

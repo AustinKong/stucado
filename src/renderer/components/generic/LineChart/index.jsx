@@ -152,10 +152,9 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
       </div>
     );
   } catch (e) {
-    console.error(e);
     return (
       <div className={styles.error}>
-        <Warning size={24} /> &nbsp;Error rendering this data
+        <Warning size={24} /> &nbsp;No data to render
       </div>
     );
   }

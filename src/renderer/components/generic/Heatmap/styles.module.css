@@ -6,6 +6,7 @@
   height: 100%;
   width: 100%;
   justify-content: center;
+  padding: var(--space-200) 0;
 }
 
 .heatmap__days {
@@ -35,7 +36,7 @@
 }
 
 .heatmap__legend {
-  margin-top: var(--space-150);
+  margin-top: auto;
   display: flex;
   gap: var(--space-100);
   align-items: center;
@@ -69,4 +70,12 @@
 
 .heatmapTile:hover .heatmapTile__tooltip {
   display: block;
+}
+
+.error {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
