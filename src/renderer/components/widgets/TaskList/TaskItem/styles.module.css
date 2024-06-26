@@ -19,6 +19,7 @@
 .taskItem__edit {
   cursor: pointer;
   color: var(--icon);
+  margin-left: auto;
 }
 
 .taskItem__status {
