@@ -43,7 +43,7 @@ const HoursFocusedHeatmap = () => {
           <Heatmap
             data={hoursFocused.map((stat) => stat['Hours focused'])}
             tooltip="Hours focused:"
-            startDay={hoursFocused[0].Date.getDay()}
+            startDay={hoursFocused[0] ? hoursFocused[0].Date.getDay() : 0}
           />
         )}
       </div>

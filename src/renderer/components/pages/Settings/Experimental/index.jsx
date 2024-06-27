@@ -6,7 +6,7 @@ const Experimental = () => {
     <>
       <SettingsButton
         title="Generate Test Data"
-        description="Populate the database with 14 days worth of randomly generated test data. Used for testing the functionality of the app."
+        description="Populate the database with 30 days worth of randomly generated test data. Used for testing the functionality of the app."
         onClick={() => generateTestData()}
         buttonText="Generate"
       />
