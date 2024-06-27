@@ -30,8 +30,8 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
 
   // const xMin = Math.min(...xValues);
   // const xMax = Math.max(...xValues);
-  const yMin = Math.min(...yValues);
-  const yMax = Math.max(...yValues);
+  const yMin = 0;
+  const yMax = Math.max(...yValues) * 1.5;
 
   const xScale = (d) => (data.findIndex((p) => p[xKey] === d) / (data.length - 1)) * innerWidth;
   const yScale = (d) => innerHeight - ((d - yMin) / (yMax - yMin)) * innerHeight;
@@ -91,7 +91,7 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
               <text
                 key={index}
                 x={xScale(value)}
-                y={innerHeight + 25}
+                y={innerHeight + 15}
                 textAnchor="middle"
                 className={styles.lineChart__xKey}
               >

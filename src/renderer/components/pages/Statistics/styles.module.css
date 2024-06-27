@@ -1,7 +1,7 @@
 .statisticsPage {
-  padding: 3rem;
+  padding: var(--space-200);
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: var(--space-200);
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas: 'past-productivity-line-chart past-productivity-line-chart past-productivity-line-chart hours-focused-heatmap' 
