@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Input from '../Input';
+import Input from './index.jsx';
 
 describe('Input Component', () => {
   test('renders correctly with required props', () => {
