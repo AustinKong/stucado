@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DurationPicker from '../DurationPicker';
+import DurationPicker from './index.jsx';
 
 jest.mock('@components/generic/Input', () => {
   return ({ label, name, type, placeholder, value, onChange, onBlur }) => (
