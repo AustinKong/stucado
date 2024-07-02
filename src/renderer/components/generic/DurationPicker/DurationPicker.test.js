@@ -17,7 +17,7 @@ jest.mock('@components/generic/Input', () => {
   );
 });
 
-describe('DurationPicker', () => {
+describe('DurationPicker Component', () => {
   const onChangeMock = jest.fn();
 
   beforeEach(() => {

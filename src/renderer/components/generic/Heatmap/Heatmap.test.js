@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import HeatMap from '../HeatMap';
@@ -10,7 +9,7 @@ jest.mock('@phosphor-icons/react', () => {
   };
 });
 
-describe('HeatMap', () => {
+describe('Heatmap Component', () => {
   test('renders correctly with default props', () => {
     const { getByText, getAllByText } = render(<HeatMap data={[1, 2, 3, 4, 5, 6, 7]} />);
 
