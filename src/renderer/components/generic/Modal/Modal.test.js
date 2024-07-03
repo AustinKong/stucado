@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Modal, { ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalSubtitle } from '../Modal';
+import Modal, { ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalSubtitle } from './index';
 
 jest.mock('@phosphor-icons/react', () => {
   return {
