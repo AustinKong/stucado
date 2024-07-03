@@ -21,11 +21,12 @@ export const Modal = ({ onClose, size = 'small', children }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.blanket} />
+      <div className={styles.blanket} data-testid="blanket" />
       <div
         className={styles.modal}
         ref={modalRef}
         style={{ width: size === 'small' ? '30vw' : size === 'medium' ? '40vw' : '50vw' }}
+        data-testid="modal"
       >
         {children}
       </div>
