@@ -1,4 +1,4 @@
-import { DaysOfWeek } from '@shared/constants.js';
+import { DaysOfWeek } from '../../shared/constants.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export function getEmptySlots(timetable, startWorkTime, endWorkTime, today) {
