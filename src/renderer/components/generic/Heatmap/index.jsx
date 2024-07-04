@@ -41,23 +41,28 @@ const HeatMap = ({ data = [], daysOfWeek = DaysOfWeek, levels = 4, columns = 7, 
           <div key={index} className={styles.heatmapTile} style={{ backgroundColor: 'transparent' }} />
         ))}
         {normalizedData.map((level, index) => (
-          <HeatMapTile key={index} level={level} tooltip={`${tooltip} ${Math.round(data[index])}`} />
+          <HeatMapTile
+            key={index}
+            level={level}
+            tooltip={`${tooltip} ${Math.round(data[index])}`}
+            testId="heatmapTile"
+          />
         ))}
       </div>
       <div className={styles.heatmap__legend}>
-        Less
+        <span>Less</span>
         <div className={styles.heatmap__legendContainer}>
           {[...Array(levels + 1).keys()].map((level) => (
-            <HeatMapTile key={level} level={level} tooltip={null} />
+            <HeatMapTile key={level} level={level} tooltip={null} testId="legendTile" />
           ))}
         </div>
-        More
+        <span>More</span>
       </div>
     </div>
   );
 };
 
-const HeatMapTile = ({ level, tooltip }) => {
+const HeatMapTile = ({ level, tooltip, testId }) => {
   const LEVEL_COLORS = [
     '#EFFFD6',
     '#D3F1A7',
@@ -71,7 +76,7 @@ const HeatMapTile = ({ level, tooltip }) => {
   ];
 
   return (
-    <div className={styles.heatmapTile} style={{ backgroundColor: LEVEL_COLORS[level] }}>
+    <div className={styles.heatmapTile} style={{ backgroundColor: LEVEL_COLORS[level] }} data-testid={testId}>
       {tooltip && <div className={styles.heatmapTile__tooltip}>{tooltip}</div>}
     </div>
   );

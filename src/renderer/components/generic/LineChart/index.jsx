@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Warning } from '@phosphor-icons/react';
 import styles from './styles.module.css';
 
-const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
+const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '', labels }) => {
   const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, value: null });
   const [width, setWidth] = useState(0);
   const containerRef = useRef(null);
@@ -63,10 +63,18 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
   };
 
   const getXAxisLabels = () => {
-    const labelCount = width / 70; // Maximum number of labels to display
+    const labelCount = labels || width / 70; // if no. of labels is specified use it, else calculate based on width
     const step = Math.ceil(xValues.length / labelCount);
     return xValues.filter((_, index) => index % step === 0);
   };
+
+  if (data.length === 0) {
+    return (
+      <div className={styles.error}>
+        <Warning size={24} /> &nbsp;No data to render
+      </div>
+    );
+  }
 
   try {
     return (
@@ -139,11 +147,16 @@ const LineChart = ({ data, height = 400, xKey, yKey, yUnits = '' }) => {
               left: `${tooltip.x + margin.left}px`,
               top: `${tooltip.y + margin.top - 48}px`,
             }}
+            data-testid="tooltip"
           >
-            <div>
+            <div
+              data-testid="tooltipKey"
+            >
               <strong>{xKey}:</strong> {tooltip.value[xKey]}
             </div>
-            <div>
+            <div
+            data-testid="tooltipValue"
+            >
               <strong>{yKey}:</strong> {tooltip.value[yKey]}
               {yUnits}
             </div>
