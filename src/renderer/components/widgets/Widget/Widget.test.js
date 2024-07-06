@@ -1,11 +1,14 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Widget, { InteractionButton } from './index.jsx';
 
 describe('Widget Component', () => {
   test('renders without crashing', () => {
-    render(<Widget className="test-class" title="Test Title" interaction={<div>Test Interaction</div>}>Test Content</Widget>);
+    render(
+      <Widget className="test-class" title="Test Title" interaction={<div>Test Interaction</div>}>
+        Test Content
+      </Widget>
+    );
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test Interaction')).toBeInTheDocument();
     expect(screen.getByText('Test Content')).toBeInTheDocument();
