@@ -39,6 +39,7 @@ const TaskItem = ({ task }) => {
             event.stopPropagation();
             setEditTaskModalIsOpen(true);
           }}
+          data-testid="edit-icon"
         />
       </li>
       {editTaskModalIsOpen && (
