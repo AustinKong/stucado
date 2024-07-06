@@ -17,7 +17,7 @@ const Input = ({ label, placeholder, value, onChange, onBlur, type = 'text', ico
   return (
     <div className={styles.input}>
       {label && (
-        <label className={styles.input__label}>
+        <label className={styles.input__label} htmlFor="input">
           {label}
           {required && <span className={styles.input__requiredStar}>*</span>}
         </label>
@@ -25,6 +25,7 @@ const Input = ({ label, placeholder, value, onChange, onBlur, type = 'text', ico
       <div className={styles.input__wrapper}>
         {icon && <div className={styles.input__icon}>{icon}</div>}
         <input
+          id="input"
           type={type}
           placeholder={placeholder}
           value={value}

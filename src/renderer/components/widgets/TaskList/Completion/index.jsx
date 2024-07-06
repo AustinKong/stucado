@@ -44,7 +44,7 @@ const Completion = ({ tasks }) => {
           {completedTasks.length} of {totalTasks} tasks completed ({Math.round(completedTasksPercentage) || 0}%)
         </small>
       </div>
-      <div className={styles.completion__bars}>
+      <div className={styles.completion__bars} data-testid="completion-bars">
         {statusInfo.map((info) => {
           return info.percentage > 0 ? (
             <div
