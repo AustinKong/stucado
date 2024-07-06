@@ -67,6 +67,7 @@
       "^@services(.*)$": "<rootDir>/src/renderer/services$1",
       "^@assets(.*)$": "<rootDir>/src/renderer/assets$1",
       "^@data(.*)$": "<rootDir>/src/renderer/data$1"
+      "^@shared/(.*)$": "<rootDir>/src/shared/$1"
     },
     "testEnvironment": "jsdom"
   }
