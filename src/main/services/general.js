@@ -33,6 +33,7 @@ export function getHoursInClasses(timetable, taskStartTime) {
   for (const slot of timetable) {
     const slotDay = DaysOfWeek.indexOf(slot.schedule.day);
     let slotTime = new Date(taskStartTime);
+    let slotEndTime = 0;
     if (slotDay == taskStartDay) {
       slotTime = new Date(taskStartTime).setHours(
         Math.floor(slot.schedule.startTime / 60),
@@ -51,7 +52,9 @@ export function getHoursInClasses(timetable, taskStartTime) {
       slotTime = 0;
     }
     if (slotTime >= sixteenHoursAgo && slotTime <= new Date(taskStartTime)) {
-      hours += (slot.schedule.endTime - slot.schedule.startTime) / 60;
+      const taskStartTimeInMinutes = new Date(taskStartTime).getHours() * 60 + new Date(taskStartTime).getMinutes();
+      slotEndTime = taskStartTimeInMinutes < slot.schedule.endTime ? taskStartTimeInMinutes : slot.schedule.endTime;
+      hours += (slotEndTime - slot.schedule.startTime) / 60;
     }
   }
   //console.log(hours);
@@ -65,7 +68,10 @@ export function getHoursFocused(tasks, pomodoro, taskStartTime) {
 
   if (mergedIntervals.length > 0) {
     mergedIntervals.forEach((interval) => {
+      console.log(interval.endTime);
+      console.log(interval.startTime);
       totalFocusedHours += (interval.endTime - interval.startTime) / 1000 / 60 / 60;
+      console.log(totalFocusedHours);
     });
   }
   return Math.round(totalFocusedHours * 100) / 100;
@@ -86,7 +92,7 @@ export async function createDatapoints() {
 
     const hoursInClasses = getHoursInClasses(timetable, task.beginTime);
     const hoursFocused = getHoursFocused(tasks, pomodoro, task.beginTime);
-    const productivity = getProductivity(task);
+    const productivity = Math.round(getProductivity(task) * 100) / 100;
 
     let currTime = new Date(task.beginTime);
     const taskEndTime = new Date(task.endTime);
