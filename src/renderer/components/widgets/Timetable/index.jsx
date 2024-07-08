@@ -82,7 +82,7 @@ const Timetable = () => {
                 </div>
               ))}
             </div>
-            <div className={styles.timetable__currentTime} ref={currentTimeRef} />
+            <div className={styles.timetable__currentTime} ref={currentTimeRef} data-testid="currentTime" />
           </div>
         </div>
       </Widget>
