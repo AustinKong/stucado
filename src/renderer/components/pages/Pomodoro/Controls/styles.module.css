@@ -1,38 +1,60 @@
 .controls {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  width: 100%;
+}
+
+.controls__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls__settings {
+  cursor: pointer;
+  color: var(--icon);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--space-200);
-  margin-top: var(--space-400);
 }
 
-.controls__main {
+.controls__settings:hover {
+  color: var(--icon-hovered);
+}
+
+.controls__settings:active {
+  color: var(--icon-pressed);
+}
+
+.controls__notification {
+  display: flex;
+  align-items: center;
+  gap: var(--space-100);
+  color: var(--text-secondary);
   cursor: pointer;
-  background-color: var(--background-brand);
-  padding: var(--space-300);
-  border-radius: 50%;
-  color: var(--text-inverse)
 }
 
-.controls__main:hover {
-  background-color: var(--background-brand-hovered);
+.controls__notification:hover {
+  color: var(--text-secondary-hovered);
 }
 
-.controls__main:active {
-  background-color: var(--background-brand-pressed);
+.controls__notification:active {
+  color: var(--text-secondary-pressed);
 }
 
-.controls__secondary {
-  cursor: pointer;
-  color: var(--icon);
-  padding: var(--space-150);
-  border-radius: 50%;
+.controls__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-100);
+  flex-wrap: wrap;
 }
 
-.controls__secondary:hover {
-  background-color: var(--background-hovered);
+.controls__play {
+  width: 100%;
 }
 
-.controls__secondary:active {
-  background-color: var(--background-pressed);
+.controls__buttonSecondary {
+  flex: 1;
 }

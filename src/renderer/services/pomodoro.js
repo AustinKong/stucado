@@ -100,7 +100,7 @@ const updateTimer = () => {
 };
 
 // Utility function to get the duration of a state
-const getStateDuration = (state) => {
+export const getStateDuration = (state) => {
   const pomodoroSettings = store.getState().pomodoro.settings;
   switch (state) {
     case 'work':
@@ -115,7 +115,7 @@ const getStateDuration = (state) => {
 };
 
 // Utility function to get the next state based on the current state and number of sessions
-const getNextState = (state, sessions) => {
+export const getNextState = (state, sessions) => {
   switch (state) {
     case 'work':
       // Add two to stop the first break from being a long break

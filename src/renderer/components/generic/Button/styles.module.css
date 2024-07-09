@@ -6,6 +6,18 @@
   background-color: var(--background-brand);
   font-weight: var(--font-weight-semibold);
   color: var(--text-inverse);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-100);
+  min-width: fit-content;
+}
+
+.button svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button:hover {
