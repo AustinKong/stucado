@@ -32,3 +32,8 @@ export async function setThemeOnStart() {
   await getSettings();
   nativeTheme.themeSource = settings.theme;
 }
+
+export const toggleNotifications = async () => {
+  updateSettings({ ...settings, notifications: !settings.notifications });
+  settings = { ...settings, notifications: !settings.notifications };
+};

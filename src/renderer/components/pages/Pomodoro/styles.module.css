@@ -1,10 +1,36 @@
 .pomodoro {
   position: relative;
-  height: 100%;
   display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.pomodoro__container {
+  width: 40vw;
+  display: flex;
+  gap: var(--space-400);
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.pomodoro__containerLeft {
+  width: 40%;
+  height: 100%;
+}
+
+.pomodoro__containerRight {
+  width: 60%;
+  height: 100%;
+}
+
+.pomodoro__containerRightUp {
+  display: flex;
+  flex-direction: row;
+  padding: var(--space-300);
+  gap: var(--space-300);
+  align-items: center;
 }
 
 .pomodoro__settings {
@@ -21,7 +47,4 @@
 
 .pomodoro__settings:active {
   color: var(--icon-pressed)
-}
-
-* {
 }
