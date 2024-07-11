@@ -77,12 +77,14 @@ const NUS_MODS_API_URL = 'https://api.nusmods.com/v2/';
 // Extracts relevant information used to make API request
 function extractURL(url) {
   // e.g. [ 'CS1010=TUT:06,SEC:1', 'CS1010E=SEC:2,TUT:18' ]
-  const enrolledLessons = url.substring(url.indexOf('?') + 1).split('&');
+  const allEnrolledLessons = url.substring(url.indexOf('?') + 1).split('&');
+  const enrolledLessons = allEnrolledLessons.filter((lesson) => lesson.substring(0, 6) != 'hidden');
 
   // e.g. 2021-2022
   const date = new Date();
+  // FIXME: Subjective to NUS Mods updated date QQ
   const academicYear =
-    date.getMonth() <= 8
+    date.getMonth() < 8
       ? `${date.getFullYear() - 1}-${date.getFullYear()}`
       : `${date.getFullYear()}-${date.getFullYear() + 1}`;
 
