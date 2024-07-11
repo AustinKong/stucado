@@ -3,8 +3,17 @@ import notificationIcon from '../../../resources/notificationIcon.png?asset';
 import { updatePomodoro as updatePomodoroCache } from '../database/cache';
 import { v4 as uuidv4 } from 'uuid';
 import { getSettings } from './settings';
+import { runModel } from './insights';
 
 export async function getPomodoroSettings() {
+  const DEFAULT_FOCUS_TIME = 1500;
+  const DEFAULT_SHORT_BREAK = 300;
+  const DEFAULT_LONG_BREAK = 1200;
+  const PRODUCTIVITY_WEIGHT = 0.5;
+
+  const productivity = await runModel();
+
+return { shortBreakDuration: DEFAULT_SHORT_BREAK , longBreakDuration: 1200, workDuration: 1500 }
   // TODO: Calculate the optimal pomodoro settings based on productivity
 }
 

@@ -1,6 +1,8 @@
 import { TimesOfDay } from '../../shared/constants.js';
 import { deleteData, readDatapoints, updateDatapoint } from '../database/database.js';
 import { predictProductivity } from '../models/gradientDescent.js';
+import { getHoursFocused, getHoursInClasses } from './general.js';
+import { readTimetable, readTasks, readPomodoro } from '../database/cache.js';
 
 const morningData = `
 midnight Monday 2 10 52.976
@@ -105,10 +107,14 @@ export function processRawData(rawData) {
 }
 
 export async function runModel() {
+  const timetable = await readTimetable();
+  const tasks = await readTasks();
+  const pomodoro = await readPomodoro();
   const datapoints = await readDatapoints();
+
   const timeOfDay = TimesOfDay[Math.floor((new Date().getHours() * 8) / 24)];
-  const hoursInClasses = 0;
-  const hoursFocused = 0;
+  const hoursInClasses = getHoursInClasses(timetable, new Date().getTime());
+  const hoursFocused = getHoursFocused(tasks, pomodoro, new Date().getTime());
   const dayOfWeek = new Date().getDay();
 
   const result = await predictProductivity(datapoints, timeOfDay, dayOfWeek, hoursInClasses, hoursFocused);
