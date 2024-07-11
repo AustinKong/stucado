@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
+  toggleNotifications: () => ipcRenderer.send('toggle-notifications'),
 });
 
 contextBridge.exposeInMainWorld('statisticsAPI', {

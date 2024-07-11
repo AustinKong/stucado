@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   theme: 'system',
   hasOnboarded: false,
+  notifications: true,
 };
 
 const settingsSlice = createSlice({

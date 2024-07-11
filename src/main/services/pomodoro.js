@@ -2,12 +2,16 @@ import { Notification } from 'electron';
 import notificationIcon from '../../../resources/notificationIcon.png?asset';
 import { updatePomodoro as updatePomodoroCache } from '../database/cache';
 import { v4 as uuidv4 } from 'uuid';
+import { getSettings } from './settings';
 
 export async function getPomodoroSettings() {
   // TODO: Calculate the optimal pomodoro settings based on productivity
 }
 
 export async function triggerNotification(_event, state) {
+  const settings = await getSettings();
+  if (!settings.notifications) return;
+
   let message;
   switch (state) {
     case 'work':

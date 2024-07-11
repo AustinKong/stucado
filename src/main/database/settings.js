@@ -13,6 +13,7 @@ export function readSettings() {
     settings = {
       hasOnboarded: false,
       theme: 'system',
+      notifications: true,
     };
   }
   return settings;

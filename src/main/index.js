@@ -15,7 +15,14 @@ import {
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
 import { triggerNotification, endSession } from '@services/pomodoro';
-import { getSettings, updateTheme, completeOnboarding, resetOnboarding, setThemeOnStart } from '@services/settings';
+import {
+  getSettings,
+  updateTheme,
+  completeOnboarding,
+  resetOnboarding,
+  setThemeOnStart,
+  toggleNotifications,
+} from '@services/settings';
 import {
   getHoursFocused,
   getTasksCompleted,
@@ -123,6 +130,7 @@ app.whenReady().then(() => {
   ipcMain.on('update-theme', updateTheme);
   ipcMain.handle('get-settings', getSettings);
   ipcMain.on('complete-onboarding', completeOnboarding);
+  ipcMain.on('toggle-notifications', toggleNotifications);
 
   ipcMain.handle('get-hours-focused', getHoursFocused);
   ipcMain.handle('get-tasks-completed', getTasksCompleted);
