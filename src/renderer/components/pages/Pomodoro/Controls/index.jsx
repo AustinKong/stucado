@@ -6,8 +6,10 @@ import Button from '@components/generic/Button';
 import { useState } from 'react';
 import EditPomodoroModal from '../EditPomodoroModal';
 import { Gear, BellSimple } from '@phosphor-icons/react';
+import { toggleNotifications } from '@services/settings';
 
 const Controls = () => {
+  const settings = useSelector((state) => state.settings);
   const timer = useSelector((state) => state.pomodoro.timer);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -42,7 +44,7 @@ const Controls = () => {
     void stopPomodoro();
   };
 
-  const notificationsOff = true;
+  const notificationsOff = !settings.notifications;
 
   return (
     <>
@@ -51,7 +53,7 @@ const Controls = () => {
           <h2 className={styles.controls__state}>Current: {getStateText()}</h2>
           <Gear onClick={() => setIsSettingsOpen(true)} size={24} className={styles.controls__settings} />
         </div>
-        <div className={styles.controls__notification}>
+        <div className={styles.controls__notification} onClick={() => toggleNotifications()}>
           <IconContext.Provider
             value={{
               size: 24,
