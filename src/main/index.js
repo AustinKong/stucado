@@ -14,7 +14,7 @@ import {
   clearTimetable,
 } from '@services/timetable';
 import { runModel, initializeModel } from '@services/insights';
-import { triggerNotification, endSession } from '@services/pomodoro';
+import { triggerNotification, endSession, getPomodoroSettings } from '@services/pomodoro';
 import {
   getSettings,
   updateTheme,
@@ -126,6 +126,7 @@ app.whenReady().then(() => {
 
   ipcMain.on('trigger-notification', triggerNotification);
   ipcMain.on('end-session', endSession);
+  ipcMain.handle('get-pomodoro-settings', getPomodoroSettings);
 
   ipcMain.on('update-theme', updateTheme);
   ipcMain.handle('get-settings', getSettings);

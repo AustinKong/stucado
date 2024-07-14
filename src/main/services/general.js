@@ -68,10 +68,7 @@ export function getHoursFocused(tasks, pomodoro, taskStartTime) {
 
   if (mergedIntervals.length > 0) {
     mergedIntervals.forEach((interval) => {
-      console.log(interval.endTime);
-      console.log(interval.startTime);
       totalFocusedHours += (interval.endTime - interval.startTime) / 1000 / 60 / 60;
-      console.log(totalFocusedHours);
     });
   }
   return Math.round(totalFocusedHours * 100) / 100;

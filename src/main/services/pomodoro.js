@@ -3,10 +3,24 @@ import notificationIcon from '../../../resources/notificationIcon.png?asset';
 import { updatePomodoro as updatePomodoroCache } from '../database/cache';
 import { v4 as uuidv4 } from 'uuid';
 import { getSettings } from './settings';
+import { runModel } from './insights';
 
 export async function getPomodoroSettings() {
-  // TODO: Calculate the optimal pomodoro settings based on productivity
+  const DEFAULT_FOCUS_TIME = 1500;
+  const DEFAULT_SHORT_BREAK = 300;
+  const DEFAULT_LONG_BREAK = 1200;
+  const PRODUCTIVITY_WEIGHT = 0.5;
+
+  const productivity = await runModel();
+
+  return {
+    shortBreakDuration: roundToMinute((DEFAULT_SHORT_BREAK * 100) / productivity) || DEFAULT_SHORT_BREAK,
+    longBreakDuration: roundToMinute((DEFAULT_LONG_BREAK * 100) / productivity) || DEFAULT_LONG_BREAK,
+    workDuration: roundToMinute((DEFAULT_FOCUS_TIME * productivity) / 100) || DEFAULT_FOCUS_TIME,
+  };
 }
+
+const roundToMinute = (time) => Math.round(time / 60) * 60;
 
 export async function triggerNotification(_event, state) {
   const settings = await getSettings();
