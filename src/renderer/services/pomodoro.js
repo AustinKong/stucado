@@ -4,7 +4,7 @@ import { store } from '@data/store';
 let interval;
 
 export const retrievePomodoroSettings = async () => {
-  // TODO: Have settings saved to cache
+  store.dispatch(setPomodoroSettings(await window.pomodoroAPI.getPomodoroSettings()));
 };
 
 /**

@@ -13,9 +13,14 @@ export async function getPomodoroSettings() {
 
   const productivity = await runModel();
 
-return { shortBreakDuration: DEFAULT_SHORT_BREAK , longBreakDuration: 1200, workDuration: 1500 }
-  // TODO: Calculate the optimal pomodoro settings based on productivity
+  return {
+    shortBreakDuration: roundToMinute((DEFAULT_SHORT_BREAK * 100) / productivity) || DEFAULT_SHORT_BREAK,
+    longBreakDuration: roundToMinute((DEFAULT_LONG_BREAK * 100) / productivity) || DEFAULT_LONG_BREAK,
+    workDuration: roundToMinute((DEFAULT_FOCUS_TIME * productivity) / 100) || DEFAULT_FOCUS_TIME,
+  };
 }
+
+const roundToMinute = (time) => Math.round(time / 60) * 60;
 
 export async function triggerNotification(_event, state) {
   const settings = await getSettings();
