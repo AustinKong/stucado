@@ -51,6 +51,7 @@ contextBridge.exposeInMainWorld('statisticsAPI', {
 contextBridge.exposeInMainWorld('experimentalAPI', {
   generateTestData: () => ipcRenderer.send('generate-test-data'),
   resetOnboarding: () => ipcRenderer.send('reset-onboarding'),
+  tearDown: () => ipcRenderer.send('tear-down'),
 });
 
 contextBridge.exposeInMainWorld('generalAPI', {

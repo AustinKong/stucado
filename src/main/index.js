@@ -31,7 +31,7 @@ import {
   getCurrentTasksCompleted,
   getCurrentAverageProductivity,
 } from '@services/statistics';
-import { generateTestData } from '@services/experimental';
+import { generateTestData, tearDown } from '@services/experimental';
 import { logout, clearData } from '@services/general';
 
 let mainWindow;
@@ -141,6 +141,7 @@ app.whenReady().then(() => {
 
   ipcMain.on('generate-test-data', generateTestData);
   ipcMain.on('reset-onboarding', resetOnboarding);
+  ipcMain.on('tear-down', tearDown);
 
   ipcMain.on('logout', logout);
   ipcMain.on('clear-data', clearData);

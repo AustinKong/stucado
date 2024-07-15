@@ -5,3 +5,7 @@ export const generateTestData = async () => {
 export const resetOnboarding = async () => {
   await window.experimentalAPI.resetOnboarding();
 };
+
+export const tearDown = async () => {
+  await window.experimentalAPI.tearDown();
+};
