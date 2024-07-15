@@ -19,7 +19,7 @@ const Experimental = () => {
       />
       <SettingsButton
         title="Tear Down"
-        description="Delete all data from the database. Used during automated testing to reset the database."
+        description="Delete all data from the database, then closes the app. Used during automated testing to reset the database."
         onClick={() => tearDown()}
         buttonText="Tear Down"
         buttonAppearance="danger"
