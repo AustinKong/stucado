@@ -37,8 +37,8 @@ export function mergeInterval(tasks, pomodoro) {
 
   tasks.forEach((task) => {
     intervals.push({
-      startTime: task.beginTime,
-      endTime: task.endTime,
+      startTime: new Date(task.beginTime).getTime(),
+      endTime: new Date(task.endTime).getTime(),
     });
   });
 
@@ -131,7 +131,7 @@ export async function generateAvgProductivity() {
   for await (const task of completedTasks) {
     date = new Date(task.beginTime).toDateString();
     const duration = (task.endTime - task.beginTime) / 60 / 1000;
-    totalProductivity += getProductivity(task) * duration;
+    totalProductivity += task.estimatedTime * 100;
     totalDuration += duration;
   }
 
