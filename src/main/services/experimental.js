@@ -15,11 +15,9 @@ export async function tearDown() {
   await deleteCache();
   await deleteData();
   app.exit(0);
-  /*
   updateSettings({
     hasOnboarded: false,
     theme: 'system',
     notifications: true,
   });
-  */
 }

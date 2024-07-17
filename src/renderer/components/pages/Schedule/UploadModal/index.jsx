@@ -31,7 +31,14 @@ const UploadModal = ({ onClose }) => {
       </ModalHeader>
       <ModalBody>
         {!uploadSuccess && <p>Error uploading, please retry</p>}
-        <Input label="Timetable URL" name="url" value={formContent.url} onChange={handleChange} required={true} />
+        <Input
+          label="Timetable URL"
+          name="url"
+          value={formContent.url}
+          onChange={handleChange}
+          required={true}
+          placeholder="Paste your NUS Mods timetable URL here"
+        />
       </ModalBody>
       <ModalFooter>
         <Button onClick={onClose} appearance="secondary">

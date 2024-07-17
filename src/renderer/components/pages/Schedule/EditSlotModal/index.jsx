@@ -58,7 +58,14 @@ const EditSlotModal = ({ slot, onClose }) => {
         <ModalTitle>Edit timetable slot</ModalTitle>
       </ModalHeader>
       <ModalBody>
-        <Input label="Title" name="title" value={formContent.title} onChange={handleChange} required={true} />
+        <Input
+          label="Title"
+          name="title"
+          value={formContent.title}
+          onChange={handleChange}
+          required={true}
+          placeholder="Edit title"
+        />
         <TextArea label="Description" name="description" value={formContent.description} onChange={handleChange} />
         <DurationPicker
           label="Start time"

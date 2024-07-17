@@ -31,15 +31,11 @@ const AddSlotModal = ({ onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    void createTimetableSlot(
-      formContent.title,
-      formContent.description,
-      {
-        startTime: formContent.startTime,
-        endTime: formContent.endTime,
-        day: formContent.day,
-      },
-    );
+    void createTimetableSlot(formContent.title, formContent.description, {
+      startTime: formContent.startTime,
+      endTime: formContent.endTime,
+      day: formContent.day,
+    });
     onClose();
   };
 

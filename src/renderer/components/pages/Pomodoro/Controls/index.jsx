@@ -51,7 +51,12 @@ const Controls = () => {
       <div className={styles.controls}>
         <div className={styles.controls__title}>
           <h2 className={styles.controls__state}>Current: {getStateText()}</h2>
-          <Gear onClick={() => setIsSettingsOpen(true)} size={24} className={styles.controls__settings} />
+          <Gear
+            onClick={() => setIsSettingsOpen(true)}
+            size={24}
+            className={styles.controls__settings}
+            data-testid="pomodoro-settings"
+          />
         </div>
         <div className={styles.controls__notification} onClick={() => toggleNotifications()}>
           <IconContext.Provider
