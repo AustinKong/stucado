@@ -1,7 +1,6 @@
 # Stucado
 Stucado is a data-driven productivity tool tailored to the needs of students. With features such as customized to-do lists, timetable integration, adaptive pomodoro timers and insightful statistics visualizations, we aim to empower university students in their academic journey.
 ## About
-![Logo](Logo.png)
 ### Motivation
 In today's fast-paced digital world, students face an array of challenges when it comes to managing their academic workload efficiently. With an ever-increasing list of tasks and responsibilities, the limited amount of time available often leads to stress and anxiety. The prevalence of social media and digital distractions only exacerbates these issues, making it easy for students to lose track of their priorities and fall into a cycle of procrastination. Furthermore, the pressure to excel academically adds to the burden, leaving many students feeling overwhelmed and unsure of where to begin.
 
