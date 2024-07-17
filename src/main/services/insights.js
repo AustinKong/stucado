@@ -4,7 +4,7 @@ import { predictProductivity } from '../models/gradientDescent.js';
 import { getHoursFocused, getHoursInClasses } from './general.js';
 import { readTimetable, readTasks, readPomodoro } from '../database/cache.js';
 
-const morningData = `
+export const morningData = `
 midnight Monday 2 10 52.976
 midnight Thursday 2 7 29.737
 midnight Friday 4 6 30.692
@@ -32,7 +32,7 @@ night Wednesday 3 7 69.963
 night Monday 3 5 73.251
 `;
 
-const afternoonData = `
+export const afternoonData = `
 midnight Friday 5 3 72.938
 midnight Tuesday 7 10 58.445
 midnight Wednesday 3 4 86.311
@@ -60,7 +60,7 @@ night Monday 6 10 76.958
 night Thursday 0 6 88.357
 `;
 
-const nightData = `
+export const nightData = `
 midnight Monday 5 6 112.279
 midnight Wednesday 0 2 99.342
 midnight Friday 6 4 92.499
@@ -98,9 +98,9 @@ export function processRawData(rawData) {
     result.push({
       timeOfDay,
       dayOfWeek,
-      hoursInClasses,
-      hoursFocused,
-      productivity,
+      hoursInClasses: parseFloat(hoursInClasses),
+      hoursFocused: parseFloat(hoursFocused),
+      productivity: parseFloat(productivity),
     });
   }
   return result;
