@@ -4,10 +4,7 @@
   "description": "A data driven productivity app for students",
   "main": "./out/main/index.js",
   "type": "module",
-  "author": [
-    "Austin Kong",
-    "Ea Jing Le"
-  ],
+  "author": "Team April",
   "homepage": "https://github.com/AustinKong/stucado",
   "scripts": {
     "format": "prettier --write .",
@@ -20,7 +17,8 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux"
+    "build:linux": "npm run build && electron-builder --linux",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
@@ -41,6 +39,7 @@
     "@babel/preset-react": "^7.24.7",
     "@electron-toolkit/eslint-config": "^1.0.2",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
+    "@playwright/test": "^1.45.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@vitejs/plugin-react": "^4.2.1",

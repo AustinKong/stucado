@@ -8,13 +8,13 @@ import Button from '@components/generic/Button';
 import { useState } from 'react';
 
 const MAIN = [
-  { icon: <SquaresFour />, to: '/' },
-  { icon: <CalendarBlank />, to: '/schedule' },
-  { icon: <ChartLine />, to: '/statistics' },
-  { icon: <Timer />, to: '/pomodoro' },
+  { icon: <SquaresFour />, to: '/', testid: 'dashboard-icon' },
+  { icon: <CalendarBlank />, to: '/schedule', testid: 'schedule-icon' },
+  { icon: <ChartLine />, to: '/statistics', testid: 'statistics-icon' },
+  { icon: <Timer />, to: '/pomodoro', testid: 'pomodoro-icon' },
 ];
 
-const OTHER = [{ icon: <Faders />, to: '/settings' }];
+const OTHER = [{ icon: <Faders />, to: '/settings', testid: 'settings-icon' }];
 
 const Group = ({ title, children }) => {
   return (
@@ -50,16 +50,20 @@ const Sidebar = () => {
         <div className={styles.sidebar__divider} />
 
         <Group title="MAIN">
-          {MAIN.map(({ icon, to }) => (
-            <NavIcon key={to} icon={icon} to={to} />
+          {MAIN.map(({ icon, to, testid }) => (
+            <div key={to} data-testid={testid}>
+              <NavIcon icon={icon} to={to} />
+            </div>
           ))}
         </Group>
 
         <Group title="OTHER">
-          {OTHER.map(({ icon, to }) => (
-            <NavIcon key={to} icon={icon} to={to} />
+          {OTHER.map(({ icon, to, testid }) => (
+            <div key={to} data-testid={testid}>
+              <NavIcon icon={icon} to={to} />
+            </div>
           ))}
-          <div className={styles.navIcon} onClick={() => setSignoutModalIsOpen(true)}>
+          <div className={styles.navIcon} onClick={() => setSignoutModalIsOpen(true)} data-testid="signout-icon">
             <SignOut size={24} />
           </div>
         </Group>

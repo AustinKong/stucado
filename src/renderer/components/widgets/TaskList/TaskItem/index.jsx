@@ -27,7 +27,11 @@ const TaskItem = ({ task }) => {
   return (
     <>
       <li className={styles.taskItem} onClick={handleToggleTaskStatus} onContextMenu={handleToggleTaskStatus}>
-        <div className={styles.taskItem__status} style={{ backgroundColor: taskStatusToColor(task.status) }} />
+        <div
+          className={styles.taskItem__status}
+          style={{ backgroundColor: taskStatusToColor(task.status) }}
+          data-testid="task-status"
+        />
         <div className={styles.taskItem__content}>
           <h4 className={styles.taskItem__title}>{task.title}</h4>
           <p className={styles.taskItem__description}>{task.description}</p>

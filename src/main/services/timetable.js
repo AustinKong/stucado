@@ -68,7 +68,7 @@ export async function uploadTimetable(_event, url) {
   const timetable = await getLessonsToTimetable(enrolledLessons, academicYear, semester);
   await deleteTimetable();
   void updateTimetable(timetable);
-  return timetable;
+  return timetable.map((lesson) => ({ ...lesson, type: 'timetable' }));
 }
 
 /* Getting timetable from NUS Mods API */

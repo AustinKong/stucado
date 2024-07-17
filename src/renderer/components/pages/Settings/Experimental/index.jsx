@@ -1,5 +1,5 @@
 import { SettingsButton } from '..';
-import { generateTestData, resetOnboarding } from '@services/experimental';
+import { generateTestData, resetOnboarding, tearDown } from '@services/experimental';
 
 const Experimental = () => {
   return (
@@ -16,6 +16,13 @@ const Experimental = () => {
         onClick={() => resetOnboarding()}
         buttonText="Reset"
         buttonAppearance="warn"
+      />
+      <SettingsButton
+        title="Tear Down"
+        description="Delete all data from the database, then closes the app. Used during automated testing to reset the database."
+        onClick={() => tearDown()}
+        buttonText="Tear Down"
+        buttonAppearance="danger"
       />
     </>
   );

@@ -28,7 +28,7 @@ const DropdownPicker = ({ options, onSelect, label, value }) => {
   return (
     <div className={styles.dropdownPicker} ref={dropdownRef}>
       {label && <label className={styles.dropdownLabel}>{label}</label>}
-      <div className={styles.dropdownHeader} onClick={() => setIsOpen(!isOpen)}>
+      <div className={styles.dropdownHeader} onClick={() => setIsOpen(!isOpen)} data-testid="dropdown">
         {selectedOption ? selectedOption.label : 'Select an option'}
         <span className={styles.dropdownArrow}>{isOpen ? '▲' : '▼'}</span>
       </div>
