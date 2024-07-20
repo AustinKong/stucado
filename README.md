@@ -57,12 +57,17 @@ Building outputs in the `dist` folder.
 
 ```
 npm run dev - Starts the project
-npm run build:win - Buiilds the project for Windows
+# Building
+npm run build:win - Builds the project for Windows
 npm run build:mac - Builds the project for Mac (Requires Mac system to build)
 npm run build:linux - Builds the project for Linux
+# Testing
+npm run test:unit - Runs all unit tests
+npm run test:integration - Runs all integration tests
 ```
 ## Authors
 Austin Kong [@AustinKong](https://github.com/AustinKong)
+
 Ea Jing Le [@JL Ea](https://github.com/JingLeEa)
 ## License
 This project is licensed under MIT license. View license in [license.txt](license.txt)
