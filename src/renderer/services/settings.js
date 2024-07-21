@@ -35,3 +35,8 @@ export const changeStatus = (status) => {
   store.dispatch(setSettings({ status }));
   window.settingsAPI.changeStatus(status);
 };
+
+export const changeProfilePicture = (profilePicture) => {
+  store.dispatch(setSettings({ profilePicture }));
+  window.settingsAPI.changeProfilePicture(profilePicture);
+};

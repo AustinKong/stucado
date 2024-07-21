@@ -7,6 +7,7 @@ const initialState = {
   externalLink: 'https://canvas.nus.edu.sg/',
   username: 'user',
   status: 'studying',
+  profilePicture: 'studious',
 };
 
 const settingsSlice = createSlice({

@@ -25,6 +25,7 @@ import {
   changeExternalLink,
   changeUsername,
   changeStatus,
+  changeProfilePicture,
 } from '@services/settings';
 import {
   getHoursFocused,
@@ -138,6 +139,7 @@ app.whenReady().then(() => {
   ipcMain.on('change-external-link', changeExternalLink);
   ipcMain.on('change-username', changeUsername);
   ipcMain.on('change-status', changeStatus);
+  ipcMain.on('change-profile-picture', changeProfilePicture);
 
   ipcMain.handle('get-hours-focused', getHoursFocused);
   ipcMain.handle('get-tasks-completed', getTasksCompleted);

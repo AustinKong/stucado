@@ -17,6 +17,7 @@ export function readSettings() {
       externalLink: 'https://canvas.nus.edu.sg/',
       username: 'user',
       status: 'studying',
+      profilePicture: 'studious',
     };
     updateSettings(settings);
   }

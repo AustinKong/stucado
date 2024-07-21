@@ -40,6 +40,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   changeExternalLink: (externalLink) => ipcRenderer.send('change-external-link', externalLink),
   changeUsername: (username) => ipcRenderer.send('change-username', username),
   changeStatus: (status) => ipcRenderer.send('change-status', status),
+  changeProfilePicture: (profilePicture) => ipcRenderer.send('change-profile-picture', profilePicture),
 });
 
 contextBridge.exposeInMainWorld('statisticsAPI', {

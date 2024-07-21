@@ -52,3 +52,8 @@ export const changeStatus = async (event, status) => {
   updateSettings({ ...settings, status });
   settings = { ...settings, status };
 };
+
+export const changeProfilePicture = async (event, profilePicture) => {
+  updateSettings({ ...settings, profilePicture });
+  settings = { ...settings, profilePicture };
+};
