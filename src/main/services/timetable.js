@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { DaysOfWeek } from '@shared/constants';
+import { DaysOfWeek } from '../../shared/constants';
 
 import {
   readTimetable,
@@ -10,8 +10,8 @@ import {
   readTasks,
   updateTaskSlots,
   readTaskSlots,
-} from '@database/cache';
-import { allocateTasks } from '@models/timetableOptimization';
+} from '../database/cache';
+import { allocateTasks } from '../models/timetableOptimization';
 
 /**
  * Retrieves the timetable from cache.
