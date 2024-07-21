@@ -1,6 +1,7 @@
 import blankAvatar from '@assets/images/blankAvatar.webp';
 import styles from './styles.module.css';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 import Input from '@components/generic/Input';
 
@@ -22,12 +23,14 @@ const Banner = () => {
 };
 
 const UserProfile = () => {
+  const settings = useSelector((state) => state.settings);
+
   return (
     <div className={styles.profile}>
       <img src={blankAvatar} alt="User avatar" className={styles.profile__avatar} />
       <span className={styles.profile__details}>
-        <p>Orbitee</p>
-        <small>Made with 💖 by Team April</small>
+        <p>{settings.username}</p>
+        <small>{settings.status}</small>
       </span>
     </div>
   );

@@ -38,7 +38,17 @@ export const toggleNotifications = async () => {
   settings = { ...settings, notifications: !settings.notifications };
 };
 
-export const changeExternalLink = async (externalLink) => {
+export const changeExternalLink = async (event, externalLink) => {
   updateSettings({ ...settings, externalLink });
   settings = { ...settings, externalLink };
+};
+
+export const changeUsername = async (event, username) => {
+  updateSettings({ ...settings, username });
+  settings = { ...settings, username };
+};
+
+export const changeStatus = async (event, status) => {
+  updateSettings({ ...settings, status });
+  settings = { ...settings, status };
 };

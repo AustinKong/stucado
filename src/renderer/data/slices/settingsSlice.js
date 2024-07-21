@@ -5,6 +5,8 @@ const initialState = {
   hasOnboarded: false,
   notifications: true,
   externalLink: 'https://canvas.nus.edu.sg/',
+  username: 'user',
+  status: 'studying',
 };
 
 const settingsSlice = createSlice({

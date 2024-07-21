@@ -38,6 +38,8 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
   toggleNotifications: () => ipcRenderer.send('toggle-notifications'),
   changeExternalLink: (externalLink) => ipcRenderer.send('change-external-link', externalLink),
+  changeUsername: (username) => ipcRenderer.send('change-username', username),
+  changeStatus: (status) => ipcRenderer.send('change-status', status),
 });
 
 contextBridge.exposeInMainWorld('statisticsAPI', {

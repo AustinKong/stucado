@@ -14,7 +14,11 @@ export function readSettings() {
       hasOnboarded: false,
       theme: 'system',
       notifications: true,
+      externalLink: 'https://canvas.nus.edu.sg/',
+      username: 'user',
+      status: 'studying',
     };
+    updateSettings(settings);
   }
   return settings;
 }

@@ -14,8 +14,8 @@ const General = () => {
       />
       <SettingsInput
         title="External Link"
-        description="Link to open when clicking on the app icon"
-        value={settings.externalLink || ''}
+        description="Link to open when clicking on the external link button. We recommend using a link to your most commonly used study tools"
+        value={settings.externalLink}
         onChange={(e) => changeExternalLink(e.target.value)}
       />
     </>

@@ -23,6 +23,8 @@ import {
   setThemeOnStart,
   toggleNotifications,
   changeExternalLink,
+  changeUsername,
+  changeStatus,
 } from '@services/settings';
 import {
   getHoursFocused,
@@ -134,6 +136,8 @@ app.whenReady().then(() => {
   ipcMain.on('complete-onboarding', completeOnboarding);
   ipcMain.on('toggle-notifications', toggleNotifications);
   ipcMain.on('change-external-link', changeExternalLink);
+  ipcMain.on('change-username', changeUsername);
+  ipcMain.on('change-status', changeStatus);
 
   ipcMain.handle('get-hours-focused', getHoursFocused);
   ipcMain.handle('get-tasks-completed', getTasksCompleted);
