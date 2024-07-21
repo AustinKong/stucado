@@ -4,6 +4,7 @@ const initialState = {
   theme: 'system',
   hasOnboarded: false,
   notifications: true,
+  externalLink: 'https://canvas.nus.edu.sg/',
 };
 
 const settingsSlice = createSlice({

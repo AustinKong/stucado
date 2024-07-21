@@ -37,3 +37,8 @@ export const toggleNotifications = async () => {
   updateSettings({ ...settings, notifications: !settings.notifications });
   settings = { ...settings, notifications: !settings.notifications };
 };
+
+export const changeExternalLink = async (externalLink) => {
+  updateSettings({ ...settings, externalLink });
+  settings = { ...settings, externalLink };
+};

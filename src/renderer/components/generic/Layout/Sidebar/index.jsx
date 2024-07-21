@@ -1,4 +1,13 @@
-import { IconContext, SquaresFour, CalendarBlank, ChartLine, Faders, SignOut, Timer } from '@phosphor-icons/react';
+import {
+  IconContext,
+  SquaresFour,
+  CalendarBlank,
+  ChartLine,
+  Faders,
+  SignOut,
+  Timer,
+  Link,
+} from '@phosphor-icons/react';
 import { NavLink } from 'react-router-dom';
 import { logout } from '@services/general';
 import appIcon from '@assets/images/appIcon.png';
@@ -6,6 +15,7 @@ import styles from './styles.module.css';
 import Modal, { ModalHeader, ModalTitle, ModalSubtitle, ModalBody, ModalFooter } from '@components/generic/Modal';
 import Button from '@components/generic/Button';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const MAIN = [
   { icon: <SquaresFour />, to: '/', testid: 'dashboard-icon' },
@@ -41,6 +51,7 @@ const NavIcon = ({ icon, to }) => {
 
 const Sidebar = () => {
   const [signoutModalIsOpen, setSignoutModalIsOpen] = useState(false);
+  const externalLink = useSelector((state) => state.settings.externalLink);
 
   return (
     <>
@@ -63,6 +74,9 @@ const Sidebar = () => {
               <NavIcon icon={icon} to={to} />
             </div>
           ))}
+          <a href={externalLink} target="blank">
+            <Link size={24} />
+          </a>
           <div className={styles.navIcon} onClick={() => setSignoutModalIsOpen(true)} data-testid="signout-icon">
             <SignOut size={24} />
           </div>

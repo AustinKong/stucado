@@ -20,3 +20,8 @@ export const retrieveSettings = async () => {
   const settings = await window.settingsAPI.getSettings();
   store.dispatch(setSettings(settings));
 };
+
+export const changeExternalLink = (externalLink) => {
+  store.dispatch(setSettings({ externalLink }));
+  window.settingsAPI.changeExternalLink(externalLink);
+};

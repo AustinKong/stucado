@@ -37,6 +37,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
   toggleNotifications: () => ipcRenderer.send('toggle-notifications'),
+  changeExternalLink: (externalLink) => ipcRenderer.send('change-external-link', externalLink),
 });
 
 contextBridge.exposeInMainWorld('statisticsAPI', {
