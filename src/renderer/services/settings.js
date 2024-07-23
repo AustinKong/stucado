@@ -6,6 +6,11 @@ export const setTheme = (theme) => {
   window.settingsAPI.updateTheme(theme);
 };
 
+export const setColorTheme = (colorTheme) => {
+  store.dispatch(setSettings({ colorTheme }));
+  window.settingsAPI.updateColorTheme(colorTheme);
+};
+
 export const toggleNotifications = () => {
   store.dispatch(setSettings({ notifications: !store.getState().settings.notifications }));
   window.settingsAPI.toggleNotifications();

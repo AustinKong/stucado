@@ -35,6 +35,7 @@ contextBridge.exposeInMainWorld('pomodoroAPI', {
 contextBridge.exposeInMainWorld('settingsAPI', {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   updateTheme: (theme) => ipcRenderer.send('update-theme', theme),
+  updateColorTheme: (colorTheme) => ipcRenderer.send('update-color-theme', colorTheme),
   completeOnboarding: () => ipcRenderer.send('complete-onboarding'),
   toggleNotifications: () => ipcRenderer.send('toggle-notifications'),
   changeExternalLink: (externalLink) => ipcRenderer.send('change-external-link', externalLink),

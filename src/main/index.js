@@ -18,6 +18,7 @@ import { triggerNotification, endSession, getPomodoroSettings } from '@services/
 import {
   getSettings,
   updateTheme,
+  updateColorTheme,
   completeOnboarding,
   resetOnboarding,
   setThemeOnStart,
@@ -133,6 +134,7 @@ app.whenReady().then(() => {
   ipcMain.handle('get-pomodoro-settings', getPomodoroSettings);
 
   ipcMain.on('update-theme', updateTheme);
+  ipcMain.on('update-color-theme', updateColorTheme);
   ipcMain.handle('get-settings', getSettings);
   ipcMain.on('complete-onboarding', completeOnboarding);
   ipcMain.on('toggle-notifications', toggleNotifications);

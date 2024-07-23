@@ -1,12 +1,14 @@
 import ReactDOM from 'react-dom';
 import { Warning, WarningDiamond } from '@phosphor-icons/react';
 import { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './styles.module.css';
 
 // Basic modal with clicking outside to cancel
 export const Modal = ({ onClose, size = 'small', children }) => {
   const modalRef = useRef();
+  const colorTheme = useSelector((state) => state.settings.colorTheme);
 
   const handleClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -27,6 +29,7 @@ export const Modal = ({ onClose, size = 'small', children }) => {
         ref={modalRef}
         style={{ width: size === 'small' ? '30vw' : size === 'medium' ? '40vw' : '50vw' }}
         data-testid="modal"
+        data-colortheme={colorTheme}
       >
         {children}
       </div>

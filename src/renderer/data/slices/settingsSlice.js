@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   theme: 'system',
+  colorTheme: 'blue',
   hasOnboarded: false,
   notifications: true,
   externalLink: 'https://canvas.nus.edu.sg/',
