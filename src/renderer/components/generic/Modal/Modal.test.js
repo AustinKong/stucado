@@ -1,6 +1,8 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Modal, { ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalSubtitle } from './index';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 
 jest.mock('@phosphor-icons/react', () => {
   return {
@@ -9,11 +11,19 @@ jest.mock('@phosphor-icons/react', () => {
   };
 });
 
+const mockStore = configureStore([]);
+
 describe('Modal Component', () => {
   const onCloseMock = jest.fn();
+  let store;
 
   beforeEach(() => {
     document.body.innerHTML = '<div id="portal"></div>';
+    store = mockStore({
+      settings: {
+        colorTheme: 'blue',
+      },
+    });
   });
 
   afterEach(() => {
@@ -22,11 +32,13 @@ describe('Modal Component', () => {
 
   test('renders correctly with default size', () => {
     const { getByText } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalHeader>Header</ModalHeader>
-        <ModalBody>Body</ModalBody>
-        <ModalFooter>Footer</ModalFooter>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalHeader>Header</ModalHeader>
+          <ModalBody>Body</ModalBody>
+          <ModalFooter>Footer</ModalFooter>
+        </Modal>
+      </Provider>
     );
 
     expect(getByText('Header')).toBeInTheDocument();
@@ -36,9 +48,11 @@ describe('Modal Component', () => {
 
   test('renders correctly with medium size', () => {
     const { getByTestId } = render(
-      <Modal onClose={onCloseMock} size="medium">
-        <ModalBody>Body</ModalBody>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock} size="medium">
+          <ModalBody>Body</ModalBody>
+        </Modal>
+      </Provider>
     );
 
     expect(getByTestId('modal')).toHaveStyle('width: 40vw');
@@ -46,9 +60,11 @@ describe('Modal Component', () => {
 
   test('renders correctly with large size', () => {
     const { getByTestId } = render(
-      <Modal onClose={onCloseMock} size="large">
-        <ModalBody>Body</ModalBody>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock} size="large">
+          <ModalBody>Body</ModalBody>
+        </Modal>
+      </Provider>
     );
 
     expect(getByTestId('modal')).toHaveStyle('width: 50vw');
@@ -56,9 +72,11 @@ describe('Modal Component', () => {
 
   test('calls onClose when clicking outside the modal', () => {
     const { getByTestId } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalBody>Body</ModalBody>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalBody>Body</ModalBody>
+        </Modal>
+      </Provider>
     );
 
     fireEvent.mouseDown(getByTestId('blanket'));
@@ -67,9 +85,11 @@ describe('Modal Component', () => {
 
   test('does not call onClose when clicking inside the modal', () => {
     const { getByText } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalBody>Body</ModalBody>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalBody>Body</ModalBody>
+        </Modal>
+      </Provider>
     );
 
     fireEvent.mouseDown(getByText('Body'));
@@ -78,11 +98,13 @@ describe('Modal Component', () => {
 
   test('renders modal title with warn appearance', () => {
     const { getByText } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalHeader>
-          <ModalTitle appearance="warn">Warning Title</ModalTitle>
-        </ModalHeader>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalHeader>
+            <ModalTitle appearance="warn">Warning Title</ModalTitle>
+          </ModalHeader>
+        </Modal>
+      </Provider>
     );
 
     expect(getByText('Warning Title')).toBeInTheDocument();
@@ -91,11 +113,13 @@ describe('Modal Component', () => {
 
   test('renders modal title with danger appearance', () => {
     const { getByText } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalHeader>
-          <ModalTitle appearance="danger">Danger Title</ModalTitle>
-        </ModalHeader>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalHeader>
+            <ModalTitle appearance="danger">Danger Title</ModalTitle>
+          </ModalHeader>
+        </Modal>
+      </Provider>
     );
 
     expect(getByText('Danger Title')).toBeInTheDocument();
@@ -104,11 +128,13 @@ describe('Modal Component', () => {
 
   test('renders modal subtitle', () => {
     const { getByText } = render(
-      <Modal onClose={onCloseMock}>
-        <ModalHeader>
-          <ModalSubtitle>Subtitle</ModalSubtitle>
-        </ModalHeader>
-      </Modal>
+      <Provider store={store}>
+        <Modal onClose={onCloseMock}>
+          <ModalHeader>
+            <ModalSubtitle>Subtitle</ModalSubtitle>
+          </ModalHeader>
+        </Modal>
+      </Provider>
     );
 
     expect(getByText('Subtitle')).toBeInTheDocument();

@@ -2,11 +2,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import EditTaskModal from './index.jsx';
 import { editTask, deleteTask } from '@services/tasks';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 
 jest.mock('@services/tasks', () => ({
   editTask: jest.fn(),
   deleteTask: jest.fn(),
 }));
+
+const mockStore = configureStore([]);
 
 describe('EditTaskModal Component', () => {
   const task = {
@@ -17,16 +21,26 @@ describe('EditTaskModal Component', () => {
   };
 
   const mockOnClose = jest.fn();
+  let store;
 
   beforeEach(() => {
     mockOnClose.mockClear();
     editTask.mockClear();
     deleteTask.mockClear();
     document.body.innerHTML = '<div id="portal"></div>';
+    store = mockStore({
+      settings: {
+        colorTheme: 'blue',
+      },
+    });
   });
 
   test('renders modal with default task data', () => {
-    render(<EditTaskModal task={task} onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <EditTaskModal task={task} onClose={mockOnClose} />
+      </Provider>
+    );
 
     expect(screen.getByPlaceholderText(/Enter task title/i)).toHaveValue('Sample Task');
     expect(screen.getByPlaceholderText(/Enter task description/i)).toHaveValue('Sample Description');
@@ -34,7 +48,11 @@ describe('EditTaskModal Component', () => {
   });
 
   test('handles input changes', () => {
-    render(<EditTaskModal task={task} onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <EditTaskModal task={task} onClose={mockOnClose} />
+      </Provider>
+    );
 
     fireEvent.change(screen.getByPlaceholderText(/Enter task title/i), {
       target: { value: 'Updated Task', name: 'title' },
@@ -50,7 +68,11 @@ describe('EditTaskModal Component', () => {
   });
 
   test('submits the form and calls editTask', () => {
-    render(<EditTaskModal task={task} onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <EditTaskModal task={task} onClose={mockOnClose} />
+      </Provider>
+    );
 
     fireEvent.change(screen.getByPlaceholderText(/Enter task title/i), {
       target: { value: 'Updated Task', name: 'title' },
@@ -72,7 +94,11 @@ describe('EditTaskModal Component', () => {
   });
 
   test('deletes the task and calls deleteTask', () => {
-    render(<EditTaskModal task={task} onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <EditTaskModal task={task} onClose={mockOnClose} />
+      </Provider>
+    );
 
     fireEvent.click(screen.getByText(/Delete/i));
 
@@ -81,7 +107,11 @@ describe('EditTaskModal Component', () => {
   });
 
   test('cancels the form and resets state', () => {
-    render(<EditTaskModal task={task} onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <EditTaskModal task={task} onClose={mockOnClose} />
+      </Provider>
+    );
 
     fireEvent.change(screen.getByPlaceholderText(/Enter task title/i), {
       target: { value: 'Updated Task', name: 'title' },

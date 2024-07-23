@@ -2,22 +2,36 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import UploadModal from './index.jsx';
 import { uploadTimetable } from '@services/timetable';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 
 jest.mock('@services/timetable', () => ({
   uploadTimetable: jest.fn(),
 }));
 
+const mockStore = configureStore([]);
+
 describe('UploadModal Component', () => {
   const mockOnClose = jest.fn();
+  let store;
 
   beforeEach(() => {
     mockOnClose.mockClear();
     uploadTimetable.mockClear();
     document.body.innerHTML = '<div id="portal"></div>';
+    store = mockStore({
+      settings: {
+        colorTheme: 'blue',
+      },
+    });
   });
 
   test('renders modal with correct elements', () => {
-    render(<UploadModal onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <UploadModal onClose={mockOnClose} />
+      </Provider>
+    );
 
     expect(screen.getByText(/Upload timetable/i)).toBeInTheDocument();
     expect(screen.getByText(/Import your NUS Mods timetable via URL/i)).toBeInTheDocument();
@@ -25,7 +39,11 @@ describe('UploadModal Component', () => {
   });
 
   test('handles input change', () => {
-    render(<UploadModal onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <UploadModal onClose={mockOnClose} />
+      </Provider>
+    );
 
     const input = screen.getByLabelText(/Timetable URL/i);
     fireEvent.change(input, { target: { value: 'http://example.com/timetable', name: 'url' } });
@@ -36,7 +54,11 @@ describe('UploadModal Component', () => {
   test('submits the form successfully', async () => {
     uploadTimetable.mockResolvedValue(true);
 
-    render(<UploadModal onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <UploadModal onClose={mockOnClose} />
+      </Provider>
+    );
 
     const input = screen.getByLabelText(/Timetable URL/i);
     fireEvent.change(input, { target: { value: 'http://example.com/timetable', name: 'url' } });
@@ -52,7 +74,11 @@ describe('UploadModal Component', () => {
   test('handles form submission failure', async () => {
     uploadTimetable.mockResolvedValue(false);
 
-    render(<UploadModal onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <UploadModal onClose={mockOnClose} />
+      </Provider>
+    );
 
     const input = screen.getByLabelText(/Timetable URL/i);
     fireEvent.change(input, { target: { value: 'http://example.com/timetable', name: 'url' } });
@@ -67,7 +93,11 @@ describe('UploadModal Component', () => {
   });
 
   test('cancels the form', () => {
-    render(<UploadModal onClose={mockOnClose} />);
+    render(
+      <Provider store={store}>
+        <UploadModal onClose={mockOnClose} />
+      </Provider>
+    );
 
     fireEvent.click(screen.getByText(/Cancel/i));
 
