@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { IconContext, User, Book, House, Pencil, TestTube } from '@phosphor-icons/react';
+import Input from '@components/generic/Input';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
 import Button from '@components/generic/Button';
@@ -121,6 +122,20 @@ export const SettingsDropdown = ({ title, description, value, options, onChange 
       </div>
       <div className={styles.settingsDropdown__picker}>
         <DropdownPicker options={options} onSelect={onChange} value={value} />
+      </div>
+    </div>
+  );
+};
+
+export const SettingsInput = ({ title, description, value, onChange }) => {
+  return (
+    <div title={title} className={styles.settingsInput}>
+      <div className={styles.settingsInput__text}>
+        <h3 className={styles.setttingsInput__title}>{title}</h3>
+        <p className={styles.settingsInput__description}>{description}</p>
+      </div>
+      <div className={styles.settingsInput__input}>
+        <Input value={value} onChange={onChange} />
       </div>
     </div>
   );

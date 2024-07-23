@@ -37,3 +37,23 @@ export const toggleNotifications = async () => {
   updateSettings({ ...settings, notifications: !settings.notifications });
   settings = { ...settings, notifications: !settings.notifications };
 };
+
+export const changeExternalLink = async (event, externalLink) => {
+  updateSettings({ ...settings, externalLink });
+  settings = { ...settings, externalLink };
+};
+
+export const changeUsername = async (event, username) => {
+  updateSettings({ ...settings, username });
+  settings = { ...settings, username };
+};
+
+export const changeStatus = async (event, status) => {
+  updateSettings({ ...settings, status });
+  settings = { ...settings, status };
+};
+
+export const changeProfilePicture = async (event, profilePicture) => {
+  updateSettings({ ...settings, profilePicture });
+  settings = { ...settings, profilePicture };
+};

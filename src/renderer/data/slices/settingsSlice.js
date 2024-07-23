@@ -4,6 +4,10 @@ const initialState = {
   theme: 'system',
   hasOnboarded: false,
   notifications: true,
+  externalLink: 'https://canvas.nus.edu.sg/',
+  username: 'user',
+  status: 'studying',
+  profilePicture: 'studious',
 };
 
 const settingsSlice = createSlice({

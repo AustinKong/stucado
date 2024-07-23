@@ -144,3 +144,23 @@
 .settingsButton__button {
   margin-left: auto;
 }
+
+/* Input */
+
+.settingsInput {
+  display: flex;
+  align-items: center;
+}
+
+.settingsInput__text {
+  width: 70%;
+}
+
+.settingsInput__description {
+  color: var(--text-secondary);
+}
+
+.settingsInput__input {
+  margin-left: auto;
+  width: 20%; 
+}
