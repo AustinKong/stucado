@@ -13,6 +13,7 @@ export function readSettings() {
     settings = {
       hasOnboarded: false,
       theme: 'system',
+      colorTheme: 'blue',
       notifications: true,
       externalLink: 'https://canvas.nus.edu.sg/',
       username: 'user',

@@ -16,6 +16,7 @@ import Loading from '@components/pages/Loading';
 function App() {
   useRetrieveData();
   const hasOnboarded = useSelector((state) => state.settings.hasOnboarded);
+  const colorTheme = useSelector((state) => state.settings.colorTheme);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -36,17 +37,19 @@ function App() {
   }
 
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/pomodoro" element={<Pomodoro />} />
-        </Route>
-      </Routes>
-    </HashRouter>
+    <div data-colortheme={colorTheme}>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/statistics" element={<Statistics />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/pomodoro" element={<Pomodoro />} />
+          </Route>
+        </Routes>
+      </HashRouter>
+    </div>
   );
 }
 

@@ -18,6 +18,11 @@ export async function updateTheme(event, theme) {
   }
 }
 
+export async function updateColorTheme(event, colorTheme) {
+  updateSettings({ ...settings, colorTheme });
+  settings = { ...settings, colorTheme };
+}
+
 export async function completeOnboarding() {
   updateSettings({ ...settings, hasOnboarded: true });
   settings = { ...settings, hasOnboarded: true };

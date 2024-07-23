@@ -74,7 +74,7 @@ const Sidebar = () => {
               <NavIcon icon={icon} to={to} />
             </div>
           ))}
-          <a href={externalLink} target="blank">
+          <a href={externalLink} className={styles.navIcon} target="blank">
             <Link size={24} />
           </a>
           <div className={styles.navIcon} onClick={() => setSignoutModalIsOpen(true)} data-testid="signout-icon">

@@ -67,9 +67,7 @@ const EditPomodoroModal = ({ onClose }) => {
         <Button onClick={handleCancel} appearance="secondary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} primary>
-          Save
-        </Button>
+        <Button onClick={handleSubmit}>Save</Button>
       </ModalFooter>
     </Modal>
   );

@@ -75,18 +75,12 @@
     --icon: #44546F; /* Use for icon only buttons */
     --icon-hovered: #091E42;
     --icon-pressed: #091E424F;
-    --icon-selected: #2898BD;
 
     --border: #091E4224;
-
-    --background-brand:#0C66E4; /* Use for primary buttons, links, and other primary actions */
-    --background-brand-hovered: #0055CC;
-    --background-brand-pressed: #09326C;
 
     --background: #F7F8F9;
     --background-hovered: #F1F2F4;
     --background-pressed: #DCDFE4;
-    --background-selected: #ddf6ff;
     --surface-overlay: #FFFFFF;
     --sunken: #F7F8F9;
 
@@ -108,6 +102,44 @@
     /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
     --shadow-overlay: 0px 8px 12px rgba(9, 30, 66, 0.15),0px 0px 1px rgba(9, 30, 66, 0.31);
     --shadow-raised: 0px 1px 1px rgba(9, 30, 66, 0.25),0px 0px 1px rgba(9, 30, 66, 0.31);
+
+    --background-brand:#0C66E4;
+    --background-brand-hovered: #0055CC;
+    --background-brand-pressed: #09326C;
+    --icon-selected: #2898BD;
+    --background-selected: #ddf6ff;
+  }
+
+  [data-colortheme='blue'] {
+    --background-brand:#0C66E4;
+    --background-brand-hovered: #0055CC;
+    --background-brand-pressed: #09326C;
+    --icon-selected: #2898BD;
+    --background-selected: #ddf6ff;
+  }
+
+  [data-colortheme='green'] {
+    --background-brand:#82B536;
+    --background-brand-hovered: #6A9A23;
+    --background-brand-pressed: #5B7F24;
+    --icon-selected: #6A9A23;
+    --background-selected: #EFFFD6;
+  }
+
+  [data-colortheme='purple'] {
+    --background-brand:#8F7EE7;
+    --background-brand-hovered: #8270DB;
+    --background-brand-pressed: #6E5DC6;
+    --icon-selected: #8270DB;
+    --background-selected: #F3F0FF;
+  }
+
+  [data-colortheme='magenta'] {
+    --background-brand: #DA62AC;
+    --background-brand-hovered: #CD519D;
+    --background-brand-pressed: #AE4787;
+    --icon-selected: #AE4787;
+    --background-selected: #FFECF8;
   }
 }
 
@@ -135,18 +167,12 @@
   --icon: #C7D1DB; /* Use for icon only buttons */
   --icon-hovered: #B6C2CF;
   --icon-pressed: #9FADBC;
-  --icon-selected: #2898BD;
 
   --border: #A6C5E229;
-
-  --background-brand:#579DFF; /* Use for primary buttons, links, and other primary actions */
-  --background-brand-hovered: #85B8FF;
-  --background-brand-pressed: #CCE0FF;
 
   --background: #161A1D;
   --background-hovered: #22272B;
   --background-pressed: #282E33;
-  --background-selected: #2C333A;
   --surface-overlay: #161A1D;
   --sunken: #161A1D;
 
@@ -169,5 +195,43 @@
   /* Use for modals, dropdowns, and other UI elements that need to overlay other elements */
   --shadow-overlay: 0px 0px 0px rgba(57, 66, 74, 1),0px 8px 12px rgba(3, 4, 4, 0.36),0px 0px 1px rgba(3, 4, 4, 0.5);
   --shadow-raised: 0px 0px 0px rgba(0, 0, 0, 0),0px 1px 1px rgba(3, 4, 4, 0.5),0px 0px 1px rgba(3, 4, 4, 0.5);
+  
+  --background-brand:#579DFF;
+  --background-brand-hovered: #85B8FF;
+  --background-brand-pressed: #CCE0FF;
+  --icon-selected: #2898BD;
+  --background-selected: #2C333A;
+  }
+
+  [data-colortheme='blue'] {
+    --background-brand:#579DFF;
+    --background-brand-hovered: #85B8FF;
+    --background-brand-pressed: #CCE0FF;
+    --icon-selected: #2898BD;
+    --background-selected: #2C333A;
+  }
+
+  [data-colortheme='green'] {
+    --background-brand:#B3DF72;
+    --background-brand-hovered: #D3F1A7;
+    --background-brand-pressed: #EFFFD6;
+    --icon-selected: #82B536;
+    --background-selected: #28311B;
+  }
+
+  [data-colortheme='purple'] {
+    --background-brand:#9F8FEF;
+    --background-brand-hovered: #B8ACF6;
+    --background-brand-pressed: #DFD8FD;
+    --icon-selected: #8F7EE7;
+    --background-selected: #2B273F;
+  }
+
+  [data-colortheme='magenta'] {
+    --background-brand:#E774BB;
+    --background-brand-hovered: #F797D2;
+    --background-brand-pressed: #FDD0EC;
+    --icon-selected: #DA62AC;
+    --background-selected: #3D2232;
   }
 }

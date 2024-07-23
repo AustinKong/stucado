@@ -22,7 +22,7 @@
   top: var(--space-300);
   width: 2px;
   height: calc(100% - 24px);
-  background-color: var(--background-danger);
+  background-color: var(--background-brand);
 }
 
 /* Hours notches */
@@ -41,9 +41,6 @@
   transform: translate(-50%, 0);
   color: var(--text-secondary);
   font-size: var(--font-size-050);
-}
-
-* {
 }
 
 /* Days notches */
