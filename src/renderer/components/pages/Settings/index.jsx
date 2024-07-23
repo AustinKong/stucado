@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconContext, User, Book, House, Pencil, TestTube } from '@phosphor-icons/react';
+import { IconContext, User, Book, House, Pencil, TestTube, Info as InfoIcon } from '@phosphor-icons/react';
 import Input from '@components/generic/Input';
 import DropdownPicker from '@components/generic/DropdownPicker';
 import styles from './styles.module.css';
@@ -7,6 +7,7 @@ import Button from '@components/generic/Button';
 import General from './General';
 import Profile from './Profile';
 import Data from './Data';
+import Info from './Info';
 import Appearance from './Appearance';
 import Experimental from './Experimental';
 
@@ -40,6 +41,12 @@ const NAVLINKS = [
     text: 'Experimental',
     long: 'Experimental Settings (for testing purposes only)',
     icon: <TestTube />,
+  },
+  {
+    id: 'info',
+    text: 'About Us',
+    long: 'About Us',
+    icon: <InfoIcon />,
   },
 ];
 
@@ -76,6 +83,7 @@ const Settings = () => {
           {subpage === 'data' && <Data />}
           {subpage === 'appearance' && <Appearance />}
           {subpage === 'experimental' && <Experimental />}
+          {subpage === 'info' && <Info />}
         </div>
       </div>
     </div>
