@@ -9,13 +9,38 @@ export const generateMessage = (productivity) => {
   let mainText = "Welcome back, it's time to get to work!";
   let subText = `Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
 
-  if (6 < timeOfDay && timeOfDay < 12) {
-    mainText = 'Good morning! A productive day starts with a productive morning!';
-    subText = `Grab a cup of coffee and get started! Your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
-  }
-  if (18 < timeOfDay && timeOfDay < 24) {
-    mainText = 'Evenings can be tough. Wrap up with light work or plan for tomorrow.';
-    subText = `It's late now, and your productivity is ${delta > 0 ? 'up' : 'down'} by ${Math.abs(delta)}% at this time of the day.`;
+  if (0 <= timeOfDay && timeOfDay < 6) {
+    if (delta > 0) {
+      mainText = 'Working late or starting early? You’re doing great!';
+      subText = `Your productivity is up by ${Math.abs(delta)}% during these hours. Keep it up!`;
+    } else {
+      mainText = 'Burning the midnight oil? Hang in there!';
+      subText = `Your productivity is down by ${Math.abs(delta)}% during these hours. Take a break if needed.`;
+    }
+  } else if (6 <= timeOfDay && timeOfDay < 12) {
+    if (delta > 0) {
+      mainText = 'Good morning! Your hard work is paying off!';
+      subText = `Your productivity is up by ${Math.abs(delta)}% this morning. Keep the momentum going!`;
+    } else {
+      mainText = 'Good morning! A new day brings new opportunities!';
+      subText = `Your productivity is down by ${Math.abs(delta)}% this morning. Let's turn it around!`;
+    }
+  } else if (12 <= timeOfDay && timeOfDay < 18) {
+    if (delta > 0) {
+      mainText = `Good afternoon! You're on a roll!`;
+      subText = `Your productivity is up by ${Math.abs(delta)}% this afternoon. Keep it up!`;
+    } else {
+      mainText = `Good afternoon! Let's push through!`;
+      subText = `Your productivity is down by ${Math.abs(delta)}% this afternoon. You can do it!`;
+    }
+  } else if (18 <= timeOfDay && timeOfDay < 24) {
+    if (delta > 0) {
+      mainText = 'Good evening! Great job today!';
+      subText = `Your productivity is up by ${Math.abs(delta)}% this evening. Time to wind down and celebrate your success.`;
+    } else {
+      mainText = 'Good evening! Almost done!';
+      subText = `Your productivity is down by ${Math.abs(delta)}% this evening. Finish strong and prepare for tomorrow.`;
+    }
   }
 
   store.dispatch(setMessage({ mainText, subText }));
