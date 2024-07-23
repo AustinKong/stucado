@@ -24,6 +24,9 @@ describe('Timetable Widget', () => {
           type: 'bookmark',
         },
       ],
+      settings: {
+        colorTheme: 'blue',
+      },
     });
 
     document.body.innerHTML = '<div id="portal"></div>';
@@ -38,7 +41,7 @@ describe('Timetable Widget', () => {
 
     expect(screen.getByText(/Schedule/i)).toBeInTheDocument();
     expect(screen.getByText(/Mon/i)).toBeInTheDocument();
-    expect(screen.getByText(/Tue/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Tue/i)[0]).toBeInTheDocument();
     expect(screen.getByText(/Sample Event 1/i)).toBeInTheDocument();
     expect(screen.getByText(/Sample Event 2/i)).toBeInTheDocument();
   });

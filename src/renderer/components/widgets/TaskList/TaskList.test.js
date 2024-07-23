@@ -31,6 +31,9 @@ describe('TaskList Component', () => {
           endTime: new Date(),
         },
       ],
+      settings: {
+        colorTheme: 'blue',
+      },
     });
 
     document.body.innerHTML = '<div id="portal"></div>';
