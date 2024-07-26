@@ -1,24 +1,17 @@
 # Stucado
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a2803c31-ff12-4ebf-bbb6-e4f41158421f" width="10%">
+</p>
+
 Stucado is a data-driven productivity tool tailored to the needs of students. With features such as customized to-do lists, timetable integration, adaptive pomodoro timers and insightful statistics visualizations, we aim to empower university students in their academic journey.
 ## About
-### Motivation
-In today's fast-paced digital world, students face an array of challenges when it comes to managing their academic workload efficiently. With an ever-increasing list of tasks and responsibilities, the limited amount of time available often leads to stress and anxiety. The prevalence of social media and digital distractions only exacerbates these issues, making it easy for students to lose track of their priorities and fall into a cycle of procrastination. Furthermore, the pressure to excel academically adds to the burden, leaving many students feeling overwhelmed and unsure of where to begin.
+### Description
 
-Adding to the urgency of addressing these challenges is the concerning state of mental health among NUS students, as highlighted by recent news articles. The demands of academic life, coupled with the stressors of modern living, underscore the need for proactive solutions to support students in their academic journey while keeping them motivated.
+![image](https://github.com/user-attachments/assets/7b4c9c69-d1af-47e6-bc07-c04d10d531d0)
 
-While study apps are not uncommon, there remains a gap in the market for tools that provide personalized solutions to these issues. Despite the availability of many high-quality study apps, few effectively address the nuanced challenges faced by students in today's digital age.
+In today's fast-paced digital world, students at the National University of Singapore (NUS) face significant challenges in managing their academic workload efficiently, often leading to stress and anxiety. The proliferation of digital distractions and the pressure to excel academically only exacerbates these issues. Stucado addresses this by offering a data-driven productivity tool tailored to individual student needs. By collecting and analyzing user data, Stucado provides personalized messages and recommendations, helping students optimize their study habits and maximize productivity. 
 
-This is where Stucado shines. As a data-driven productivity tool tailored to the needs of individual students, Stucado offers a unique solution to the challenges of time management and productivity.
-### Vision
-By collecting and analyzing user data, Stucado provides personalized messages and recommendations to help students optimize their study habits and maximize their productivity.
-
-With features such as customized to-do lists, timetable integration, and adaptive pomodoro timers, Stucado empowers students to take control of their academic journey with confidence. By leveraging technology to offer actionable insights and support, Stucado not only helps students excel academically but also promotes overall well-being.
-### Aim
-Stucado aims to provide students a data-driven platform to optimize their daily productivity by constantly collecting data and tweaking its algorithm. Our goal is to transform the way students approach their studies by offering an intelligent, adaptive tool that not only helps them manage their time effectively but also enhances their overall learning experience.
-
-We aim to alleviate the stress and anxiety associated with academic workload by providing a structured and supportive environment. By supercharging ordinary features such as timetables, to-do lists and pomodoro timers with the power of data, we aim to provide actionable insights and recommendations. This would help students make informed decisions about when and how to study, ensuring that they get the most out of their day. 
-
-Stucado is designed to be a reliable companion for students throughout their academic journey. By keeping all user data stored locally and ensuring offline functionality, the app respects users’ privacy and provides uninterrupted support, regardless of internet connectivity. Our ultimate aim is to empower students to take control of their academic success with confidence, efficiency, and a sense of enjoyment.
+Key features include customized to-do lists, timetable integration, and adaptive Pomodoro timers, all designed to transform how students approach their studies. Stucado aims to create a structured, supportive environment that alleviates academic stress, enhances learning experiences, and promotes overall well-being. With a commitment to privacy and offline functionality, Stucado ensures uninterrupted support, empowering students to take control of their academic journey with confidence and efficiency.
 ### Technology
 * React: All frontend components are written in React
 * CSS: Pure CSS, with CSS modules are used for styling the app
@@ -29,13 +22,13 @@ Stucado is designed to be a reliable companion for students throughout their aca
 ## Getting Started
 ### Deployment
 Download instructions for users (zip):
-1. Download [Stucado-MS2-Unpacked.zip](https://github.com/AustinKong/stucado/releases/download/v0.2.0/Stucado-MS2-Unpacked.zip)
+1. Download [Stucado-Unpacked.zip](https://github.com/AustinKong/stucado/releases/download/v1.0.0/Stucado-Unpacked.zip)
 2. Extract into folder
 3. Open `stucado.exe`
 4. Everything is self-contained in this folder, just delete the folder after done
 
 Download instructions for users (installer):
-1. Dowload [Stucado-MS2-Installer.exe](https://github.com/AustinKong/stucado/releases/download/v0.2.0/Stucado-MS2-Installer.exe)
+1. Dowload [Stucado-Installer.exe](https://github.com/AustinKong/stucado/releases/download/v1.0.0/Stucado-Installer.exe)
 2. Start the intaller and run through the installation process
 3. Open `stucado.exe`
 4. To uninstall, use the "Add or remove programs" feature from Windows
@@ -66,8 +59,7 @@ npm run test:unit - Runs all unit tests
 npm run test:integration - Runs all integration tests
 ```
 ## Authors
-Austin Kong [@AustinKong](https://github.com/AustinKong)
-
-Ea Jing Le [@JL Ea](https://github.com/JingLeEa)
+- Austin Kong [@AustinKong](https://github.com/AustinKong)
+- Ea Jing Le [@JL Ea](https://github.com/JingLeEa)
 ## License
 This project is licensed under MIT license. View license in [license.txt](license.txt)
