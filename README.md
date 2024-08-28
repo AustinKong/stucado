@@ -12,6 +12,9 @@ Stucado is a data-driven productivity tool tailored to the needs of students. Wi
 In today's fast-paced digital world, students at the National University of Singapore (NUS) face significant challenges in managing their academic workload efficiently, often leading to stress and anxiety. The proliferation of digital distractions and the pressure to excel academically only exacerbates these issues. Stucado addresses this by offering a data-driven productivity tool tailored to individual student needs. By collecting and analyzing user data, Stucado provides personalized messages and recommendations, helping students optimize their study habits and maximize productivity. 
 
 Key features include customized to-do lists, timetable integration, and adaptive Pomodoro timers, all designed to transform how students approach their studies. Stucado aims to create a structured, supportive environment that alleviates academic stress, enhances learning experiences, and promotes overall well-being. With a commitment to privacy and offline functionality, Stucado ensures uninterrupted support, empowering students to take control of their academic journey with confidence and efficiency.
+### Documentation
+Extensive documentation was made for this project, going into detail on the implementation philosophies, challenges, software engineering principles and feature details. It can be found [here](Documentation.pdf).
+
 ### Technology
 * React: All frontend components are written in React
 * CSS: Pure CSS, with CSS modules are used for styling the app
