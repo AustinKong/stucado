@@ -84,7 +84,7 @@ function extractURL(url) {
   const date = new Date();
   // FIXME: Subjective to NUS Mods updated date QQ
   const academicYear =
-    date.getMonth() < 8
+    date.getMonth() < 7
       ? `${date.getFullYear() - 1}-${date.getFullYear()}`
       : `${date.getFullYear()}-${date.getFullYear() + 1}`;
 
